@@ -8,8 +8,15 @@
 var num=0;
 
 function newVariable(){
-	document.getElementById("newvariable" + num).innerHTML = "<label> var : </label> <textarea> nom </textarea> <label> type : </label> <select> <option> Integer </option> <option> Float </option> <option> Boolean </option>  </select> <label> role : </label> <select> <option> input </option> <option> output </option> <option> control </option>  <option> internal </option> </select> <label> Borne min : </label> <textarea> 0 </textarea> <label> Borne max : </label> <textarea> 1 </textarea> <label> Valeur d initialisation (optionnel) </label> <textarea> 0 </textarea> <br/> <div id=\"newvariable" + (num+1) + "\" ></div>";
-num++;
+	document.getElementById("newvariables").innerHTML += "<div id=\"variable" + num + "\"><label> var : </label> <textarea> nom </textarea> <label> type : </label> <select> <option> Integer </option> <option> Float </option> <option> Boolean </option>  </select> <label> role : </label> <select> <option> input </option> <option> output </option> <option> control </option>  <option> internal </option> </select> <label> Borne min : </label> <textarea> 0 </textarea> <label> Borne max : </label> <textarea> 1 </textarea> <label> Valeur d initialisation (optionnel) </label> <textarea> 0 </textarea> <br/> </div>";
+	num++; 
+}
+
+function removeVariable(){
+	if(num>0) {
+		num--;
+		document.getElementById("newvariables").removeChild(document.getElementById("variable" + num));
+	}
 }
 </script>
 
@@ -27,8 +34,9 @@ num++;
 <label> Borne max : </label> <textarea> 1 </textarea>
 <label> Valeur d'initialisation (optionnel) </label> <textarea> 0 </textarea>
 <br/>
-<div id="newvariable0"></div>
+<div id="newvariables"></div>
 <input type="button" value="add variable" onclick="newVariable()" >
+<input type="button" value="remove variable" onclick="removeVariable()" >
 <br/>
 <label> propriétés </label> <textarea> propriétés </textarea>
 <br/>
