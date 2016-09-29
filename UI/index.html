@@ -1,0 +1,41 @@
+ <!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+<title>Projet Construction CECS</title>
+
+<script>
+var num=0;
+
+function newVariable(){
+	document.getElementById("newvariable" + num).innerHTML = "<label> var : </label> <textarea> nom </textarea> <label> type : </label> <select> <option> Integer </option> <option> Float </option> <option> Boolean </option>  </select> <label> role : </label> <select> <option> input </option> <option> output </option> <option> control </option>  <option> internal </option> </select> <label> Borne min : </label> <textarea> 0 </textarea> <label> Borne max : </label> <textarea> 1 </textarea> <label> Valeur d initialisation (optionnel) </label> <textarea> 0 </textarea> <br/> <div id=\"newvariable" + (num+1) + "\" ></div>";
+num++;
+}
+</script>
+
+
+</head>
+
+
+<body>
+
+<form action="index.html">
+<label> var : </label> <textarea> nom </textarea>
+<label> type : </label> <select> <option> Integer </option> <option> Float </option> <option> Boolean </option>  </select>
+<label> role : </label> <select> <option> input </option> <option> output </option> <option> control </option>  <option> internal </option> </select>
+<label> Borne min : </label> <textarea> 0 </textarea>
+<label> Borne max : </label> <textarea> 1 </textarea>
+<label> Valeur d'initialisation (optionnel) </label> <textarea> 0 </textarea>
+<br/>
+<div id="newvariable0"></div>
+<input type="button" value="add variable" onclick="newVariable()" >
+<br/>
+<label> propriétés </label> <textarea> propriétés </textarea>
+<br/>
+<input type="submit" value="Generate model">
+</form>
+
+
+
+</body>
+</html> 
