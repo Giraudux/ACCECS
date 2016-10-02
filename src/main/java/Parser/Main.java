@@ -12,9 +12,11 @@ public class Main {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		File file = new File("/comptes/E129211X/M2/CAPSTON/ConstructionCECS/Parser/test.txt");
+		String curDir = System.getProperty("user.dir");
+		File file = new File(curDir+"/src/main/java/fichiertest.txt");
 		FileInputStream fis = null;
-
+		
+	   
 		
 		try {
 			fis = new FileInputStream(file);
@@ -22,6 +24,7 @@ public class Main {
 		ParserM m = new ParserM(fis);
 		m.parser();
 		m.afficherTous();
+		m.variableCreation();
 		}
 		catch (Exception e) {
 			e.printStackTrace();

@@ -1,12 +1,20 @@
 package Parser;
 
-
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+
+
+import modele.Evenement;
+import modele.Propriete;
+import modele.RoleEvenement;
+import modele.RolePropriete;
+import modele.VariableBoolean;
+import modele.VariableInteger;
+import modele.VariableReal;
 
 public class ParserM {
 
@@ -87,31 +95,47 @@ public class ParserM {
 		}
 		System.out.println("-----------------------------------------");
 	}
-	public void parserProp() throws IOException{
-		InputStream fluxProp = new BufferedInputStream(flux);
-		int content;
-		StringBuffer bf = new StringBuffer(""); 
-		while ((content = fluxProp.read()) != -1) {
-			// convert to char and display it
-			if((char) content != separateurFin){
-				bf.append((char)content);
-			}
-			else{				
+	public List<Evenement> eventCreation(){
+		List<Evenement> res = new ArrayList<Evenement>();
+		for(String each : evts){
+			//TODO comment connaitre le bon role
+			res.add(new Evenement(each,RoleEvenement.capteur));
+		}
+		return res;
+	}
+	public List<modele.Variable> variableCreation(){
+		List<modele.Variable> res = new ArrayList<modele.Variable>();
+		
+		for(String each : vars){
+			
+			if(each.indexOf("boolean") != -1){
+				res.add(new VariableBoolean(true));
+			
+			}else if(each.indexOf("integer") != -1){
+				int bornemin;
+				int bornemax;
+				bornemin = Integer.parseInt(each.substring(each.indexOf('[')+1, each.indexOf("..")));
+				bornemax = Integer.parseInt(each.substring(each.indexOf("..")+2, each.indexOf(']')));
+				res.add(new VariableInteger(bornemax,bornemin));
 				
-				String res = bf.toString().replaceAll("PROP", "");
-				System.out.println(res);
+			}else if(each.indexOf("float") != -1){
+				float bornemin;
+				float bornemax;
+				bornemin = Float.parseFloat(each.substring(each.indexOf('[')+1, each.indexOf("..")));
+				bornemax = Float.parseFloat(each.substring(each.indexOf("..")+2, each.indexOf(']')));
+				res.add(new VariableReal(bornemax,bornemin));
 			}
 			
 		}
+		return res;
 	}
-	/*
-	private void parserVar(){
-		
+	public List<Propriete> propertieCreation(){
+		List<Propriete> res = new ArrayList<Propriete>();
+		for(String each : evts){
+			//TODO comment connaitre le bon role
+			res.add(new Propriete(each,RolePropriete.liveness));
+		}
+		return res;
 	}
-	
-	private void parserEvt(){
-		
-	}
-	*/
 	
 }
