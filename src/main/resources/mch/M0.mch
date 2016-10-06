@@ -1,12 +1,12 @@
-MACHINE $(name)
+MACHINE {{ name }}
 
 VARIABLES
-    $(variables)
+    {{ variables }}
 
 INVARIANTS
-    $(properties)
+    {{ properties }}
 
 INITIALISATION
-    $(initialisation)
+    {{ initialisation }}
 
 END
