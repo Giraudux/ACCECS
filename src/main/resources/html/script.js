@@ -1,12 +1,12 @@
 var cptVar=0;
 
 function printFormVariable() {
-	return "<label> var : </label> <textarea rows=1 name=\"variableName" + cptVar + "\"> name </textarea>" +
-	"<label> type : </label> <select name=\"variableType" + cptVar + "\"> <option> Integer </option> <option> Float </option> <option> Boolean </option>  </select> " +
-	"<label> role : </label> <select name=\"variableRole" + cptVar + "\"> <option> input </option> <option> output </option> <option> control </option>  <option> internal </option> </select>" +
-	"<label> Lower bound : </label> <textarea name=\"variableMin" + cptVar + "\">  </textarea>"+ 
-	"<label> Upper bound : </label> <textarea name=\"variableMax" + cptVar + "\">  </textarea>" +
-	"<label> Default value (optional) </label> <textarea  name=\"variableInit" + cptVar + "\"> </textarea>" +
+	return "<label> var : </label> <textarea rows=1 class=\"variableName\"> name </textarea>" +
+	"<label> type : </label> <select class=\"variableType\"> <option> Integer </option> <option> Float </option> <option> Boolean </option>  </select> " +
+	"<label> role : </label> <select class=\"variableRole\"> <option> input </option> <option> output </option> <option> control </option>  <option> internal </option> </select>" +
+	"<label> Lower bound : </label> <textarea class=\"variableMin\">  </textarea>"+ 
+	"<label> Upper bound : </label> <textarea class=\"variableMax\">  </textarea>" +
+	"<label> Default value (optional) </label> <textarea  class=\"variableInit\"> </textarea>" +
 	"<br/> ";
 
 }
@@ -25,3 +25,22 @@ function removeVariable(){
 		document.getElementById("newvariables").removeChild(document.getElementById("variable" + cptVar));
 	}
 }
+
+function generateModelJSON(){
+  var obj = { variables : []};
+  for(i = 0 ; i<document.getElementsByClassName("variableName").length ; i++) {
+    var variable = {};
+    variable.variableName =  JSON.stringify(document.getElementsByClassName("variableName")[i].value);
+    variable.variableType =  JSON.stringify(document.getElementsByClassName("variableType")[i].value);
+    variable.variableRole =  JSON.stringify(document.getElementsByClassName("variableRole")[i].value);
+    variable.variableMin =  JSON.stringify(document.getElementsByClassName("variableMin")[i].value);
+    variable.variableMax =  JSON.stringify(document.getElementsByClassName("variableMax")[i].value);
+    variable.variableInit =  JSON.stringify(document.getElementsByClassName("variableInit")[i].value);
+
+    obj.variables.push(variable);
+  }
+
+		console.log(obj.variables[0]);
+}
+	
+
