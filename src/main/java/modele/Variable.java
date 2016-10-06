@@ -1,8 +1,16 @@
 package modele;
 
 public abstract class Variable {
+	
+	public enum RoleVariable {
+		input,
+		output,
+		control,
+		internal;
+	}
 
-	private String nom;
+
+	private String name;
 	private RoleVariable role;
 		
 
@@ -11,20 +19,19 @@ public abstract class Variable {
 	}
 
 
-	public Variable(String nom, RoleVariable role) {
-		super();
-		this.nom = nom;
+	public Variable(String name, RoleVariable role) {
+		this.name = name;
 		this.role = role;
 	}
 
 
-	public String getNom() {
-		return nom;
+	public String getName() {
+		return name;
 	}
 
 
-	public void setNom(String nom) {
-		this.nom = nom;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 
@@ -36,6 +43,9 @@ public abstract class Variable {
 	public void setRole(RoleVariable role) {
 		this.role = role;
 	}
+
+
+
 
 	
 	

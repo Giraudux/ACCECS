@@ -12,16 +12,16 @@ public class VariableInteger extends Variable{
 	}
 
 
-	public VariableInteger(int borneMax, int borneMin, int valeurDefaut) {
-		super();
+	public VariableInteger(String nom, RoleVariable role, int borneMax, int borneMin, int valeurDefaut) {
+		super(nom, role);
 		this.borneMax = borneMax;
 		this.borneMin = borneMin;
 		this.valeurDefaut = valeurDefaut;
 	}
 
 
-	public VariableInteger(int borneMax, int borneMin) {
-		super();
+	public VariableInteger(String nom, RoleVariable role, int borneMax, int borneMin) {
+		super(nom, role);
 		this.borneMax = borneMax;
 		this.borneMin = borneMin;
 		this.valeurDefaut = 0;

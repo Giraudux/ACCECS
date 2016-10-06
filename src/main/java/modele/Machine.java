@@ -4,30 +4,30 @@ import java.util.List;
 
 public class Machine {
 
-	private String nom;
+	private String name;
 	private List<Variable> variables;
-	private List<Propriete> proprietes;
-	private List<Evenement> evenements;
+	private List<Property> properties;
+	private List<Event> events;
 	
 	public Machine() {
 		super();
 	}
 
-	public Machine(String nom, List<Variable> variables,
-			List<Propriete> proprietes, List<Evenement> evenements) {
+	public Machine(String name, List<Variable> variables,
+			List<Property> properties, List<Event> events) {
 		super();
-		this.nom = nom;
+		this.name = name;
 		this.variables = variables;
-		this.proprietes = proprietes;
-		this.evenements = evenements;
+		this.properties = properties;
+		this.events = events;
 	}
 
-	public String getNom() {
-		return nom;
+	public String getName() {
+		return name;
 	}
 
-	public void setNom(String nom) {
-		this.nom = nom;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public List<Variable> getVariables() {
@@ -38,21 +38,22 @@ public class Machine {
 		this.variables = variables;
 	}
 
-	public List<Propriete> getProprietes() {
-		return proprietes;
+	public List<Property> getProperties() {
+		return properties;
 	}
 
-	public void setProprietes(List<Propriete> proprietes) {
-		this.proprietes = proprietes;
+	public void setProperties(List<Property> properties) {
+		this.properties = properties;
 	}
 
-	public List<Evenement> getEvenements() {
-		return evenements;
+	public List<Event> getEvents() {
+		return events;
 	}
 
-	public void setEvenements(List<Evenement> evenements) {
-		this.evenements = evenements;
+	public void setEvents(List<Event> events) {
+		this.events = events;
 	}
+
 	
 	
 	
