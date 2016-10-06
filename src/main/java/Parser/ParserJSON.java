@@ -1,0 +1,131 @@
+package Parser;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import modele.Event;
+import modele.Property;
+import modele.Variable;
+import modele.VariableBoolean;
+import modele.VariableFloat;
+import modele.VariableInteger;
+import modele.Variable.RoleVariable;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+public class ParserJSON {
+
+	private List<Variable> variables = new ArrayList<Variable>();
+	private List<Property> Properties = new ArrayList<Property>();
+	private List<Event> events = new ArrayList<Event>();
+	
+	
+	public ParserJSON() {
+		super();
+	}
+
+	public List<Variable> getVariables() {
+		return variables;
+	}
+
+	public void setVariables(List<Variable> variables) {
+		this.variables = variables;
+	}
+
+	public List<Property> getProperties() {
+		return Properties;
+	}
+
+	public void setProperties(List<Property> properties) {
+		Properties = properties;
+	}
+
+	public List<Event> getEvents() {
+		return events;
+	}
+
+	public void setEvents(List<Event> events) {
+		this.events = events;
+	}
+
+
+
+	public void parser(String json){
+		
+		try{
+			Variable variable = null;
+			
+			JSONObject jsonMachine = new JSONObject(json);
+			//String machineName = jsonMachine.getJSONObject("pageInfo").getString("pageName");
+			JSONArray jsonVariables = jsonMachine.getJSONArray("variables");
+			
+			
+			for (int i = 0; i < jsonVariables.length(); i++){
+		    
+				String variableName = jsonVariables.getJSONObject(i).getString("variableName");
+				String variableType = jsonVariables.getJSONObject(i).getString("variableType");
+				String variableRole = jsonVariables.getJSONObject(i).getString("variableRole");
+		    
+				RoleVariable role = null;
+				switch(variableRole){
+				case "input":
+					role = RoleVariable.input;
+					break;
+				case "output":
+					role = RoleVariable.output;
+					break;
+				case "control":
+					role = RoleVariable.control;
+					break;
+				case "internal":
+					role = RoleVariable.internal;
+					break;
+				}
+				
+				if(variableType.equals("Integer")){
+					int lowerBound = Integer.parseInt(jsonVariables.getJSONObject(i).getString("variableMin"));
+					int upperBound = Integer.parseInt(jsonVariables.getJSONObject(i).getString("variableMax"));
+					
+					if(jsonVariables.getJSONObject(i).getString("variableInit").trim() != ""){
+						int variableInit = Integer.parseInt(jsonVariables.getJSONObject(i).getString("variableInit"));
+						variable = new VariableInteger(variableName, role, upperBound, lowerBound, variableInit);
+					}else{
+						variable = new VariableInteger(variableName, role, upperBound, lowerBound);
+					}
+					
+				}
+				else if(variableType.equals("Float")){
+					float lowerBound = Float.parseFloat(jsonVariables.getJSONObject(i).getString("variableMin"));
+					float upperBound = Float.parseFloat(jsonVariables.getJSONObject(i).getString("variableMax"));
+					
+					if(jsonVariables.getJSONObject(i).getString("variableInit").trim() != ""){
+						float variableInit = Float.parseFloat(jsonVariables.getJSONObject(i).getString("variableInit"));
+						variable = new VariableFloat(variableName, role, upperBound, lowerBound, variableInit);
+					}else{
+						variable = new VariableFloat(variableName, role, upperBound, lowerBound);
+					}
+					
+					variable = new VariableFloat(variableName, role, upperBound, lowerBound);
+				} 
+				else if(variableType.equals("Boolean")){
+					if(jsonVariables.getJSONObject(i).getString("variableInit").trim() != ""){
+						boolean variableInit = Boolean.parseBoolean(jsonVariables.getJSONObject(i).getString("variableInit"));
+						variable = new VariableBoolean(variableName, role, variableInit);
+					}else{
+						variable = new VariableBoolean(variableName, role);
+					}
+				}
+				
+				
+				variables.add(variable);
+			    
+			}
+		
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		
+	}
+}

@@ -1,12 +1,28 @@
-MACHINE $(name)
+MACHINE {{ name }}
 
 VARIABLES
-    $(variables)
+    {% for variable in variables %}
+        {{ variable }}
+        {% if (loop.last == false) %}
+            ,
+        {% endif %}
+    {% endfor %}
+
 
 INVARIANTS
-    $(properties)
+    {% for property in properties %}
+        {% if (loop.first == false) %}
+            &
+        {% endif %}
+        {{ property }}
+    {% endfor %}
 
 INITIALISATION
-    $(initialisation)
+    {% for initialisation in initialisations %}
+        {% if (loop.first == false) %}
+            ||
+        {% endif %}
+        {{ initialisation }}
+    {% endfor %}
 
 END

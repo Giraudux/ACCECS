@@ -8,13 +8,15 @@ import java.util.List;
 
 
 
-import modele.Evenement;
-import modele.Propriete;
+
+import modele.Event;
+import modele.Event.RoleEvent;
+import modele.Property;
 import modele.RoleEvenement;
 import modele.RolePropriete;
 import modele.VariableBoolean;
 import modele.VariableInteger;
-import modele.VariableReal;
+import modele.VariableFloat;
 
 public class ParserM {
 
@@ -95,11 +97,11 @@ public class ParserM {
 		}
 		System.out.println("-----------------------------------------");
 	}
-	public List<Evenement> eventCreation(){
-		List<Evenement> res = new ArrayList<Evenement>();
+	public List<Event> eventCreation(){
+		List<Event> res = new ArrayList<Event>();
 		for(String each : evts){
 			//TODO comment connaitre le bon role
-			res.add(new Evenement(each,RoleEvenement.capteur));
+			res.add(new Event(each,RoleEvent.SENSING));
 		}
 		return res;
 	}
@@ -123,17 +125,17 @@ public class ParserM {
 				float bornemax;
 				bornemin = Float.parseFloat(each.substring(each.indexOf('[')+1, each.indexOf("..")));
 				bornemax = Float.parseFloat(each.substring(each.indexOf("..")+2, each.indexOf(']')));
-				res.add(new VariableReal(bornemax,bornemin));
+				res.add(new VariableFloat(bornemax,bornemin));
 			}
 			
 		}
 		return res;
 	}
-	public List<Propriete> propertieCreation(){
-		List<Propriete> res = new ArrayList<Propriete>();
+	public List<Property> propertieCreation(){
+		List<Property> res = new ArrayList<Property>();
 		for(String each : evts){
 			//TODO comment connaitre le bon role
-			res.add(new Propriete(each,RolePropriete.liveness));
+			res.add(new Property(each,RolePropriete.liveness));
 		}
 		return res;
 	}

@@ -4,12 +4,13 @@ public class VariableBoolean extends Variable{
 	
 	private boolean valeurDefaut;
 
-	public VariableBoolean() {
-		super();
+	public VariableBoolean(String nom, RoleVariable role) {
+		super(nom, role);
+		this.valeurDefaut = false;
 	}
 
-	public VariableBoolean(boolean valeurDefaut) {
-		super();
+	public VariableBoolean(String nom, RoleVariable role, boolean valeurDefaut) {
+		super(nom, role);
 		this.valeurDefaut = valeurDefaut;
 	}
 
