@@ -8,7 +8,9 @@ import java.util.List;
 
 
 
+
 import modele.Event;
+import modele.Event.RoleEvent;
 import modele.Property;
 import modele.RoleEvenement;
 import modele.RolePropriete;
@@ -99,7 +101,7 @@ public class ParserM {
 		List<Event> res = new ArrayList<Event>();
 		for(String each : evts){
 			//TODO comment connaitre le bon role
-			res.add(new Event(each,RoleEvenement.capteur));
+			res.add(new Event(each,RoleEvent.SENSING));
 		}
 		return res;
 	}
