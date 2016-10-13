@@ -1,15 +1,15 @@
-package Parser;
+package fr.univ.nantes.alma.accecs.generator.parser;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import modele.Event;
-import modele.Property;
-import modele.Variable;
-import modele.VariableBoolean;
-import modele.VariableFloat;
-import modele.VariableInteger;
-import modele.Variable.RoleVariable;
+import fr.univ.nantes.alma.accecs.generator.model.Event;
+import fr.univ.nantes.alma.accecs.generator.model.Property;
+import fr.univ.nantes.alma.accecs.generator.model.Variable;
+import fr.univ.nantes.alma.accecs.generator.model.VariableBoolean;
+import fr.univ.nantes.alma.accecs.generator.model.VariableFloat;
+import fr.univ.nantes.alma.accecs.generator.model.VariableInteger;
+import fr.univ.nantes.alma.accecs.generator.model.Variable.RoleVariable;
 
 import org.json.JSONArray;
 import org.json.JSONObject;

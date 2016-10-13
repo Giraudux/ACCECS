@@ -1,4 +1,4 @@
-package modele;
+package fr.univ.nantes.alma.accecs.generator.model;
 
 import java.util.List;
 

@@ -1,6 +1,7 @@
 package fr.univ.nantes.alma.accecs.generator;
 
-import fr.univ.nantes.alma.accecs.model.Machine;
+
+import fr.univ.nantes.alma.accecs.generator.model.Machine;
 
 import java.io.OutputStream;
 
