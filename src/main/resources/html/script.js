@@ -26,6 +26,15 @@ function removeVariable(){
 	}
 }
 
+function sendJSON(data) {
+
+  xhr = new XMLHttpRequest();
+  xhr.open("POST", "/src/main/java/controleur/dataServlet.java", true);
+  xhr.setRequestHeader("Content-type", "application/json");
+  xhr.send(data);
+  
+}
+
 function generateModelJSON(){
   var obj = { variables : []};
   for(i = 0 ; i<document.getElementsByClassName("variableName").length ; i++) {
@@ -40,7 +49,7 @@ function generateModelJSON(){
     obj.variables.push(variable);
   }
 
-		console.log(obj.variables[0]);
+	console.log(obj.variables[0]);
+	sendJSON(obj);
 }
-	
 

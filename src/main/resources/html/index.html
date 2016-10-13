@@ -7,7 +7,7 @@
 </head>
 
 <body>
-  <form name="formGenerateModel" method="post" action="index.html" >
+  <form name="formGenerateModel" method="post" action="">
     <script> 
       document.write(printFormVariable());
       cptVar++; 
@@ -19,8 +19,9 @@
     <label>properties</label> 
     <textarea name="textAreaProperties">Type your properties here.</textarea>
     <br/>
-    <input type="submit" name="submitGenerateModel" value="Generate model" onclick="generateModelJSON()">
   </form>
+  
+  <input type="button" method="post" name="submitGenerateModel" value="Generate model" onclick="generateModelJSON()">
   
   <label name="cptVar" style="display:none;"> <script> document.write(cptVar);</script></label>
 </body>
