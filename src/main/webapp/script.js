@@ -6,7 +6,8 @@ function printFormVariable() {
 	"<label> role : </label> <select class=\"variableRole\"> <option> input </option> <option> output </option> <option> control </option>  <option> internal </option> </select>" +
 	"<label> Lower bound : </label> <textarea class=\"variableMin\">  </textarea>"+ 
 	"<label> Upper bound : </label> <textarea class=\"variableMax\">  </textarea>" +
-	"<label> Default value (optional) </label> <textarea  class=\"variableInit\"> </textarea>" +
+	"<label> Default value (optional) </label> <textarea  class=\"variableInit\"> </textarea>" + 
+  "<input type=\"button\" value=\"DELETE\" onclick=\"removeVariable( " + cptVar  +")\">" +
 	"<br/> ";
 
 }
@@ -15,28 +16,23 @@ function newVariable(){
   var div = document.createElement('div');
   div.id = "variable" + cptVar;
   div.innerHTML = printFormVariable();
-	document.getElementById("newvariables").appendChild(div);
+	document.getElementById("variables").appendChild(div);
 	cptVar++; 
 }
 
-function removeVariable(){
-	if(cptVar>1) {
-		cptVar--;
-		document.getElementById("newvariables").removeChild(document.getElementById("variable" + cptVar));
-	}
+function removeVariable(rankVar){
+	document.getElementById("variables").removeChild(document.getElementById("variable" + rankVar));
 }
 
 function sendJSON(data) {
-
   xhr = new XMLHttpRequest();
   xhr.open("POST", "/src/main/java/controleur/dataServlet.java", true);
   xhr.setRequestHeader("Content-type", "application/json");
   xhr.send(data);
-  
 }
 
 function generateModelJSON(){
-  var obj = { variables : []};
+  var data = { variables : []};
   for(i = 0 ; i<document.getElementsByClassName("variableName").length ; i++) {
     var variable = {};
     variable.variableName =  JSON.stringify(document.getElementsByClassName("variableName")[i].value);
@@ -46,10 +42,11 @@ function generateModelJSON(){
     variable.variableMax =  JSON.stringify(document.getElementsByClassName("variableMax")[i].value);
     variable.variableInit =  JSON.stringify(document.getElementsByClassName("variableInit")[i].value);
 
-    obj.variables.push(variable);
+    data.variables.push(variable);
   }
 
-	console.log(obj.variables[0]);
-	sendJSON(obj);
+	//console.log(data.variables[0]);
+	sendJSON(data);
 }
+
 
