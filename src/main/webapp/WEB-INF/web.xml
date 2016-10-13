@@ -1,10 +1,16 @@
-<web-app xmlns="http://java.sun.com/xml/ns/javaee" version="2.5">
-    <servlet>
+<!DOCTYPE web-app PUBLIC
+        "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+        "http://java.sun.com/dtd/web-app_2_3.dtd" >
+<web-app>
+    <display-name>Archetype Created Web Application</display-name>
+
+    <!--<servlet>
         <servlet-name>DataServlet</servlet-name>
         <servlet-class>fr.univ.nantes.alma.accecs.controler.DataServlet</servlet-class>
     </servlet>
+
     <servlet-mapping>
         <servlet-name>DataServlet</servlet-name>
         <url-pattern>/*</url-pattern>
-    </servlet-mapping>
+    </servlet-mapping>-->
 </web-app>
