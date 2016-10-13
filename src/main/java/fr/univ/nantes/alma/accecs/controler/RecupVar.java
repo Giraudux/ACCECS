@@ -1,11 +1,11 @@
-package fr.univ.nantes.alma.accecs.generator.controler;
+package fr.univ.nantes.alma.accecs.controler;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.univ.nantes.alma.accecs.generator.model.*;
-import fr.univ.nantes.alma.accecs.generator.model.Variable.RoleVariable;
+import fr.univ.nantes.alma.accecs.model.*;
+import fr.univ.nantes.alma.accecs.model.Variable.RoleVariable;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;

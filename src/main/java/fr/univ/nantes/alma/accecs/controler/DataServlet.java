@@ -1,15 +1,15 @@
-package fr.univ.nantes.alma.accecs.generator.controler;
+package fr.univ.nantes.alma.accecs.controler;
 
 import java.io.IOException;
 
-import fr.univ.nantes.alma.accecs.generator.model.*;
+import fr.univ.nantes.alma.accecs.model.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import fr.univ.nantes.alma.accecs.generator.parser.ParserJSON;
+import fr.univ.nantes.alma.accecs.parser.ParserJSON;
 
 
 

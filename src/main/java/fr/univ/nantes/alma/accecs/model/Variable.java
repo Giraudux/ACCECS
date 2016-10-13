@@ -1,4 +1,4 @@
-package fr.univ.nantes.alma.accecs.generator.model;
+package fr.univ.nantes.alma.accecs.model;
 
 public abstract class Variable {
 	
