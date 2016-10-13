@@ -32,7 +32,7 @@ function sendJSON(data) {
 }
 
 function generateModelJSON(){
-  var data = { variables : []};
+  var data = { variables : [], properties : ""};
   for(i = 0 ; i<document.getElementsByClassName("variableName").length ; i++) {
     var variable = {};
     variable.variableName =  JSON.stringify(document.getElementsByClassName("variableName")[i].value);
@@ -45,8 +45,12 @@ function generateModelJSON(){
     data.variables.push(variable);
   }
 
-	//console.log(data.variables[0]);
+  data.properties = JSON.stringify(document.getElementsByClassName("textAreaProperties")[0].value);
+	/*
+	console.log(data.variables[0]);
+	console.log(data.variables[1]);
+	console.log(data.properties);
+	*/
 	sendJSON(data);
 }
-
 
