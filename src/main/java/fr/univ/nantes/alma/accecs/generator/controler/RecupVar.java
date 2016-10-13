@@ -39,22 +39,20 @@ public class RecupVar extends HttpServlet{
 			String variableType = request.getParameter( "variableType" );
 			String variableRole = request.getParameter( "variableRole" );
 			RoleVariable role = null;
-			
-			
-			switch(variableRole){
-			case "input":
+
+
+			if (variableRole.equals("input")) {
 				role = RoleVariable.input;
-				break;
-			case "output":
+
+			} else if (variableRole.equals("output")) {
 				role = RoleVariable.output;
-				break;
-			case "control":
+
+			} else if (variableRole.equals("control")) {
 				role = RoleVariable.control;
-				break;
-			case "internal":
+
+			} else if (variableRole.equals("internal")) {
 				role = RoleVariable.internal;
-				break;
-				
+
 			}
 			
 	
