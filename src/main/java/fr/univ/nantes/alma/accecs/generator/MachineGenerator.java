@@ -4,6 +4,7 @@ import fr.univ.nantes.alma.accecs.model.Machine;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
 
+import java.io.File;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -13,8 +14,8 @@ import java.util.Collection;
  */
 public class MachineGenerator implements IMachineGenerator {
 
-    public void generate(Machine machine, String templateLocation, OutputStream outputStream) {
-        JtwigTemplate template = JtwigTemplate.classpathTemplate(templateLocation);
+    public void generate(Machine machine, File templateFile, OutputStream outputStream) {
+        JtwigTemplate template = JtwigTemplate.fileTemplate(templateFile);
         JtwigModel model = JtwigModel.newModel();
         Collection<String> variables = new ArrayList<String>();
         Collection<String> invariants = new ArrayList<String>();
