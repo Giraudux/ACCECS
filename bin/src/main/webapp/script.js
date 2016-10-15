@@ -25,12 +25,10 @@ function removeVariable(rankVar){
 }
 
 function sendJSON(data) {
-  var url = "http://localhost:8080/accecs/dataServlet"
   xhr = new XMLHttpRequest();
-  xhr.open("POST", url, true);
- // xhr.setRequestHeader("Content-type", "application/json");
-  xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-  xhr.send("data="+data);
+  xhr.open("POST", "/src/main/java/controleur/dataServlet.java", true);
+  xhr.setRequestHeader("Content-type", "application/json");
+  xhr.send(data);
 }
 
 function generateModelJSON(){
@@ -54,7 +52,7 @@ function generateModelJSON(){
 	console.log(data.variables[1]);
 	console.log(data.properties);
 	
-	sendJSON(JSON.stringify(data));
+	sendJSON(data);
 }
 
 

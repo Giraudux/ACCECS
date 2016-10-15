@@ -4,13 +4,14 @@
 <web-app>
     <display-name>Archetype Created Web Application</display-name>
 
-    <!--<servlet>
-        <servlet-name>DataServlet</servlet-name>
-        <servlet-class>fr.univ.nantes.alma.accecs.controler.DataServlet</servlet-class>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>DataServlet</servlet-name>
-        <url-pattern>/*</url-pattern>
-    </servlet-mapping>-->
+	<servlet>
+		<servlet-name>DataServlet</servlet-name>
+		<servlet-class>fr.univ.nantes.alma.accecs.controler.DataServlet</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>DataServlet</servlet-name>
+		<url-pattern>/dataServlet</url-pattern>
+	</servlet-mapping>
+	
 </web-app>

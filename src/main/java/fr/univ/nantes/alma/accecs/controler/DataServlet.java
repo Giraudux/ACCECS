@@ -27,9 +27,10 @@ public class DataServlet extends HttpServlet{
 	}
 	
 	public void doPost( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException{
-		
+			
+		System.out.println(request.getParameter("data"));
 		ParserJSON parser = new ParserJSON();
-		parser.parser(request.getParameter(""));
+		parser.parser(request.getParameter("data"));
 		Machine machine = new Machine("bb", parser.getVariables(), parser.getProperties(), parser.getEvents());
 
 
