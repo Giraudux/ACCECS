@@ -1,7 +1,10 @@
 package fr.univ.nantes.alma.accecs.controler;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.OutputStream;
 
+import fr.univ.nantes.alma.accecs.generator.MachineGenerator;
 import fr.univ.nantes.alma.accecs.model.*;
 
 import javax.servlet.ServletException;
@@ -40,6 +43,8 @@ public class DataServlet extends HttpServlet{
 	   // request.setAttribute( "test", message );
 	    //this.getServletContext().getRequestDispatcher( "/WEB-INF/test.jsp" ).forward( request, response );
 	    
+		MachineGenerator generator = new MachineGenerator();
+		generator.generate(machine, new File("src/main/resources/mch/M0.mch"), System.out);
 	}
 
 }
