@@ -51,7 +51,7 @@ public class ParserJSON {
 
 
 
-	public void parser(String json){
+	public void parse(String json){
 		
 		try{
 			Variable variable = null;

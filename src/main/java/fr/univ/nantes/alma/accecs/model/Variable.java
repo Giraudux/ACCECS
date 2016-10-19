@@ -44,6 +44,9 @@ public abstract class Variable {
 		this.role = role;
 	}
 
+	public String toString(){
+		return this.name + " " + this.role;
+	}
 
 
 	

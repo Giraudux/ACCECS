@@ -57,7 +57,9 @@ public class VariableInteger extends Variable{
 		this.valeurDefaut = valeurDefaut;
 	}
 	
-	
+	public String toString(){
+		return super.toString() + " " +this.borneMin + " - " + this.borneMax + " (" + this.valeurDefaut+").";
+	}
 	
 	
 }

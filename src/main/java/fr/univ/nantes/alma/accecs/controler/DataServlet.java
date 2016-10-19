@@ -2,7 +2,6 @@ package fr.univ.nantes.alma.accecs.controler;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.OutputStream;
 
 import fr.univ.nantes.alma.accecs.generator.MachineGenerator;
 import fr.univ.nantes.alma.accecs.model.*;
@@ -31,20 +30,20 @@ public class DataServlet extends HttpServlet{
 	
 	public void doPost( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException{
 			
-		System.out.println(request.getParameter("data"));
 		ParserJSON parser = new ParserJSON();
-		parser.parser(request.getParameter("data"));
-		Machine machine = new Machine("bb", parser.getVariables(), parser.getProperties(), parser.getEvents());
-
-
-		for(Variable v : machine.getVariables()){
-			System.out.println(v.getName()+v.getRole());
-		}
-	   // request.setAttribute( "test", message );
-	    //this.getServletContext().getRequestDispatcher( "/WEB-INF/test.jsp" ).forward( request, response );
+		parser.parse(request.getParameter("data"));
+		Machine machine = new Machine("Machine0", parser.getVariables(), parser.getProperties(), parser.getEvents());
 	    
+		for(Variable each : machine.getVariables()){
+			System.out.println(each.toString());
+		}
+		
 		MachineGenerator generator = new MachineGenerator();
-		generator.generate(machine, new File("src/main/resources/mch/M0.mch"), System.out);
+		File template = new File("C:/Users/Geof/workspace_JEE/ACCECS/src/main/resources/mch/M0.mch");
+		generator.generate(machine, template, System.out);
+		
+		//request.setAttribute( "test", message );
+		//this.getServletContext().getRequestDispatcher( "/WEB-INF/test.jsp" ).forward( request, response );
 	}
 
 }
