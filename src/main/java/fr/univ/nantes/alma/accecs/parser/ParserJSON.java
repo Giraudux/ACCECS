@@ -6,6 +6,7 @@ import java.util.List;
 
 import fr.univ.nantes.alma.accecs.model.Event;
 import fr.univ.nantes.alma.accecs.model.Property;
+import fr.univ.nantes.alma.accecs.model.Property.RoleProperty;
 import fr.univ.nantes.alma.accecs.model.Variable;
 import fr.univ.nantes.alma.accecs.model.VariableBoolean;
 import fr.univ.nantes.alma.accecs.model.VariableFloat;
@@ -18,7 +19,7 @@ import org.json.JSONObject;
 public class ParserJSON {
 
 	private List<Variable> variables = new ArrayList<Variable>();
-	private List<Property> Properties = new ArrayList<Property>();
+	private List<Property> properties = new ArrayList<Property>();
 	private List<Event> events = new ArrayList<Event>();
 	
 	
@@ -35,11 +36,11 @@ public class ParserJSON {
 	}
 
 	public List<Property> getProperties() {
-		return Properties;
+		return properties;
 	}
 
 	public void setProperties(List<Property> properties) {
-		Properties = properties;
+		this.properties = properties;
 	}
 
 	public List<Event> getEvents() {
@@ -70,23 +71,15 @@ public class ParserJSON {
 				RoleVariable role = null;
 				if (variableRole.equals("input")) {
 					role = RoleVariable.input;
-
 				} else if (variableRole.equals("output")) {
 					role = RoleVariable.output;
-
 				} else if (variableRole.equals("control")) {
 					role = RoleVariable.control;
-
 				} else if (variableRole.equals("internal")) {
 					role = RoleVariable.internal;
-
 				}
 				
 				if(variableType.equals("Integer")){
-					
-					
-						
-					
 					int lowerBound = Integer.parseInt(jsonVariables.getJSONObject(i).getString("variableMin"));
 					int upperBound = Integer.parseInt(jsonVariables.getJSONObject(i).getString("variableMax"));
 					
@@ -96,12 +89,7 @@ public class ParserJSON {
 					}else{
 						variable = new VariableInteger(variableName, role, upperBound, lowerBound);
 					}
-					
-				
 				}
-				
-				
-				
 				
 				else if(variableType.equals("Float")){
 					float lowerBound = Float.parseFloat(jsonVariables.getJSONObject(i).getString("variableMin").replace(",","."));
@@ -128,6 +116,26 @@ public class ParserJSON {
 				
 				variables.add(variable);
 			    
+			}
+			
+			JSONArray jsonProperties = jsonMachine.getJSONArray("properties");
+			Property property = null;
+			for (int i = 0; i < jsonProperties.length(); i++){
+			    
+				String propertyExpression = jsonVariables.getJSONObject(i).getString("propertyExpression");
+				String propertyRole = jsonVariables.getJSONObject(i).getString("propertyRole");
+				
+				RoleProperty role = null;
+				if (propertyRole.equals("safety")) {
+					role = RoleProperty.SAFETY;
+				} else if (propertyRole.equals("non_functional")) {
+					role = RoleProperty.NON_FUNCTIONAL;
+				} else if (propertyRole.equals("liveness")) {
+					role = RoleProperty.LIVENESS;
+				} 
+				
+				property = new Property(propertyExpression, role);
+				properties.add(property);
 			}
 		
 		}
