@@ -118,7 +118,16 @@ public class ParserJSON {
 			    
 			}
 			
-			JSONArray jsonProperties = jsonMachine.getJSONArray("properties");
+			
+			String jsonProperties = jsonMachine.getString("properties");
+			Property property = new Property();
+			property.setExpression(jsonProperties);
+			property.setRole(RoleProperty.LIVENESS);
+			properties.add(property);
+					
+					
+			/*
+			JSONArray jsonProperties = jsonMachine.getJSONArray("textAreaProperties");
 			Property property = null;
 			for (int i = 0; i < jsonProperties.length(); i++){
 			    
@@ -136,7 +145,7 @@ public class ParserJSON {
 				
 				property = new Property(propertyExpression, role);
 				properties.add(property);
-			}
+			}*/
 		
 		}
 		
