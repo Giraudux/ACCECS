@@ -10,15 +10,24 @@ VARIABLES
     {% endif %}
 {% endfor %}
 
-
 {% for property in properties %}
+    {% if (loop.first == true) %}
+PROPERTIES
+    {% endif %}
+    {% if (loop.first == false) %}
+        &
+    {% endif %}
+    {{ property }}
+{% endfor %}
+
+{% for invariant in invariants %}
     {% if (loop.first == true) %}
 INVARIANTS
     {% endif %}
     {% if (loop.first == false) %}
         &
     {% endif %}
-    {{ property }}
+    {{ invariant }}
 {% endfor %}
 
 {% for initialisation in initialisations %}
