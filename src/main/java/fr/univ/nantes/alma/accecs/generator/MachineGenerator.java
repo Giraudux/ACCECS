@@ -42,7 +42,7 @@ public class MachineGenerator implements IMachineGenerator {
         }
 
         for (Property property : machine.getProperties()) {
-            invariants.add(property.getExpression());
+            properties.add(property.getExpression());
         }
 
         LOGGER.info("machine = "+machine.toString());
