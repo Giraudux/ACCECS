@@ -47,6 +47,9 @@ public class DataServlet extends HttpServlet{
 		for(Variable each : machine.getVariables()){
 			System.out.println(each.toString());
 		}
+		for(Property each : machine.getProperties()){
+			System.out.println(each.getExpression());
+		}
 		
 		MachineGenerator generator = new MachineGenerator();
 		File template = new File("C:/Users/Geof/workspace_JEE/ACCECS/src/main/resources/mch/M0.mch");
