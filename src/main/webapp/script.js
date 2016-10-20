@@ -50,7 +50,7 @@ function checkType(rankVar){
   
 }
 function sendJSON(data) {
-  var url = "http://localhost:8080/dataServlet"
+  var url = "http://localhost:8080/accecs/dataServlet"
   xhr = new XMLHttpRequest();
   xhr.open("POST", url, true);
  // xhr.setRequestHeader("Content-type", "application/json");
