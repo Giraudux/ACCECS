@@ -34,6 +34,8 @@ function checkType(rankVar){
     document.getElementById("variable" + rankVar).removeChild(document.getElementById("delete" + rankVar));
     document.getElementById("variable" + rankVar).innerHTML+="<select id=\"defaultValue" + rankVar +"\"class=\"variableInit\"> <option> true </option> <option> false </option> </select>"+
       "<input id=\"delete" + rankVar +"\" type=\"button\" value=\"DELETE\" onclick=\"removeVariable( " + rankVar  +")\">";
+    document.getElementById("selectType" + rankVar).value=x;
+    
     } else{
       document.getElementById("lowerBound" + rankVar).style.visibility = "visible";
       document.getElementById("upperBound" + rankVar).style.visibility = "visible";
@@ -43,11 +45,12 @@ function checkType(rankVar){
       document.getElementById("variable" + rankVar).removeChild(document.getElementById("delete" + rankVar));
       document.getElementById("variable" + rankVar).innerHTML+="<textarea id=\"defaultValue" + rankVar +"\" class=\"variableInit\"></textarea>"+
       "<input id=\"delete" + rankVar +"\" type=\"button\" value=\"DELETE\" onclick=\"removeVariable( " + rankVar  +")\">";
+      document.getElementById("selectType" + rankVar).value=x;
   }
   
 }
 function sendJSON(data) {
-  var url = "http://localhost:8080/accecs/dataServlet"
+  var url = "http://localhost:8080/dataServlet"
   xhr = new XMLHttpRequest();
   xhr.open("POST", url, true);
  // xhr.setRequestHeader("Content-type", "application/json");
