@@ -1,6 +1,6 @@
 package fr.univ.nantes.alma.accecs.generator;
 
-import fr.univ.nantes.alma.accecs.model.Machine;
+import fr.univ.nantes.alma.accecs.model.*;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
 
@@ -20,6 +20,28 @@ public class MachineGenerator implements IMachineGenerator {
         Collection<String> variables = new ArrayList<String>();
         Collection<String> invariants = new ArrayList<String>();
         Collection<String> initialisations = new ArrayList<String>();
+
+        for (Variable variable : machine.getVariables()) {
+            variables.add(variable.getName());
+
+            if (variable instanceof VariableInteger) {
+                invariants.add(variable.getName() + " : INT");
+                initialisations.add(variable.getName() + " := " + ((VariableInteger) variable).getValeurDefaut());
+                invariants.add(variable.getName()+" : "+((VariableInteger) variable).getBorneMin()+".."+((VariableInteger) variable).getBorneMax());
+            } else if (variable instanceof VariableFloat) {
+                invariants.add(variable.getName() + " : NAT");
+                initialisations.add(variable.getName() + " := " + ((VariableFloat) variable).getValeurDefaut());
+                invariants.add(variable.getName()+" : "+((VariableFloat) variable).getBorneMin()+".."+((VariableFloat) variable).getBorneMax());
+            } else if (variable instanceof VariableBoolean) {
+                invariants.add(variable.getName() + " : BOOL");
+                initialisations.add(variable.getName() + " := " + (((VariableBoolean) variable).isValeurDefaut() ? "TRUE" : "FALSE"));
+            }
+        }
+
+        for (Property property : machine.getProperties()) {
+            invariants.add(property.getExpression());
+        }
+
 
         model.with("name", machine.getName());
         model.with("variables", variables);
