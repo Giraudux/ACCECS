@@ -1,13 +1,12 @@
 var cptVar=0;
-
 function printFormVariable() {
 	return "<label> var : </label> <textarea rows=1 class=\"variableName\">name</textarea>" +
-	"<label> type : </label> <select class=\"variableType\"> <option> Integer </option> <option> Float </option> <option> Boolean </option>  </select> " +
+	"<label> type : </label> <select id=\"selectType" + cptVar +"\" class=\"variableType\" onchange=\"checkType(" + cptVar  +")\"> <option> Integer </option> <option> Float </option> <option> Boolean </option>  </select> " +
 	"<label> role : </label> <select class=\"variableRole\"> <option> input </option> <option> output </option> <option> control </option>  <option> internal </option> </select>" +
-	"<label> Lower bound : </label> <textarea class=\"variableMin\"></textarea>"+ 
-	"<label> Upper bound : </label> <textarea class=\"variableMax\"></textarea>" +
-	"<label> Default value (optional) </label> <textarea  class=\"variableInit\"></textarea>" + 
-  "<input type=\"button\" value=\"DELETE\" onclick=\"removeVariable( " + cptVar  +")\">" +
+	"<label id=\"labelLowerBound" + cptVar +"\"> Lower bound : </label> <textarea id=\"lowerBound" + cptVar +"\" class=\"variableMin\"></textarea>"+ 
+	"<label id=\"labelUpperBound" + cptVar +"\"> Upper bound : </label> <textarea id=\"upperBound" + cptVar +"\" class=\"variableMax\"></textarea>" +
+	"<label> Default value (optional) </label> <textarea id=\"defaultValue" + cptVar +"\" class=\"variableInit\"></textarea>" + 
+  "<input id=\"delete" + cptVar +"\" type=\"button\" value=\"DELETE\" onclick=\"removeVariable( " + cptVar  +")\">" +
 	"<br/> ";
 
 }
@@ -24,6 +23,29 @@ function removeVariable(rankVar){
 	document.getElementById("variables").removeChild(document.getElementById("variable" + rankVar));
 }
 
+function checkType(rankVar){
+  var x = document.getElementById("selectType" + rankVar).value;
+  if (x=="Boolean"){
+    document.getElementById("lowerBound" + rankVar).style.visibility = "hidden";
+    document.getElementById("upperBound" + rankVar).style.visibility = "hidden";
+    document.getElementById("labelLowerBound" + rankVar).style.visibility = "hidden";
+    document.getElementById("labelUpperBound" + rankVar).style.visibility = "hidden";
+    document.getElementById("variable" + rankVar).removeChild(document.getElementById("defaultValue" + rankVar));
+    document.getElementById("variable" + rankVar).removeChild(document.getElementById("delete" + rankVar));
+    document.getElementById("variable" + rankVar).innerHTML+="<select id=\"defaultValue" + rankVar +"\"class=\"variableInit\"> <option> true </option> <option> false </option> </select>"+
+      "<input id=\"delete" + rankVar +"\" type=\"button\" value=\"DELETE\" onclick=\"removeVariable( " + rankVar  +")\">";
+    } else{
+      document.getElementById("lowerBound" + rankVar).style.visibility = "visible";
+      document.getElementById("upperBound" + rankVar).style.visibility = "visible";
+      document.getElementById("labelLowerBound" + rankVar).style.visibility = "visible";
+      document.getElementById("labelUpperBound" + rankVar).style.visibility = "visible";
+      document.getElementById("variable" + rankVar).removeChild(document.getElementById("defaultValue" + rankVar));
+      document.getElementById("variable" + rankVar).removeChild(document.getElementById("delete" + rankVar));
+      document.getElementById("variable" + rankVar).innerHTML+="<textarea id=\"defaultValue" + rankVar +"\" class=\"variableInit\"></textarea>"+
+      "<input id=\"delete" + rankVar +"\" type=\"button\" value=\"DELETE\" onclick=\"removeVariable( " + rankVar  +")\">";
+  }
+  
+}
 function sendJSON(data) {
   var url = "http://localhost:8080/accecs/dataServlet"
   xhr = new XMLHttpRequest();
@@ -56,5 +78,6 @@ function generateModelJSON(){
 	
 	sendJSON(JSON.stringify(data));
 }
+
 
 
