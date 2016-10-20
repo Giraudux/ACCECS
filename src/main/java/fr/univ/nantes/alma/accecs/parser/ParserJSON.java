@@ -3,6 +3,7 @@ package fr.univ.nantes.alma.accecs.parser;
 import java.util.ArrayList;
 import java.util.List;
 
+
 import fr.univ.nantes.alma.accecs.model.Event;
 import fr.univ.nantes.alma.accecs.model.Property;
 import fr.univ.nantes.alma.accecs.model.Variable;
@@ -53,7 +54,6 @@ public class ParserJSON {
 
 	public void parse(String json){
 		
-		try{
 			Variable variable = null;
 			
 			JSONObject jsonMachine = new JSONObject(json);
@@ -83,6 +83,10 @@ public class ParserJSON {
 				}
 				
 				if(variableType.equals("Integer")){
+					
+					
+						
+					
 					int lowerBound = Integer.parseInt(jsonVariables.getJSONObject(i).getString("variableMin"));
 					int upperBound = Integer.parseInt(jsonVariables.getJSONObject(i).getString("variableMax"));
 					
@@ -93,13 +97,18 @@ public class ParserJSON {
 						variable = new VariableInteger(variableName, role, upperBound, lowerBound);
 					}
 					
+				
 				}
+				
+				
+				
+				
 				else if(variableType.equals("Float")){
-					float lowerBound = Float.parseFloat(jsonVariables.getJSONObject(i).getString("variableMin"));
-					float upperBound = Float.parseFloat(jsonVariables.getJSONObject(i).getString("variableMax"));
+					float lowerBound = Float.parseFloat(jsonVariables.getJSONObject(i).getString("variableMin").replace(",","."));
+					float upperBound = Float.parseFloat(jsonVariables.getJSONObject(i).getString("variableMax").replace(",","."));
 					
 					if(jsonVariables.getJSONObject(i).getString("variableInit").trim() != ""){
-						float variableInit = Float.parseFloat(jsonVariables.getJSONObject(i).getString("variableInit"));
+						float variableInit = Float.parseFloat(jsonVariables.getJSONObject(i).getString("variableInit").replace(",","."));
 						variable = new VariableFloat(variableName, role, upperBound, lowerBound, variableInit);
 					}else{
 						variable = new VariableFloat(variableName, role, upperBound, lowerBound);
@@ -122,9 +131,5 @@ public class ParserJSON {
 			}
 		
 		}
-		catch(Exception e){
-			e.printStackTrace();
-		}
 		
-	}
 }

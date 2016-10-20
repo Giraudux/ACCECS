@@ -21,17 +21,27 @@ public class DataServlet extends HttpServlet{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private String resultat = "aucune erreur.";
 	
 
 	
 	public void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException{
-		
+		this.getServletContext().getRequestDispatcher( "/index.jsp" ).forward( request, response );
 	}
 	
 	public void doPost( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException{
 			
 		ParserJSON parser = new ParserJSON();
-		parser.parse(request.getParameter("data"));
+		
+		try{
+			parser.parse(request.getParameter("data"));
+		}catch(NumberFormatException e){
+			this.resultat = "Une erreur lors de l'ecriture des variables";
+			request.setAttribute( "resultat", this.resultat );
+			this.getServletContext().getRequestDispatcher( "/index.jsp" ).forward( request, response );
+		}
+		
+		
 		Machine machine = new Machine("Machine0", parser.getVariables(), parser.getProperties(), parser.getEvents());
 	    
 		for(Variable each : machine.getVariables()){
@@ -41,9 +51,6 @@ public class DataServlet extends HttpServlet{
 		MachineGenerator generator = new MachineGenerator();
 		File template = new File("C:/Users/Geof/workspace_JEE/ACCECS/src/main/resources/mch/M0.mch");
 		generator.generate(machine, template, System.out);
-		
-		//request.setAttribute( "test", message );
-		//this.getServletContext().getRequestDispatcher( "/WEB-INF/test.jsp" ).forward( request, response );
 	}
 
 }
