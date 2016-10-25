@@ -1,12 +1,14 @@
 var cptVar=0;
 function printFormVariable() {
-	return "<label> var : </label> <textarea rows=1 class=\"variableName\">name</textarea>" +
-	"<label> type : </label> <select id=\"selectType" + cptVar +"\" class=\"variableType\" onchange=\"checkType(" + cptVar  +")\"> <option> Integer </option> <option> Float </option> <option> Boolean </option>  </select> " +
-	"<label> role : </label> <select class=\"variableRole\"> <option> input </option> <option> output </option> <option> control </option>  <option> internal </option> </select>" +
-	"<label id=\"labelLowerBound" + cptVar +"\"> Lower bound : </label> <textarea id=\"lowerBound" + cptVar +"\" class=\"variableMin\"></textarea>"+ 
-	"<label id=\"labelUpperBound" + cptVar +"\"> Upper bound : </label> <textarea id=\"upperBound" + cptVar +"\" class=\"variableMax\"></textarea>" +
-	"<label> Default value (optional) </label> <textarea id=\"defaultValue" + cptVar +"\" class=\"variableInit\"></textarea>" + 
-  "<input id=\"delete" + cptVar +"\" type=\"button\" value=\"DELETE\" onclick=\"removeVariable( " + cptVar  +")\">" +
+	return "<fieldset>" +
+	"<label> name: </label> <input type=\"text\" class=\"variableName\"> <br>" +
+	"<label> type: </label> <select id=\"selectType" + cptVar +"\" class=\"variableType\" onchange=\"checkType(" + cptVar  +")\"> <option> Integer </option> <option> Float </option> <option> Boolean </option>  </select> <br>" +
+	"<label> role: </label> <select class=\"variableRole\"> <option> input </option> <option> output </option> <option> control </option>  <option> internal </option> </select> <br>" +
+	"<label id=\"labelLowerBound" + cptVar +"\"> Lower bound : </label> <input type=\"text\" id=\"lowerBound" + cptVar +"\" class=\"variableMin\"> <br>"+
+	"<label id=\"labelUpperBound" + cptVar +"\"> Upper bound : </label> <input type=\"text\" id=\"upperBound" + cptVar +"\" class=\"variableMax\"> <br>" +
+	"<label> Default value (optional) </label> <input type=\"text\" id=\"defaultValue" + cptVar +"\" class=\"variableInit\"> <br>" +
+    "<input id=\"delete" + cptVar +"\" type=\"button\" value=\"DELETE\" onclick=\"removeVariable( " + cptVar  +")\">" +
+	"</fieldset>" +
 	"<br/> ";
 
 }
@@ -50,12 +52,14 @@ function checkType(rankVar){
   
 }
 function sendJSON(data) {
-  var url = "http://localhost:8080/accecs/dataServlet"
+  //var url = "http://localhost:8080/accecs/dataServlet"
+  var url = "http://localhost:8080/dataServlet"
   xhr = new XMLHttpRequest();
   xhr.open("POST", url, true);
  // xhr.setRequestHeader("Content-type", "application/json");
   xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
   xhr.send("data="+data);
+  document.getElementById("machine").innerHTML = xhr.responseText;
 }
 
 function generateModelJSON(){

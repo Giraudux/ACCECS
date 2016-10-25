@@ -1,25 +1,42 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
-  <title>Project Construction CECS</title>
-  <script type="text/javascript" src="script.js"></script>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+    <title>ACCECS</title>
+    <script type="text/javascript" src="script.js"></script>
 </head>
 
 <body>
-  
-  <div id="variables">
-    <script> 
-      newVariable();
-    </script>
-  </div>
-  <input type="button" value="Add a new variable" onclick="newVariable()" >
-  <br/>
-  <label>properties</label> 
-  <textarea class="textAreaProperties">Type your properties here.</textarea>
-  <br/>
 
-  <input type="button" method="post" name="submitGenerateModel" value="Generate model" onclick="generateModelJSON()">
-  
+<h1>Assistance for the Construction of Critical Embedded Control Systems</h1>
+
+<fieldset>
+    <legend>Variables</legend>
+    <div id="variables">
+        <script>
+            newVariable();
+        </script>
+    </div>
+    <input type="button" value="Add a new variable" onclick="newVariable()">
+</fieldset>
+
+<br>
+
+<fieldset>
+    <legend>Properties</legend>
+    <textarea class="textAreaProperties">Type your properties here.</textarea>
+</fieldset>
+
+<br>
+
+<input type="button" method="post" name="submitGenerateModel" value="Generate model" onclick="generateModelJSON()">
+
+<br>
+
+<fieldset>
+    <legend>Machine</legend>
+    <code id="machine"></code>
+</fieldset>
+
 </body>
 </html>
