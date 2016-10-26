@@ -1,4 +1,3 @@
-
 /**
  *
  */
@@ -9,13 +8,13 @@ function newElement(name, attributes, childs) {
 
     element = document.createElement(name);
 
-    for(attribute in attributes) {
-        if(attributes.hasOwnProperty(attribute)) {
+    for (attribute in attributes) {
+        if (attributes.hasOwnProperty(attribute)) {
             element.setAttribute(attribute, attributes[attribute]);
         }
     }
 
-    for(i = 0; i < childs.length; i++) {
+    for (i = 0; i < childs.length; i++) {
         element.appendChild(childs[i]);
     }
 
@@ -26,9 +25,17 @@ function newElement(name, attributes, childs) {
  *
  */
 function newElementProperty() {
-    return newElement("FIELDSET", {class: "Property"}, [
-        newElement("BUTTON", {type: "button", onclick: "this.parentNode.parentNode.removeChild(this.parentNode)"}, [document.createTextNode("Remove")]),
-        newElement("INPUT", {type: "text", class: "PropertyExpression"}, [])
+    return newElement("FIELDSET", {
+        class: "Property"
+    }, [
+        newElement("BUTTON", {
+            type: "button",
+            onclick: "this.parentNode.parentNode.removeChild(this.parentNode)"
+        }, [document.createTextNode("Remove")]),
+        newElement("INPUT", {
+            type: "text",
+            class: "PropertyExpression"
+        }, [])
     ]);
 }
 
@@ -40,36 +47,72 @@ function newElementVariable() {
     var element;
     var option;
 
-    variable = newElement("FIELDSET", {class: "Variable"}, []);
+    variable = newElement("FIELDSET", {
+        class: "Variable"
+    }, []);
 
-    variable.appendChild(newElement("BUTTON", {type: "button", onclick: "this.parentNode.parentNode.removeChild(this.parentNode)"}, [document.createTextNode("Remove")]));
+    variable.appendChild(newElement("BUTTON", {
+        type: "button",
+        onclick: "this.parentNode.parentNode.removeChild(this.parentNode)"
+    }, [document.createTextNode("Remove")]));
 
     variable.appendChild(newElement("LABEL", {}, [document.createTextNode("Name:")]));
-    variable.appendChild(newElement("INPUT", {type: "text", class: "VariableName"}, []));
+    variable.appendChild(newElement("INPUT", {
+        type: "text",
+        class: "VariableName"
+    }, []));
 
     variable.appendChild(newElement("LABEL", {}, [document.createTextNode("Type:")]));
-    variable.appendChild(newElement("SELECT", {class: "VariableType", onchange: "updateVariable(this.parentNode)"}, [
-        newElement("OPTION", {value: "integer"}, [document.createTextNode("Integer")]),
-        newElement("OPTION", {value: "float"}, [document.createTextNode("Float")]),
-        newElement("OPTION", {value: "boolean"}, [document.createTextNode("Boolean")])
+    variable.appendChild(newElement("SELECT", {
+        class: "VariableType",
+        onchange: "updateVariable(this.parentNode)"
+    }, [
+        newElement("OPTION", {
+            value: "integer"
+        }, [document.createTextNode("Integer")]),
+        newElement("OPTION", {
+            value: "float"
+        }, [document.createTextNode("Float")]),
+        newElement("OPTION", {
+            value: "boolean"
+        }, [document.createTextNode("Boolean")])
     ]));
 
     variable.appendChild(newElement("LABEL", {}, [document.createTextNode("Category:")]));
-    variable.appendChild(newElement("SELECT", {class: "VariableCategory"}, [
-        newElement("OPTION", {value: "input"}, [document.createTextNode("Input")]),
-        newElement("OPTION", {value: "output"}, [document.createTextNode("Output")]),
-        newElement("OPTION", {value: "control"}, [document.createTextNode("Control")]),
-        newElement("OPTION", {value: "internal"}, [document.createTextNode("Internal")])
+    variable.appendChild(newElement("SELECT", {
+        class: "VariableCategory"
+    }, [
+        newElement("OPTION", {
+            value: "input"
+        }, [document.createTextNode("Input")]),
+        newElement("OPTION", {
+            value: "output"
+        }, [document.createTextNode("Output")]),
+        newElement("OPTION", {
+            value: "control"
+        }, [document.createTextNode("Control")]),
+        newElement("OPTION", {
+            value: "internal"
+        }, [document.createTextNode("Internal")])
     ]));
 
     variable.appendChild(newElement("LABEL", {}, [document.createTextNode("Lower bound:")]));
-    variable.appendChild(newElement("INPUT", {type: "number", class: "VariableLowerBound"/*, step: "any"*/}, []));
+    variable.appendChild(newElement("INPUT", {
+        type: "number",
+        class: "VariableLowerBound" /*, step: "any"*/
+    }, []));
 
     variable.appendChild(newElement("LABEL", {}, [document.createTextNode("Upper bound:")]));
-    variable.appendChild(newElement("INPUT", {type: "number", class: "VariableUpperBound"/*, step: "any"*/}, []));
+    variable.appendChild(newElement("INPUT", {
+        type: "number",
+        class: "VariableUpperBound" /*, step: "any"*/
+    }, []));
 
     variable.appendChild(newElement("LABEL", {}, [document.createTextNode("Default value:")]));
-    variable.appendChild(newElement("INPUT", {type: "text", class: "VariableDefaultValue"}, []));
+    variable.appendChild(newElement("INPUT", {
+        type: "text",
+        class: "VariableDefaultValue"
+    }, []));
 
     return variable;
 }
@@ -85,20 +128,30 @@ function updateVariable(variable) {
     type = variable.getElementsByClassName("VariableType")[0].value;
     variable.removeChild(variable.getElementsByClassName("VariableDefaultValue")[0]);
 
-    if(type == "boolean") {
-         disableBounds = true;
-         variable.appendChild(newElement("SELECT", {class: "VariableDefaultValue"}, [
-             newElement("OPTION", {value: "true"}, [document.createTextNode("True")]),
-             newElement("OPTION", {value: "false"}, [document.createTextNode("False")])
-         ]));
+    if (type == "boolean") {
+        disableBounds = true;
+        variable.appendChild(newElement("SELECT", {
+            class: "VariableDefaultValue"
+        }, [
+            newElement("OPTION", {
+                value: "true"
+            }, [document.createTextNode("True")]),
+            newElement("OPTION", {
+                value: "false"
+            }, [document.createTextNode("False")])
+        ]));
     } else {
         disableBounds = false;
-        if(type == "integer") {
+        if (type == "integer") {
             step = "1";
-        } else if(type == "float") {
+        } else if (type == "float") {
             step = "any";
         }
-        variable.appendChild(newElement("INPUT", {type: "number", class: "VariableDefaultValue", step: step}, []));
+        variable.appendChild(newElement("INPUT", {
+            type: "number",
+            class: "VariableDefaultValue",
+            step: step
+        }, []));
         variable.getElementsByClassName("VariableLowerBound")[0].setAttribute("step", step);
         variable.getElementsByClassName("VariableUpperBound")[0].setAttribute("step", step);
     }
@@ -111,51 +164,54 @@ function updateVariable(variable) {
  *
  */
 function generateMachine() {
-  var xhttp;
+    var xhttp;
 
-  console.log(machineToJSON());
+    console.log(machineToJSON());
 
-  xhttp = new XMLHttpRequest();
+    xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-           console.log(this.responseText);
+            console.log(this.responseText);
         }
     };
-  xhttp.open("POST", "dataServlet", true);
-  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-  xhttp.send("data="+encodeURIComponent(machineToJSON));
+    xhttp.open("POST", "dataServlet", true);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.send("data=" + encodeURIComponent(machineToJSON));
 }
 
 /**
  *
  */
-function machineToJSON(){
-  var machine;
-  var variables;
-  var variable;
-  var properties;
-  var i;
+function machineToJSON() {
+    var machine;
+    var variables;
+    var variable;
+    var properties;
+    var i;
 
-  machine = {variables: [], properties: []};
+    machine = {
+        variables: [],
+        properties: []
+    };
 
-  variables = document.getElementsByClassName("Variable");
-  for(i = 0 ; i < variables.length ; i++) {
-    variable = {};
-    variable.name =  variables[i].getElementsByClassName("VariableName")[0].value;
-    variable.type =  variables[i].getElementsByClassName("VariableType")[0].value;
-    variable.category =  variables[i].getElementsByClassName("VariableCategory")[0].value;
-    variable.lowerBound =  variables[i].getElementsByClassName("VariableLowerBound")[0].value;
-    variable.upperBound =  variables[i].getElementsByClassName("VariableUpperBound")[0].value;
-    variable.defaultValue =  variables[i].getElementsByClassName("VariableDefaultValue")[0].value;
-    machine.variables.push(variable);
-  }
+    variables = document.getElementsByClassName("Variable");
+    for (i = 0; i < variables.length; i++) {
+        variable = {};
+        variable.name = variables[i].getElementsByClassName("VariableName")[0].value;
+        variable.type = variables[i].getElementsByClassName("VariableType")[0].value;
+        variable.category = variables[i].getElementsByClassName("VariableCategory")[0].value;
+        variable.lowerBound = variables[i].getElementsByClassName("VariableLowerBound")[0].value;
+        variable.upperBound = variables[i].getElementsByClassName("VariableUpperBound")[0].value;
+        variable.defaultValue = variables[i].getElementsByClassName("VariableDefaultValue")[0].value;
+        machine.variables.push(variable);
+    }
 
-  properties = document.getElementsByClassName("Property");
-  for(i = 0; i < properties.length; i++) {
-      machine.properties.push(properties[i].getElementsByClassName("PropertyExpression")[0].value);
-  }
+    properties = document.getElementsByClassName("Property");
+    for (i = 0; i < properties.length; i++) {
+        machine.properties.push(properties[i].getElementsByClassName("PropertyExpression")[0].value);
+    }
 
     console.log(machine);
-	
-	return JSON.stringify(machine);
+
+    return JSON.stringify(machine);
 }
