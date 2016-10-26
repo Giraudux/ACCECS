@@ -1,42 +1,50 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+    <meta charset="UTF-8">
     <title>ACCECS</title>
-    <script type="text/javascript" src="script.js"></script>
+    <script src="script.js"></script>
 </head>
 
 <body>
 
 <h1>Assistance for the Construction of Critical Embedded Control Systems</h1>
 
-<fieldset>
-    <legend>Variables</legend>
-    <div id="variables">
-        <script>
-            newVariable();
-        </script>
-    </div>
-    <input type="button" value="Add a new variable" onclick="newVariable()">
+<fieldset id="machine">
+    <legend>Machine</legend>
+
+    <label>Name:</label><input type="text" class="MachineName">
+
+    <br>
+
+    <fieldset id="variables">
+        <legend>Variables</legend>
+        <button type="button" onclick="this.parentNode.insertBefore(newElementVariable(), this)">Add variable</button>
+    </fieldset>
+
+    <br>
+
+    <fieldset id="properties">
+        <legend>Properties</legend>
+        <button type="button" onclick="this.parentNode.insertBefore(newElementProperty(), this)">Add property</button>
+    </fieldset>
+
 </fieldset>
 
 <br>
 
-<fieldset>
-    <legend>Properties</legend>
-    <textarea class="textAreaProperties">Type your properties here.</textarea>
-</fieldset>
-
-<br>
-
-<input type="button" method="post" name="submitGenerateModel" value="Generate model" onclick="generateModelJSON()">
+<button type="button" onclick="generateMachine()">Generate machine</button>
 
 <br>
 
 <fieldset>
     <legend>Machine</legend>
-    <code id="machine"></code>
+    <code id="machine-code"></code>
 </fieldset>
+
+<button type="button" onclick="">Save</button>
+
+<button type="button" onclick="">Load</button>
 
 </body>
 </html>
