@@ -114,13 +114,13 @@ function newElementVariable() {
     variable.appendChild(newElement("LABEL", {}, [document.createTextNode("Lower bound:")]));
     variable.appendChild(newElement("INPUT", {
         type: "number",
-        class: "VariableLowerBound" /*, step: "any"*/
+        class: "VariableLowerBound"
     }, []));
 
     variable.appendChild(newElement("LABEL", {}, [document.createTextNode("Upper bound:")]));
     variable.appendChild(newElement("INPUT", {
         type: "number",
-        class: "VariableUpperBound" /*, step: "any"*/
+        class: "VariableUpperBound"
     }, []));
 
     variable.appendChild(newElement("LABEL", {}, [document.createTextNode("Default value:")]));
@@ -138,7 +138,6 @@ function newElementVariable() {
 function updateVariable(variable) {
     var type;
     var disableBounds;
-    var step = "any";
 
     type = variable.getElementsByClassName("VariableType")[0].value;
     variable.removeChild(variable.getElementsByClassName("VariableDefaultValue")[0]);
@@ -158,17 +157,14 @@ function updateVariable(variable) {
     } else {
         disableBounds = false;
         if (type == "integer") {
-            step = "1";
-        } else if (type == "float") {
-            step = "any";
+            ;
+        } else if (type == "natural") {
+            ;
         }
         variable.appendChild(newElement("INPUT", {
             type: "number",
-            class: "VariableDefaultValue",
-            step: step
+            class: "VariableDefaultValue"
         }, []));
-        variable.getElementsByClassName("VariableLowerBound")[0].setAttribute("step", step);
-        variable.getElementsByClassName("VariableUpperBound")[0].setAttribute("step", step);
     }
 
     variable.getElementsByClassName("VariableLowerBound")[0].disabled = disableBounds;
