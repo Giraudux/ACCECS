@@ -32,10 +32,25 @@ function newElementProperty() {
             type: "button",
             onclick: "this.parentNode.parentNode.removeChild(this.parentNode)"
         }, [document.createTextNode("Remove")]),
+        newElement("LABEL", {}, [document.createTextNode("Expression:")]),
         newElement("INPUT", {
             type: "text",
             class: "PropertyExpression"
-        }, [])
+        }, []),
+        newElement("LABEL", {}, [document.createTextNode("Category:")]),
+        newElement("SELECT", {
+            class: "PropertyCategory"
+        }, [
+            newElement("OPTION", {
+                value: "safety"
+            }, [document.createTextNode("Safety")]),
+            newElement("OPTION", {
+                value: "non-functional"
+            }, [document.createTextNode("Non-functional")]),
+            newElement("OPTION", {
+                value: "liveness"
+            }, [document.createTextNode("Liveness")])
+        ])
     ]);
 }
 
@@ -170,13 +185,13 @@ function generateMachine() {
 
     xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-            console.log(this.responseText);
+        if (xhttp.readyState == 4 && xhttp.status == 200) {
+            console.log(xhttp.response);
         }
     };
     xhttp.open("POST", "dataServlet", true);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xhttp.send("data=" + encodeURIComponent(machineToJSON));
+    xhttp.send("data=" + encodeURIComponent(machineToJSON()));
 }
 
 /**
@@ -187,12 +202,15 @@ function machineToJSON() {
     var variables;
     var variable;
     var properties;
+    var property;
     var i;
 
     machine = {
         variables: [],
         properties: []
     };
+
+    machine.name = document.getElementsByClassName("MachineName")[0].value;
 
     variables = document.getElementsByClassName("Variable");
     for (i = 0; i < variables.length; i++) {
@@ -208,7 +226,10 @@ function machineToJSON() {
 
     properties = document.getElementsByClassName("Property");
     for (i = 0; i < properties.length; i++) {
-        machine.properties.push(properties[i].getElementsByClassName("PropertyExpression")[0].value);
+        property = {};
+        property.expression = properties[i].getElementsByClassName("PropertyExpression")[0].value;
+        property.category = properties[i].getElementsByClassName("PropertyCategory")[0].value;
+        machine.properties.push(property);
     }
 
     console.log(machine);

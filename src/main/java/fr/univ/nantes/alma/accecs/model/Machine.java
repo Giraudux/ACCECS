@@ -1,60 +1,58 @@
 package fr.univ.nantes.alma.accecs.model;
 
-import java.util.List;
+import java.util.ArrayList;
+import java.util.Collection;
 
 public class Machine {
 
-	private String name;
-	private List<Variable> variables;
-	private List<Property> properties;
-	private List<Event> events;
-	
-	public Machine() {
-		super();
-	}
+    private String name;
+    private Collection<Variable> variables;
+    private Collection<Property> properties;
+    private Collection<Event> events;
 
-	public Machine(String name, List<Variable> variables,
-			List<Property> properties, List<Event> events) {
-		super();
-		this.name = name;
-		this.variables = variables;
-		this.properties = properties;
-		this.events = events;
-	}
+    public Machine() {
+        name = new String();
+        variables = new ArrayList<Variable>();
+        properties = new ArrayList<Property>();
+        events = new ArrayList<Event>();
+    }
 
-	public String getName() {
-		return name;
-	}
+    public Machine(String name, Collection<Variable> variables, Collection<Property> properties, Collection<Event> events) {
+        this.name = name;
+        this.variables = variables;
+        this.properties = properties;
+        this.events = events;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public List<Variable> getVariables() {
-		return variables;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setVariables(List<Variable> variables) {
-		this.variables = variables;
-	}
+    public Collection<Variable> getVariables() {
+        return variables;
+    }
 
-	public List<Property> getProperties() {
-		return properties;
-	}
+    public void setVariables(Collection<Variable> variables) {
+        this.variables = variables;
+    }
 
-	public void setProperties(List<Property> properties) {
-		this.properties = properties;
-	}
+    public Collection<Property> getProperties() {
+        return properties;
+    }
 
-	public List<Event> getEvents() {
-		return events;
-	}
+    public void setProperties(Collection<Property> properties) {
+        this.properties = properties;
+    }
 
-	public void setEvents(List<Event> events) {
-		this.events = events;
-	}
+    public Collection<Event> getEvents() {
+        return events;
+    }
 
-	
-	
-	
+    public void setEvents(Collection<Event> events) {
+        this.events = events;
+    }
 }

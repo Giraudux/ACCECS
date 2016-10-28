@@ -1,152 +1,127 @@
 package fr.univ.nantes.alma.accecs.parser;
 
-import java.util.ArrayList;
-import java.util.List;
-
-
-import fr.univ.nantes.alma.accecs.model.Event;
-import fr.univ.nantes.alma.accecs.model.Property;
-import fr.univ.nantes.alma.accecs.model.Property.RoleProperty;
-import fr.univ.nantes.alma.accecs.model.Variable;
-import fr.univ.nantes.alma.accecs.model.VariableBoolean;
-import fr.univ.nantes.alma.accecs.model.VariableFloat;
-import fr.univ.nantes.alma.accecs.model.VariableInteger;
-import fr.univ.nantes.alma.accecs.model.Variable.RoleVariable;
-
+import fr.univ.nantes.alma.accecs.model.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 public class ParserJSON {
 
-	private List<Variable> variables = new ArrayList<Variable>();
-	private List<Property> properties = new ArrayList<Property>();
-	private List<Event> events = new ArrayList<Event>();
-	
-	
-	public ParserJSON() {
-		super();
-	}
-
-	public List<Variable> getVariables() {
-		return variables;
-	}
-
-	public void setVariables(List<Variable> variables) {
-		this.variables = variables;
-	}
-
-	public List<Property> getProperties() {
-		return properties;
-	}
-
-	public void setProperties(List<Property> properties) {
-		this.properties = properties;
-	}
-
-	public List<Event> getEvents() {
-		return events;
-	}
-
-	public void setEvents(List<Event> events) {
-		this.events = events;
-	}
+    private String name;
+    private Collection<Variable> variables;
+    private Collection<Property> properties;
+    private Collection<Event> events;
 
 
+    public ParserJSON() {
+        name = new String();
+        variables = new ArrayList<Variable>();
+        properties = new ArrayList<Property>();
+        events = new ArrayList<Event>();
+    }
 
-	public void parse(String json){
-		
-			Variable variable = null;
-			
-			JSONObject jsonMachine = new JSONObject(json);
-			//String machineName = jsonMachine.getJSONObject("pageInfo").getString("pageName");
-			JSONArray jsonVariables = jsonMachine.getJSONArray("variables");
-			
-			
-			for (int i = 0; i < jsonVariables.length(); i++){
-		    
-				String variableName = jsonVariables.getJSONObject(i).getString("variableName");
-				String variableType = jsonVariables.getJSONObject(i).getString("variableType");
-				String variableRole = jsonVariables.getJSONObject(i).getString("variableRole");
-		    
-				RoleVariable role = null;
-				if (variableRole.equals("input")) {
-					role = RoleVariable.input;
-				} else if (variableRole.equals("output")) {
-					role = RoleVariable.output;
-				} else if (variableRole.equals("control")) {
-					role = RoleVariable.control;
-				} else if (variableRole.equals("internal")) {
-					role = RoleVariable.internal;
-				}
-				
-				if(variableType.equals("Integer")){
-					int lowerBound = Integer.parseInt(jsonVariables.getJSONObject(i).getString("variableMin"));
-					int upperBound = Integer.parseInt(jsonVariables.getJSONObject(i).getString("variableMax"));
-					
-					if(jsonVariables.getJSONObject(i).getString("variableInit").trim() != ""){
-						int variableInit = Integer.parseInt(jsonVariables.getJSONObject(i).getString("variableInit"));
-						variable = new VariableInteger(variableName, role, upperBound, lowerBound, variableInit);
-					}else{
-						variable = new VariableInteger(variableName, role, upperBound, lowerBound);
-					}
-				}
-				
-				else if(variableType.equals("Float")){
-					float lowerBound = Float.parseFloat(jsonVariables.getJSONObject(i).getString("variableMin").replace(",","."));
-					float upperBound = Float.parseFloat(jsonVariables.getJSONObject(i).getString("variableMax").replace(",","."));
-					
-					if(jsonVariables.getJSONObject(i).getString("variableInit").trim() != ""){
-						float variableInit = Float.parseFloat(jsonVariables.getJSONObject(i).getString("variableInit").replace(",","."));
-						variable = new VariableFloat(variableName, role, upperBound, lowerBound, variableInit);
-					}else{
-						variable = new VariableFloat(variableName, role, upperBound, lowerBound);
-					}
-					
-					variable = new VariableFloat(variableName, role, upperBound, lowerBound);
-				} 
-				else if(variableType.equals("Boolean")){
-					if(jsonVariables.getJSONObject(i).getString("variableInit").trim() != ""){
-						boolean variableInit = Boolean.parseBoolean(jsonVariables.getJSONObject(i).getString("variableInit"));
-						variable = new VariableBoolean(variableName, role, variableInit);
-					}else{
-						variable = new VariableBoolean(variableName, role);
-					}
-				}
-				
-				
-				variables.add(variable);
-			    
-			}
-			
-			
-			String jsonProperties = jsonMachine.getString("properties");
-			Property property = new Property();
-			property.setExpression(jsonProperties);
-			property.setRole(RoleProperty.LIVENESS);
-			properties.add(property);
-					
-					
-			/*
-			JSONArray jsonProperties = jsonMachine.getJSONArray("textAreaProperties");
-			Property property = null;
-			for (int i = 0; i < jsonProperties.length(); i++){
-			    
-				String propertyExpression = jsonVariables.getJSONObject(i).getString("propertyExpression");
-				String propertyRole = jsonVariables.getJSONObject(i).getString("propertyRole");
-				
-				RoleProperty role = null;
-				if (propertyRole.equals("safety")) {
-					role = RoleProperty.SAFETY;
-				} else if (propertyRole.equals("non_functional")) {
-					role = RoleProperty.NON_FUNCTIONAL;
-				} else if (propertyRole.equals("liveness")) {
-					role = RoleProperty.LIVENESS;
-				} 
-				
-				property = new Property(propertyExpression, role);
-				properties.add(property);
-			}*/
-		
-		}
-		
+    public void parse(String json) throws Exception {
+
+        JSONObject jsonMachine = new JSONObject(json);
+
+        name = jsonMachine.getString("name");
+
+        JSONArray jsonVariables = jsonMachine.getJSONArray("variables");
+        for (int i = 0; i < jsonVariables.length(); i++) {
+            Variable variable;
+            JSONObject jsonVariable = jsonVariables.getJSONObject(i);
+
+            String variableName = jsonVariable.getString("name");
+            String variableType = jsonVariable.getString("type");
+            String variableCategory = jsonVariable.getString("category");
+
+            Variable.Category category;
+            if (variableCategory.equals("input")) {
+                category = Variable.Category.INPUT;
+            } else if (variableCategory.equals("output")) {
+                category = Variable.Category.OUTPUT;
+            } else if (variableCategory.equals("control")) {
+                category = Variable.Category.CONTROL;
+            } else if (variableCategory.equals("internal")) {
+                category = Variable.Category.INTERNAL;
+            } else {
+                throw new Exception("unknown variable category: " + variableCategory);
+            }
+
+            if (variableType.equals("integer")) {
+                Integer lowerBound = Integer.parseInt(jsonVariable.getString("lowerBound"));
+                Integer upperBound = Integer.parseInt(jsonVariable.getString("upperBound"));
+
+                String variableDefaultValue = jsonVariable.getString("defaultValue");
+                if (variableDefaultValue.isEmpty()) {
+                    variable = new VariableInteger(variableName, category, lowerBound, upperBound);
+                } else {
+                    variable = new VariableInteger(variableName, category, upperBound, lowerBound, Integer.parseInt(variableDefaultValue));
+                }
+            } else if (variableType.equals("float")) {
+                Float lowerBound = Float.parseFloat(jsonVariable.getString("lowerBound").replace(",", "."));
+                Float upperBound = Float.parseFloat(jsonVariable.getString("upperBound").replace(",", "."));
+
+                String variableDefaultValue = jsonVariable.getString("defaultValue");
+                if (variableDefaultValue.isEmpty()) {
+                    variable = new VariableFloat(variableName, category, lowerBound, upperBound);
+                } else {
+                    variable = new VariableFloat(variableName, category, lowerBound, upperBound, Float.parseFloat(variableDefaultValue.replace(",", ".")));
+                }
+            } else if (variableType.equals("boolean")) {
+                if (Boolean.parseBoolean(jsonVariable.getString("defaultValue"))) {
+                    variable = new VariableBoolean(variableName, category, Boolean.TRUE);
+                } else {
+                    variable = new VariableBoolean(variableName, category);
+                }
+            } else {
+                throw new Exception("unknown variable type: " + variableType);
+            }
+
+
+            variables.add(variable);
+
+        }
+
+        JSONArray jsonProperties = jsonMachine.getJSONArray("properties");
+        for (int i = 0; i < jsonProperties.length(); i++) {
+            Property property;
+            JSONObject jsonProperty = jsonProperties.getJSONObject(i);
+
+            String propertyExpression = jsonProperty.getString("expression");
+            String propertyCategory = jsonProperty.getString("category");
+
+            Property.Category category;
+            if (propertyCategory.equals("safety")) {
+                category = Property.Category.SAFETY;
+            } else if (propertyCategory.equals("non-functional")) {
+                category = Property.Category.NON_FUNCTIONAL;
+            } else if (propertyCategory.equals("liveness")) {
+                category = Property.Category.LIVENESS;
+            } else {
+                throw new Exception("unknown property category: " + propertyCategory);
+            }
+
+            property = new Property(propertyExpression, category);
+            properties.add(property);
+        }
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Collection<Variable> getVariables() {
+        return variables;
+    }
+
+    public Collection<Property> getProperties() {
+        return properties;
+    }
+
+    public Collection<Event> getEvents() {
+        return events;
+    }
 }

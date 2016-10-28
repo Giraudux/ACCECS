@@ -1,6 +1,8 @@
 package fr.univ.nantes.alma.accecs.generator;
 
-import fr.univ.nantes.alma.accecs.model.*;
+import fr.univ.nantes.alma.accecs.model.Machine;
+import fr.univ.nantes.alma.accecs.model.Property;
+import fr.univ.nantes.alma.accecs.model.Variable;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
 
@@ -14,7 +16,7 @@ import java.util.logging.Logger;
  *
  */
 public class MachineGenerator implements IMachineGenerator {
-    private static final Logger LOGGER = Logger.getLogger( MachineGenerator.class.getName() );
+    private static final Logger LOGGER = Logger.getLogger(MachineGenerator.class.getName());
 
     public void generate(Machine machine, File templateFile, OutputStream outputStream) {
         JtwigTemplate template = JtwigTemplate.fileTemplate(templateFile);
@@ -27,28 +29,28 @@ public class MachineGenerator implements IMachineGenerator {
         for (Variable variable : machine.getVariables()) {
             variables.add(variable.getName());
 
-            if (variable instanceof VariableInteger) {
+            /*if (variable instanceof VariableInteger) {
                 invariants.add(variable.getName() + " : INT");
-                initialisations.add(variable.getName() + " := " + ((VariableInteger) variable).getValeurDefaut());
-                properties.add(variable.getName()+" : "+((VariableInteger) variable).getBorneMin()+".."+((VariableInteger) variable).getBorneMax());
+                initialisations.add(variable.getName() + " := " + ((VariableIntegerOld) variable).getValeurDefaut());
+                properties.add(variable.getName()+" : "+((VariableIntegerOld) variable).getBorneMin()+".."+((VariableIntegerOld) variable).getBorneMax());
             } else if (variable instanceof VariableFloat) {
                 invariants.add(variable.getName() + " : NAT");
-                initialisations.add(variable.getName() + " := " + ((VariableFloat) variable).getValeurDefaut());
-                properties.add(variable.getName()+" : "+((VariableFloat) variable).getBorneMin()+".."+((VariableFloat) variable).getBorneMax());
+                initialisations.add(variable.getName() + " := " + ((VariableFloatOld) variable).getValeurDefaut());
+                properties.add(variable.getName()+" : "+((VariableFloatOld) variable).getBorneMin()+".."+((VariableFloatOld) variable).getBorneMax());
             } else if (variable instanceof VariableBoolean) {
                 invariants.add(variable.getName() + " : BOOL");
-                initialisations.add(variable.getName() + " := " + (((VariableBoolean) variable).isValeurDefaut() ? "TRUE" : "FALSE"));
-            }
+                initialisations.add(variable.getName() + " := " + (((VariableBooleanOld) variable).isValeurDefaut() ? "TRUE" : "FALSE"));
+            }*/
         }
 
         for (Property property : machine.getProperties()) {
             properties.add(property.getExpression());
         }
 
-        LOGGER.info("machine = "+machine.toString());
-        LOGGER.info("variables = "+variables.toString());
-        LOGGER.info("invariants = "+invariants.toString());
-        LOGGER.info("initialisation = "+initialisations.toString());
+        LOGGER.info("machine = " + machine.toString());
+        LOGGER.info("variables = " + variables.toString());
+        LOGGER.info("invariants = " + invariants.toString());
+        LOGGER.info("initialisation = " + initialisations.toString());
 
         model.with("name", machine.getName());
         model.with("variables", variables);

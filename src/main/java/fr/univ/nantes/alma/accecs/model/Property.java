@@ -1,48 +1,36 @@
 package fr.univ.nantes.alma.accecs.model;
 
 public class Property {
-	
-    public enum RoleProperty {
+
+    private String expression;
+    private Category category;
+    public Property() {
+    }
+
+    public Property(String expression, Category category) {
+        this.expression = expression;
+        this.category = category;
+    }
+
+    public String getExpression() {
+        return expression;
+    }
+
+    public void setExpression(String expression) {
+        this.expression = expression;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public enum Category {
         SAFETY,
         NON_FUNCTIONAL,
         LIVENESS
     }
-
-	private String expression;
-	private RoleProperty role;
-	
-	
-	public Property() {
-		super();
-	}
-
-
-	public Property(String expression, RoleProperty role) {
-		super();
-		this.expression = expression;
-		this.role = role;
-	}
-
-
-	public String getExpression() {
-		return expression;
-	}
-
-
-	public void setExpression(String expression) {
-		this.expression = expression;
-	}
-
-
-	public RoleProperty getRole() {
-		return role;
-	}
-
-
-	public void setRole(RoleProperty role) {
-		this.role = role;
-	}
-	
-	
-	
 }

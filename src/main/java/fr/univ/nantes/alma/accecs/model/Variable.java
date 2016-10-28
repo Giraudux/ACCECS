@@ -1,55 +1,59 @@
 package fr.univ.nantes.alma.accecs.model;
 
-public abstract class Variable {
-	
-	public enum RoleVariable {
-		input,
-		output,
-		control,
-		internal;
-	}
+/**
+ * @author Alexis Giraudet
+ */
+public abstract class Variable<T> {
+    protected String name;
+    protected Category category;
+    protected Type type;
+    protected T lowerBound;
+    protected T upperBound;
+    protected T defaultValue;
 
+    protected Variable(String name, Category category, Type type, T lowerBound, T upperBound, T defaultValue) {
+        this.name = name;
+        this.category = category;
+        this.type = type;
+        this.lowerBound = lowerBound;
+        this.upperBound = upperBound;
+        this.defaultValue = defaultValue;
+    }
 
-	private String name;
-	private RoleVariable role;
-		
+    public String getName() {
+        return name;
+    }
 
-	public Variable() {
-		super();
-	}
+    public Category getCategory() {
+        return category;
+    }
 
+    public Type getType() {
+        return type;
+    }
 
-	public Variable(String name, RoleVariable role) {
-		this.name = name;
-		this.role = role;
-	}
+    public T getLowerBound() {
+        return lowerBound;
+    }
 
+    public T getUpperBound() {
+        return upperBound;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public T getDefaultValue() {
+        return defaultValue;
+    }
 
+    public enum Category {
+        INPUT,
+        OUTPUT,
+        CONTROL,
+        INTERNAL
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
-
-
-	public RoleVariable getRole() {
-		return role;
-	}
-
-
-	public void setRole(RoleVariable role) {
-		this.role = role;
-	}
-
-	public String toString(){
-		return this.name + " " + this.role;
-	}
-
-
-	
-	
-	
+    public enum Type {
+        INTEGER,
+        FLOAT,
+        BOOLEAN
+    }
 }
