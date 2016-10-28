@@ -6,12 +6,12 @@ package fr.univ.nantes.alma.accecs.model;
 public abstract class Variable<T> {
     protected String name;
     protected Category category;
-    protected Type type;
+    protected String type;
     protected T lowerBound;
     protected T upperBound;
     protected T defaultValue;
 
-    protected Variable(String name, Category category, Type type, T lowerBound, T upperBound, T defaultValue) {
+    protected Variable(String name, Category category, String type, T lowerBound, T upperBound, T defaultValue) {
         this.name = name;
         this.category = category;
         this.type = type;
@@ -28,7 +28,7 @@ public abstract class Variable<T> {
         return category;
     }
 
-    public Type getType() {
+    public String getType() {
         return type;
     }
 
@@ -44,6 +44,10 @@ public abstract class Variable<T> {
         return defaultValue;
     }
 
+    public boolean hasBounds() {
+        return lowerBound != null && upperBound != null;
+    }
+
     public enum Category {
         INPUT,
         OUTPUT,
@@ -51,9 +55,9 @@ public abstract class Variable<T> {
         INTERNAL
     }
 
-    public enum Type {
+    /*public enum Type {
         INTEGER,
-        FLOAT,
+        NATURAL,
         BOOLEAN
-    }
+    }*/
 }

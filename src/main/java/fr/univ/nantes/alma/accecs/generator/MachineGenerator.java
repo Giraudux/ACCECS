@@ -28,19 +28,11 @@ public class MachineGenerator implements IMachineGenerator {
 
         for (Variable variable : machine.getVariables()) {
             variables.add(variable.getName());
-
-            /*if (variable instanceof VariableInteger) {
-                invariants.add(variable.getName() + " : INT");
-                initialisations.add(variable.getName() + " := " + ((VariableIntegerOld) variable).getValeurDefaut());
-                properties.add(variable.getName()+" : "+((VariableIntegerOld) variable).getBorneMin()+".."+((VariableIntegerOld) variable).getBorneMax());
-            } else if (variable instanceof VariableFloat) {
-                invariants.add(variable.getName() + " : NAT");
-                initialisations.add(variable.getName() + " := " + ((VariableFloatOld) variable).getValeurDefaut());
-                properties.add(variable.getName()+" : "+((VariableFloatOld) variable).getBorneMin()+".."+((VariableFloatOld) variable).getBorneMax());
-            } else if (variable instanceof VariableBoolean) {
-                invariants.add(variable.getName() + " : BOOL");
-                initialisations.add(variable.getName() + " := " + (((VariableBooleanOld) variable).isValeurDefaut() ? "TRUE" : "FALSE"));
-            }*/
+            invariants.add(variable.getName()+" : "+variable.getType());
+            if (variable.hasBounds()) {
+                invariants.add(variable.getName()+" : "+variable.getLowerBound()+".."+variable.getUpperBound());
+            }
+            initialisations.add(variable.getName()+" := "+variable.getDefaultValue());
         }
 
         for (Property property : machine.getProperties()) {

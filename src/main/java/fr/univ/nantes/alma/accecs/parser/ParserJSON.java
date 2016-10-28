@@ -60,15 +60,15 @@ public class ParserJSON {
                 } else {
                     variable = new VariableInteger(variableName, category, upperBound, lowerBound, Integer.parseInt(variableDefaultValue));
                 }
-            } else if (variableType.equals("float")) {
-                Float lowerBound = Float.parseFloat(jsonVariable.getString("lowerBound").replace(",", "."));
-                Float upperBound = Float.parseFloat(jsonVariable.getString("upperBound").replace(",", "."));
+            } else if (variableType.equals("natural")) {
+                Integer lowerBound = Integer.parseInt(jsonVariable.getString("lowerBound"));
+                Integer upperBound = Integer.parseInt(jsonVariable.getString("upperBound"));
 
                 String variableDefaultValue = jsonVariable.getString("defaultValue");
                 if (variableDefaultValue.isEmpty()) {
-                    variable = new VariableFloat(variableName, category, lowerBound, upperBound);
+                    variable = new VariableNatural(variableName, category, lowerBound, upperBound);
                 } else {
-                    variable = new VariableFloat(variableName, category, lowerBound, upperBound, Float.parseFloat(variableDefaultValue.replace(",", ".")));
+                    variable = new VariableNatural(variableName, category, lowerBound, upperBound, Integer.parseInt(variableDefaultValue));
                 }
             } else if (variableType.equals("boolean")) {
                 if (Boolean.parseBoolean(jsonVariable.getString("defaultValue"))) {

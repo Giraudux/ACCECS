@@ -86,8 +86,8 @@ function newElementVariable() {
             value: "integer"
         }, [document.createTextNode("Integer")]),
         newElement("OPTION", {
-            value: "float"
-        }, [document.createTextNode("Float")]),
+            value: "natural"
+        }, [document.createTextNode("Natural")]),
         newElement("OPTION", {
             value: "boolean"
         }, [document.createTextNode("Boolean")])

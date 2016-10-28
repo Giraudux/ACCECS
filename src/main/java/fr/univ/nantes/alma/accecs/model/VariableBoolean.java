@@ -5,10 +5,10 @@ package fr.univ.nantes.alma.accecs.model;
  */
 public class VariableBoolean extends Variable<Boolean> {
     public VariableBoolean(String name, Category category) {
-        super(name, category, Type.BOOLEAN, false, true, false);
+        super(name, category, "BOOL", null, null, false);
     }
 
     public VariableBoolean(String name, Category category, Boolean defaultValue) {
-        super(name, category, Type.BOOLEAN, false, true, defaultValue);
+        super(name, category, "BOOL", null, null, defaultValue);
     }
 }
