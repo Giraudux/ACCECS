@@ -3,6 +3,8 @@ package fr.univ.nantes.alma.accecs.model;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import fr.univ.nantes.alma.accecs.model.Variable.Category;
+
 public class Machine {
 
     private String name;
@@ -22,8 +24,27 @@ public class Machine {
         this.variables = variables;
         this.properties = properties;
         this.events = events;
+        //Determine the possible events with the known variables
+        for (Variable each : this.variables){
+        	if (each.getCategory() == Category.INPUT){
+        		events.add(calculEventInput(each));
+        	}
+        	if (each.getCategory() == Category.OUTPUT){
+        		events.add(calculEventOutput(each));
+        	}
+        }
     }
-
+    //TODO determiner comment fabriquer un event a partir de variable d'entree 
+    private Event calculEventInput(Variable v){
+    	
+    	return new Event();
+    }
+  //TODO determiner comment fabriquer un event a partir de variable d'entree 
+    private Event calculEventOutput(Variable v){
+    	
+    	return new Event();
+    }
+    
     public String getName() {
         return name;
     }
