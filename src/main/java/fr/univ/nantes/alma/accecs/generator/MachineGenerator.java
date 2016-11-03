@@ -21,13 +21,29 @@ public class MachineGenerator implements IMachineGenerator {
     public void generate(Machine machine, File templateFile, OutputStream outputStream) {
         JtwigTemplate template = JtwigTemplate.fileTemplate(templateFile);
         JtwigModel model = JtwigModel.newModel();
-        Collection<String> variables = new ArrayList<String>();
+        Collection<String> variablesInput = new ArrayList<String>();
+        Collection<String> variablesOutput = new ArrayList<String>();
+        Collection<String> variablesControl = new ArrayList<String>();
+        Collection<String> variablesInternal = new ArrayList<String>();
         Collection<String> invariants = new ArrayList<String>();
         Collection<String> initialisations = new ArrayList<String>();
         Collection<String> properties = new ArrayList<String>();
 
         for (Variable variable : machine.getVariables()) {
-            variables.add(variable.getName());
+            switch (variable.getCategory()) {
+                case INPUT:
+                    variablesInput.add(variable.getName());
+                    break;
+                case OUTPUT:
+                    variablesOutput.add(variable.getName());
+                    break;
+                case CONTROL:
+                    variablesControl.add(variable.getName());
+                    break;
+                case INTERNAL:
+                    variablesInternal.add(variable.getName());
+                    break;
+            }
             invariants.add(variable.getName()+" : "+variable.getType());
             if (variable.hasBounds()) {
                 invariants.add(variable.getName()+" : "+variable.getLowerBound()+".."+variable.getUpperBound());
@@ -39,13 +55,11 @@ public class MachineGenerator implements IMachineGenerator {
             properties.add(property.getExpression());
         }
 
-        LOGGER.info("machine = " + machine.toString());
-        LOGGER.info("variables = " + variables.toString());
-        LOGGER.info("invariants = " + invariants.toString());
-        LOGGER.info("initialisation = " + initialisations.toString());
-
         model.with("name", machine.getName());
-        model.with("variables", variables);
+        model.with("variablesInput", variablesInput);
+        model.with("variablesOutput", variablesOutput);
+        model.with("variablesControl", variablesControl);
+        model.with("variablesInternal", variablesInternal);
         model.with("invariants", invariants);
         model.with("initialisations", initialisations);
         model.with("properties", properties);
