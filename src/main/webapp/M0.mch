@@ -30,7 +30,7 @@ INITIALISATION
     {% endfor %}
 {% endif %}
 
-{% if (variablesInput.size > 0 || variablesOutput > 0 %}
+{% if (variablesInput.size > 0 or variablesOutput.size > 0) %}
 EVENTS
     // Input variables
     {% for variable in variablesInput %}
@@ -39,7 +39,7 @@ EVENTS
 	    
 	THEN
 	    
-	END{% if (loop.last == false && variablesOutput.size == 0 %} ; {% endif %}
+	END{% if (loop.last == false and variablesOutput.size == 0) %} ; {% endif %}
     {% endfor %}
 
     // Output variables
