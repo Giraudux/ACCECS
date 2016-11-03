@@ -29,4 +29,27 @@ INITIALISATION
     {% for initialisation in initialisations %}{% if (loop.first) %}   {% else %}|| {% endif %}{{ initialisation }}
     {% endfor %}
 {% endif %}
+
+{% if (variablesInput.size > 0 || variablesOutput > 0 %}
+EVENTS
+    // Input variables
+    {% for variable in variablesInput %}
+        sense_{{variable}} =
+	SELECT
+	    
+	THEN
+	    
+	END{% if (loop.last == false && variablesOutput.size == 0 %} ; {% endif %}
+    {% endfor %}
+
+    // Output variables
+    {% for variable in variablesOutput %}
+        monitor_{{variable}} =
+	SELECT
+	    
+	THEN
+	    
+	END{% if (loop.last == false) %} ; {% endif %} 
+    {% endfor %}
+{% endif %}
 END
