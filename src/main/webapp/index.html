@@ -4,31 +4,71 @@
     <meta charset="UTF-8">
     <title>ACCECS</title>
     <script src="script.js"></script>
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="style.css" />
 </head>
 <body>
-<h1>Assistance for the Construction of Critical Embedded Control Systems</h1>
-<fieldset id="machine">
-    <legend>Machine</legend>
-    <label>Name:</label><input type="text" class="MachineName">
+
+	<h1>Assistance for the Construction of Critical Embedded Control Systems</h1>
+
+	<fieldset id="machine">
+   		<legend>Machine</legend>
+    	<div class="container">
+    		<div class="row">
+    			<input type="text" class="MachineName col-md-3" placeholder="Machine name">
+    		</div>
+    	</div>
+	</fieldset>
     <br>
+    
     <fieldset id="variables">
         <legend>Variables</legend>
-        <button type="button" onclick="this.parentNode.insertBefore(newElementVariable(), this)">Add variable</button>
+        <div class="container">
+        	<div class="form-inline">
+        		<div class="col-md-1 form-group"></div>
+        		<div class="col-md-3 form-group">Name</div>
+        		<div class="col-md-1 form-group">Type</div>
+        		<div class="col-md-1 form-group">Category</div>
+        		<div class="col-md-2 form-group">Lower bound</div>
+        		<div class="col-md-2 form-group">Upper bound</div>
+        		<div class="col-md-2 form-group">Default value</div>
+        	</div>
+        
+        	<button type="button" class="btn btn-success col-md-1" onclick="this.parentNode.insertBefore(newElementVariable(), this)">Add variable</button>
+        </div>
     </fieldset>
     <br>
+    
     <fieldset id="properties">
         <legend>Properties</legend>
-        <button type="button" onclick="this.parentNode.insertBefore(newElementProperty(), this)">Add property</button>
+        <div class="container">
+        	<div class="form-inline">
+        		<div class="col-md-1 form-group"></div>
+        		<div class="col-md-9 form-group">Expression</div>
+        		<div class="col-md-2 form-group">Category</div>
+        	</div>
+        	
+        	<button type="button" class="btn btn-success col-md-1" onclick="this.parentNode.insertBefore(newElementProperty(), this)">Add property</button>
+        </div>
     </fieldset>
-</fieldset>
-<br>
-<button type="button" onclick="generateMachine()">Generate machine</button>
-<br>
-<fieldset>
-    <legend>Machine</legend>
-    <code id="machine-code"></code>
-</fieldset>
-<button type="button" onclick="">Save</button>
-<button type="button" onclick="">Load</button>
+	<br>
+	
+	<div class="container">
+		<button type="button" id="generateBtn" class="btn btn-success col-md-1" onclick="generateMachine()">Generate machine</button>
+	</div>
+	
+	<br>
+	<br>
+	<fieldset>
+    	<legend>Machine code</legend>
+    	<code id="machine-code"></code>
+	</fieldset>
+	
+	<div class="container">
+		<button type="button" class="btn btn-info" onclick="">Save</button>
+		<button type="button" class="btn btn-info" onclick="">Load</button>
+	</div>
+	
 </body>
 </html>
