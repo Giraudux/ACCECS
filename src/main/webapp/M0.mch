@@ -1,43 +1,32 @@
 MACHINE {{ name }}
-
-{% for variable in variables %}
-    {% if (loop.first == true) %}
+{% if (variablesInput.size + variablesOutput.size + variablesControl.size + variablesInternal.size > 0) %}
 VARIABLES
-    {% endif %}
-    {{ variable }}
-    {% if (loop.last == false) %}
-        ,
-    {% endif %}
-{% endfor %}
-
-{% for property in properties %}
-    {% if (loop.first == true) %}
+    // input variables
+    {% for variable in variablesInput %}{{ variable }},
+    {% endfor %}
+    // output variables
+    {% for variable in variablesOutput %}{{ variable }},
+    {% endfor %}
+    // control variables
+    {% for variable in variablesControl %}{{ variable }},
+    {% endfor %}
+    // internal variables
+    {% for variable in variablesInternal %}{{ variable }},
+    {% endfor %}
+{% endif %}
+{% if (properties.size > 0) %}
 PROPERTIES
-    {% endif %}
-    {% if (loop.first == false) %}
-        &
-    {% endif %}
-    {{ property }}
-{% endfor %}
-
-{% for invariant in invariants %}
-    {% if (loop.first == true) %}
+    {% for property in properties %}{% if (loop.first) %}  {% else %}& {% endif %}{{ property }}
+    {% endfor %}
+{% endif %}
+{% if (invariants.size > 0) %}
 INVARIANTS
-    {% endif %}
-    {% if (loop.first == false) %}
-        &
-    {% endif %}
-    {{ invariant }}
-{% endfor %}
-
-{% for initialisation in initialisations %}
-    {% if (loop.first == true) %}
+    {% for invariant in invariants %}{% if (loop.first) %}  {% else %}& {% endif %}{{ invariant }}
+    {% endfor %}
+{% endif %}
+{% if (initialisations.size > 0) %}
 INITIALISATION
-    {% endif %}
-    {% if (loop.first == false) %}
-        ||
-    {% endif %}
-    {{ initialisation }}
-{% endfor %}
-
+    {% for initialisation in initialisations %}{% if (loop.first) %}   {% else %}|| {% endif %}{{ initialisation }}
+    {% endfor %}
+{% endif %}
 END
