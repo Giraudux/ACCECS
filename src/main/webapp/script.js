@@ -26,20 +26,20 @@ function newElement(name, attributes, childs) {
  */
 function newElementProperty() {
     return newElement("FIELDSET", {
-        class: "Property"
+        class: "Property form-inline"
     }, [
         newElement("BUTTON", {
             type: "button",
+            class: "col-sm-1 btn btn-danger",
             onclick: "this.parentNode.parentNode.removeChild(this.parentNode)"
         }, [document.createTextNode("Remove")]),
-        newElement("LABEL", {}, [document.createTextNode("Expression:")]),
         newElement("INPUT", {
             type: "text",
-            class: "PropertyExpression"
+            placeholder: "Property expression",
+            class: "PropertyExpression col-md-9"
         }, []),
-        newElement("LABEL", {}, [document.createTextNode("Category:")]),
         newElement("SELECT", {
-            class: "PropertyCategory"
+            class: "PropertyCategory col-md-2"
         }, [
             newElement("OPTION", {
                 value: "safety"
@@ -63,23 +63,23 @@ function newElementVariable() {
     var option;
 
     variable = newElement("FIELDSET", {
-        class: "Variable"
+        class: "Variable form-inline"
     }, []);
 
     variable.appendChild(newElement("BUTTON", {
         type: "button",
+        class: "col-sm-1 btn btn-danger",
         onclick: "this.parentNode.parentNode.removeChild(this.parentNode)"
-    }, [document.createTextNode("Remove")]));
+    }, [document.createTextNode("Remove variable")]));
 
-    variable.appendChild(newElement("LABEL", {}, [document.createTextNode("Name:")]));
     variable.appendChild(newElement("INPUT", {
         type: "text",
-        class: "VariableName"
+        class: "VariableName  col-sm-3",
+        placeholder: "Variable name"
     }, []));
 
-    variable.appendChild(newElement("LABEL", {}, [document.createTextNode("Type:")]));
     variable.appendChild(newElement("SELECT", {
-        class: "VariableType",
+        class: "VariableType  col-sm-1",
         onchange: "updateVariable(this.parentNode)"
     }, [
         newElement("OPTION", {
@@ -93,9 +93,8 @@ function newElementVariable() {
         }, [document.createTextNode("Boolean")])
     ]));
 
-    variable.appendChild(newElement("LABEL", {}, [document.createTextNode("Category:")]));
     variable.appendChild(newElement("SELECT", {
-        class: "VariableCategory"
+        class: "VariableCategory col-sm-1"
     }, [
         newElement("OPTION", {
             value: "input"
@@ -111,22 +110,19 @@ function newElementVariable() {
         }, [document.createTextNode("Internal")])
     ]));
 
-    variable.appendChild(newElement("LABEL", {}, [document.createTextNode("Lower bound:")]));
     variable.appendChild(newElement("INPUT", {
         type: "number",
-        class: "VariableLowerBound"
+        class: "VariableLowerBound col-sm-2"
     }, []));
 
-    variable.appendChild(newElement("LABEL", {}, [document.createTextNode("Upper bound:")]));
     variable.appendChild(newElement("INPUT", {
         type: "number",
-        class: "VariableUpperBound"
+        class: "VariableUpperBound col-sm-2"
     }, []));
 
-    variable.appendChild(newElement("LABEL", {}, [document.createTextNode("Default value:")]));
     variable.appendChild(newElement("INPUT", {
         type: "text",
-        class: "VariableDefaultValue"
+        class: "VariableDefaultValue col-sm-2"
     }, []));
 
     return variable;
@@ -185,7 +181,8 @@ function generateMachine() {
             console.log(xhttp.response);
         }
     };
-    xhttp.open("POST", "dataServlet", true);
+    xhttp.open("POST", "/dataServlet", true);
+    xhttp.responseType = "text";
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.send("data=" + encodeURIComponent(machineToJSON()));
 }
