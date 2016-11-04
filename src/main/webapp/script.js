@@ -193,7 +193,7 @@ function generateMachine() {
  */
 function saveJson() {
     console.log(machineToJSON());
-    document.getElementsByClassName("dataToSave")[0].value = machineToJSON(); 
+    document.getElementById("dataToSave").value = machineToJSON(); 
     document.getElementById("saveForm").submit();
 }
 

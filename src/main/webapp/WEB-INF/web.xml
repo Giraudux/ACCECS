@@ -9,9 +9,19 @@
 		<servlet-class>fr.univ.nantes.alma.accecs.controler.DataServlet</servlet-class>
 	</servlet>
 	
+	<servlet>
+		<servlet-name>SaveJsonServlet</servlet-name>
+		<servlet-class>fr.univ.nantes.alma.accecs.controler.SaveJsonServlet</servlet-class>
+	</servlet>
+	
 	<servlet-mapping>
 		<servlet-name>DataServlet</servlet-name>
 		<url-pattern>/dataServlet</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>SaveJsonServlet</servlet-name>
+		<url-pattern>/savejsonservlet</url-pattern>
 	</servlet-mapping>
 	
 </web-app>

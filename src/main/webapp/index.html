@@ -35,7 +35,7 @@
         		<div class="col-md-2 form-group">Default value</div>
         	</div>
         
-        	<button type="button" class="btn btn-success col-md-1" onclick="this.parentNode.insertBefore(newElementVariable(), this)">Add variable</button>
+        	<button id="addVariableBtn" type="button" class="btn btn-success col-md-1" onclick="this.parentNode.insertBefore(newElementVariable(), this)">Add variable</button>
         </div>
     </fieldset>
     <br>
@@ -49,7 +49,7 @@
         		<div class="col-md-2 form-group">Category</div>
         	</div>
         	
-        	<button type="button" class="btn btn-success col-md-1" onclick="this.parentNode.insertBefore(newElementProperty(), this)">Add property</button>
+        	<button id="addPropertiesBtn" type="button" class="btn btn-success col-md-1" onclick="this.parentNode.insertBefore(newElementProperty(), this)">Add property</button>
         </div>
     </fieldset>
 	<br>
@@ -65,9 +65,14 @@
     	<code id="machine-code"></code>
 	</fieldset>
 	
+	<form id="saveForm" action="/accecs/savejsonservlet" method="post">
+		<input id="dataToSave" name="data" type="hidden">
+	</form>
+	
 	<div class="container">
-		<button type="button" class="btn btn-info" onclick="">Save</button>
-		<button type="button" class="btn btn-info" onclick="">Load</button>
+		<button type="button" class="btn btn-info" onclick="saveJson()">Save</button>
+		<button type="button" class="btn btn-info" onclick="" disabled="disabled">Load</button>
+		<input type="file" onchange="loadJson(this.files)" />
 	</div>
 	
 </body>
