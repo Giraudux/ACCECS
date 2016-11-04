@@ -26,20 +26,20 @@ function newElement(name, attributes, childs) {
  */
 function newElementProperty() {
     return newElement("FIELDSET", {
-        class: "Property"
+        class: "Property form-inline"
     }, [
         newElement("BUTTON", {
             type: "button",
+            class: "col-sm-1 btn btn-danger",
             onclick: "this.parentNode.parentNode.removeChild(this.parentNode)"
         }, [document.createTextNode("Remove")]),
-        newElement("LABEL", {}, [document.createTextNode("Expression:")]),
         newElement("INPUT", {
             type: "text",
-            class: "PropertyExpression"
+            placeholder: "Property expression",
+            class: "PropertyExpression col-md-9"
         }, []),
-        newElement("LABEL", {}, [document.createTextNode("Category:")]),
         newElement("SELECT", {
-            class: "PropertyCategory"
+            class: "PropertyCategory col-md-2"
         }, [
             newElement("OPTION", {
                 value: "safety"
@@ -63,23 +63,23 @@ function newElementVariable() {
     var option;
 
     variable = newElement("FIELDSET", {
-        class: "Variable"
+        class: "Variable form-inline"
     }, []);
 
     variable.appendChild(newElement("BUTTON", {
         type: "button",
+        class: "col-sm-1 btn btn-danger",
         onclick: "this.parentNode.parentNode.removeChild(this.parentNode)"
-    }, [document.createTextNode("Remove")]));
+    }, [document.createTextNode("Remove variable")]));
 
-    variable.appendChild(newElement("LABEL", {}, [document.createTextNode("Name:")]));
     variable.appendChild(newElement("INPUT", {
         type: "text",
-        class: "VariableName"
+        class: "VariableName  col-sm-3",
+        placeholder: "Variable name"
     }, []));
 
-    variable.appendChild(newElement("LABEL", {}, [document.createTextNode("Type:")]));
     variable.appendChild(newElement("SELECT", {
-        class: "VariableType",
+        class: "VariableType  col-sm-1",
         onchange: "updateVariable(this.parentNode)"
     }, [
         newElement("OPTION", {
@@ -93,9 +93,8 @@ function newElementVariable() {
         }, [document.createTextNode("Boolean")])
     ]));
 
-    variable.appendChild(newElement("LABEL", {}, [document.createTextNode("Category:")]));
     variable.appendChild(newElement("SELECT", {
-        class: "VariableCategory"
+        class: "VariableCategory col-sm-1"
     }, [
         newElement("OPTION", {
             value: "input"
@@ -111,22 +110,19 @@ function newElementVariable() {
         }, [document.createTextNode("Internal")])
     ]));
 
-    variable.appendChild(newElement("LABEL", {}, [document.createTextNode("Lower bound:")]));
     variable.appendChild(newElement("INPUT", {
         type: "number",
-        class: "VariableLowerBound"
+        class: "VariableLowerBound col-sm-2"
     }, []));
 
-    variable.appendChild(newElement("LABEL", {}, [document.createTextNode("Upper bound:")]));
     variable.appendChild(newElement("INPUT", {
         type: "number",
-        class: "VariableUpperBound"
+        class: "VariableUpperBound col-sm-2"
     }, []));
 
-    variable.appendChild(newElement("LABEL", {}, [document.createTextNode("Default value:")]));
     variable.appendChild(newElement("INPUT", {
         type: "text",
-        class: "VariableDefaultValue"
+        class: "VariableDefaultValue col-sm-2"
     }, []));
 
     return variable;
@@ -185,9 +181,82 @@ function generateMachine() {
             console.log(xhttp.response);
         }
     };
-    xhttp.open("POST", "dataServlet", true);
+    xhttp.open("POST", "/dataServlet", true);
+    xhttp.responseType = "text";
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.send("data=" + encodeURIComponent(machineToJSON()));
+}
+
+/**
+ * 
+ * @returns
+ */
+function saveJson() {
+    console.log(machineToJSON());
+    document.getElementsByClassName("dataToSave")[0].value = machineToJSON(); 
+    document.getElementById("saveForm").submit();
+}
+
+function loadJson(files) {
+	  if(files.length>0) {
+		cleanForm();
+	    var file = files[0];
+	    var reader = new FileReader();
+	    reader.onload = function(e) {
+	    	  var text = reader.result;
+	    	  console.log(text);
+	    	  var objJson = JSON.parse(text);
+	    	  var i=0;
+	    	  
+	    	  for(var vr in objJson.variables){
+	    		  var variablesBtn =  document.getElementById("addVariableBtn");
+	    		  variablesBtn.parentNode.insertBefore(newElementVariable(), variablesBtn);
+	    		  fillVariableForm(objJson, vr, i);
+	    	      i++;
+	    	  }
+	    	  var j = 0;
+	    	  for(var key in objJson.properties){
+	    		  var propertiesBtn =  document.getElementById("addPropertiesBtn");
+	    		  propertiesBtn.parentNode.insertBefore(newElementProperty(), propertiesBtn);
+	    		  fillPropertyForm(objJson, key, j)
+	    		  j++;
+	    	  }
+	    	  document.getElementsByClassName("MachineName")[0].value = objJson.name;
+	    }
+	    reader.readAsText(file);
+	  }
+}
+
+function fillVariableForm(objJson, key, index){
+			var variables = document.getElementsByClassName("Variable");
+			var variable = variables[index];
+	        variable.getElementsByClassName("VariableName")[0].value = objJson.variables[key].name;
+	        variable.getElementsByClassName("VariableType")[0].value = objJson.variables[key].type;
+	        variable.getElementsByClassName("VariableCategory")[0].value = objJson.variables[key].category;
+	        variable.getElementsByClassName("VariableLowerBound")[0].value = objJson.variables[key].lowerBound;
+	        variable.getElementsByClassName("VariableUpperBound")[0].value = objJson.variables[key].upperBound;
+	        variable.getElementsByClassName("VariableDefaultValue")[0].value = objJson.variables[key].defaultValue;
+}
+
+function fillPropertyForm(objJson, key, index){
+	var properties = document.getElementsByClassName("Property");
+	var property = properties[index];
+	property.getElementsByClassName("PropertyExpression")[0].value = objJson.properties[key].expression;
+	property.getElementsByClassName("PropertyCategory")[0].value = objJson.properties[key].category;
+}
+
+function cleanForm(){
+	var variables = document.getElementsByClassName("Variable");
+	var initialSize = variables.length;
+    for (i = 0; i < initialSize; i++) {
+    	variables[0].parentNode.removeChild(variables[0]);
+    }
+    
+    var properties = document.getElementsByClassName("Property");
+	var initialSizePr = properties.length;
+    for (i = 0; i < initialSizePr; i++) {
+    	properties[0].parentNode.removeChild(properties[0]);
+    }
 }
 
 /**
