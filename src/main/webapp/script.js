@@ -321,3 +321,14 @@ function machineToJSON() {
 
     return JSON.stringify(machine);
 }
+function selectMachine(){
+        if (document.selection) {
+            var range = document.body.createTextRange();
+            range.moveToElementText(document.getElementById("machine-code"));
+            range.select();
+        } else if (window.getSelection) {
+            var range = document.createRange();
+            range.selectNode(document.getElementById("machine-code"));
+            window.getSelection().addRange(range);
+        }
+}
