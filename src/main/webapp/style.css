@@ -24,8 +24,13 @@ fieldset{
 	font-weight : bolder;
 }
 	
-#generateBtn{
-	margin-top:2%;
-	margin-bottom:4%;
-	margin-left:10%;
-	}
+
+	
+#machine-code{
+	white-space:pre;
+	margin-left:5%;
+	margin-right:5%;
+	margin-bottom:2%;
+	padding:1%;
+	background-color: #F9F2F4;
+}
