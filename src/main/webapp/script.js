@@ -237,11 +237,18 @@ function fillVariableForm(objJson, key, index){
 			var variable = variables[index];
 	        variable.getElementsByClassName("VariableName")[0].value = objJson.variables[key].name;
 	        variable.getElementsByClassName("VariableType")[0].value = objJson.variables[key].type;
+	        if(objJson.variables[key].type=='boolean'){
+				variable.getElementsByClassName("VariableLowerBound")[0].disabled = true;
+				variable.getElementsByClassName("VariableUpperBound")[0].disabled = true;
+				}
+				 else{
+				variable.getElementsByClassName("VariableLowerBound")[0].value = objJson.variables[key].lowerBound;
+				variable.getElementsByClassName("VariableUpperBound")[0].value = objJson.variables[key].upperBound;
+				}
 	        variable.getElementsByClassName("VariableCategory")[0].value = objJson.variables[key].category;
-	        variable.getElementsByClassName("VariableLowerBound")[0].value = objJson.variables[key].lowerBound;
-	        variable.getElementsByClassName("VariableUpperBound")[0].value = objJson.variables[key].upperBound;
 	        variable.getElementsByClassName("VariableDefaultValue")[0].value = objJson.variables[key].defaultValue;
-}
+			}
+
 
 function fillPropertyForm(objJson, key, index){
 	var properties = document.getElementsByClassName("Property");
