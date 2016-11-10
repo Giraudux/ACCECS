@@ -182,8 +182,16 @@ function generateMachine() {
 
     xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
-        if (xhttp.readyState == 4 && xhttp.status == 200) {
-            console.log(xhttp.response);
+        if (xhttp.readyState == 4 && xhttp.status == 200) { 
+        
+        	var element = document.getElementById("machine-code");
+        
+            while (element.firstChild) {
+    			element.removeChild(element.firstChild);
+			}
+        
+           element.appendChild(newElement("CODE",{
+           }, [document.createTextNode(xhttp.response)]));       
         }
     };
     xhttp.open("POST", "/dataServlet", true);
