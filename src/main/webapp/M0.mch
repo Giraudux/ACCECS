@@ -1,8 +1,8 @@
 MACHINE 
-	{{ name }}
+    {{ name }}
 {% if (variablesInput.size + variablesOutput.size + variablesControl.size + variablesInternal.size > 0) %}
 VARIABLES
-	{% if (variablesInput.size > 0) %}// input variables{% endif %}
+    {% if (variablesInput.size > 0) %}// input variables{% endif %}
     {% for variable in variablesInput %}{{ variable }}{% if (variablesOutput.size > 0 or variablesControl.size > 0 or variablesInternal.size > 0 or loop.last == false) %}, {% endif %}
     {% endfor %}
     {% if (variablesOutput.size > 0) %}// output variables{% endif %}
@@ -20,27 +20,25 @@ VARIABLES
 {% if (invariants.size > 0) %}INVARIANT
     {% for invariant in invariants %}{% if (loop.first) %}  {% else %}& {% endif %}{{ invariant }}
     {% endfor %}{% endif %}
-{% if (initialisations.size > 0) %}
-INITIALISATION
+{% if (initialisations.size > 0) %}INITIALISATION
     {% for initialisation in initialisations %}{% if (loop.first) %}   {% else %}|| {% endif %}{{ initialisation }}
-    {% endfor %}
-{% endif %}
+    {% endfor %}{% endif %}
 {% if (variablesInput.size > 0 or variablesOutput.size > 0) %}EVENTS
 
     {% if (variablesOutput.size > 0) %}// Sense events {% endif %}{% for variable in variablesInput %}
     sense_{{variable}} =
-		SELECT
-		    {{variable}} = {{variable}}
-		THEN
-		    {{variable}} := {{variable}}
-		END;
+        SELECT
+            {{variable}} = {{variable}}
+        THEN
+            {{variable}} := {{variable}}
+        END{% if ( variablesOutput.size > 0 or loop.last == false) %}; {% endif %}
     {% endfor %}
     {% if (variablesOutput.size > 0) %}// Monitor events {% endif %} {% for variable in variablesOutput %}
     monitor_{{variable}} =
-		SELECT
-	    	{{variable}} = {{variable}}
-		THEN
-	    	{{variable}} := {{variable}} 
-		END; 
+        SELECT
+            {{variable}} = {{variable}}
+        THEN
+            {{variable}} := {{variable}} 
+        END{% if (loop.last == false) %}; {% endif %}
     {% endfor %} {% endif %}
 END

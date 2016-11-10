@@ -129,6 +129,8 @@ function newElementVariable() {
         type: "text",
         class: "VariableDefaultValue col-sm-2"
     }, []));
+    
+    updateVariable(variable);
 
     return variable;
 }
