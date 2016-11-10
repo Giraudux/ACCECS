@@ -178,8 +178,6 @@ function updateVariable(variable) {
 function generateMachine() {
     var xhttp;
 
-    console.log(machineToJSON());
-
     xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (xhttp.readyState == 4 && xhttp.status == 200) { 

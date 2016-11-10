@@ -10,6 +10,13 @@
 </head>
 <body>
 
+<script type="text/javascript">
+function getfile(){
+    document.getElementById('hiddenfile').click();
+    document.getElementById('selectedfile').value=document.getElementById('hiddenfile').value
+}
+</script>
+
 	<h1>Assistance for the Construction of Critical Embedded Control Systems</h1>
 
 	<fieldset id="machine">
@@ -55,24 +62,35 @@
 	<br>
 	
 	
-	<br>
-	<br>
 	<fieldset>
     	<legend>Machine code</legend>
+    	
+    	<form id="saveForm" action="/savejsonservlet" method="post">
+			<input id="dataToSave" name="data" type="hidden">
+		</form>
+	
+    	<div class="container">
+			<button type="button" class="btn btn-info" onclick="generateMachine()">Generate machine</button>
+			<button type="button" class="btn btn-info" onclick="saveJson()">Save</button>
+			<input type="file" id="hiddenfile" style="display:none" onchange="loadJson(this.files)"/>
+			<input type="button" class="btn btn-info" value="Load" onclick="getfile()" />
+		</div>
+		
+		<br>
+    	
     	<div id="machine-code"></div>
 	</fieldset>
 	
 	
-	<form id="saveForm" action="/savejsonservlet" method="post">
-		<input id="dataToSave" name="data" type="hidden">
-	</form>
+
 	
-	<div class="container">
-		<button type="button" class="btn btn-info" onclick="generateMachine()">Generate machine</button>
-		<button type="button" class="btn btn-info" onclick="saveJson()">Save</button>
-		<button type="button" class="btn btn-info" onclick="" disabled="disabled">Load</button>
-		<input type="file" onchange="loadJson(this.files)" />
-	</div>
+
+	
+	
+
+	
+	
+	
 	
 </body>
 </html>
