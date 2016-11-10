@@ -26,7 +26,8 @@ function newElement(name, attributes, childs) {
  */
 function newElementProperty() {
     return newElement("FIELDSET", {
-        class: "Property form-inline"
+        class: "Property form-inline",
+        required: true
     }, [
         newElement("BUTTON", {
             type: "button",
@@ -35,6 +36,7 @@ function newElementProperty() {
         }, [document.createTextNode("Remove")]),
         newElement("INPUT", {
             type: "text",
+            required: true,
             placeholder: "Property expression",
             class: "PropertyExpression col-md-9"
         }, []),
@@ -74,6 +76,7 @@ function newElementVariable() {
 
     variable.appendChild(newElement("INPUT", {
         type: "text",
+        required: true,
         class: "VariableName  col-sm-3",
         placeholder: "Variable name"
     }, []));
@@ -112,11 +115,13 @@ function newElementVariable() {
 
     variable.appendChild(newElement("INPUT", {
         type: "number",
+        required: true,
         class: "VariableLowerBound col-sm-2"
     }, []));
 
     variable.appendChild(newElement("INPUT", {
         type: "number",
+        required: true,
         class: "VariableUpperBound col-sm-2"
     }, []));
 
