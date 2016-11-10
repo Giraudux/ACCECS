@@ -33,7 +33,7 @@ INITIALISATION
 		    {{variable}} = {{variable}}
 		THEN
 		    {{variable}} := {{variable}}
-		END;
+		END{% if ( variablesOutput.size > 0 or loop.last == false) %}; {% endif %}
     {% endfor %}
     {% if (variablesOutput.size > 0) %}// Monitor events {% endif %} {% for variable in variablesOutput %}
     monitor_{{variable}} =
@@ -41,6 +41,6 @@ INITIALISATION
 	    	{{variable}} = {{variable}}
 		THEN
 	    	{{variable}} := {{variable}} 
-		END; 
+		END{% if (loop.last == false) %}; {% endif %}
     {% endfor %} {% endif %}
 END
