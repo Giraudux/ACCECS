@@ -30,7 +30,8 @@ VARIABLES
         SELECT
             {{variable}} = {{variable}}
         THEN
-            {{variable}} := {{variable}}
+            //TODO
+            skip
         END{% if ( variablesOutput.size > 0 or loop.last == false) %}; {% endif %}
     {% endfor %}
     {% if (variablesOutput.size > 0) %}// Monitor events {% endif %} {% for variable in variablesOutput %}
@@ -38,7 +39,8 @@ VARIABLES
         SELECT
             {{variable}} = {{variable}}
         THEN
-            {{variable}} := {{variable}} 
+            //TODO
+            skip
         END{% if (loop.last == false) %}; {% endif %}
     {% endfor %} {% endif %}
 END
