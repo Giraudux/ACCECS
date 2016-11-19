@@ -21,7 +21,28 @@ public class ParserJSON {
         properties = new ArrayList<Property>();
         events = new ArrayList<Event>();
     }
-
+    @SuppressWarnings({ "rawtypes", "unused" })
+	public CategoryVariable convertVariableCategory(String variableCategory){
+    	Class c = null;
+    	CategoryVariable categoryVar = null;
+		try {
+			c = Class.forName("fr.univ.nantes.alma.accecs.model."+variableCategory.toUpperCase());
+		} catch (ClassNotFoundException e) {
+			
+			e.printStackTrace();
+		}
+    	
+		try {
+			categoryVar = (CategoryVariable) c.newInstance();
+		} catch (InstantiationException e) {
+			
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			
+			e.printStackTrace();
+		}
+    	return categoryVar;
+    }
     public void parse(String json) throws Exception {
 
         JSONObject jsonMachine = new JSONObject(json);
@@ -36,7 +57,8 @@ public class ParserJSON {
             String variableName = jsonVariable.getString("name");
             String variableType = jsonVariable.getString("type");
             String variableCategory = jsonVariable.getString("category");
-
+            
+            //TODO changer pour category variable 
             Variable.Category category;
             if (variableCategory.equals("input")) {
                 category = Variable.Category.INPUT;

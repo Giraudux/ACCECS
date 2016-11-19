@@ -30,7 +30,8 @@ public class MachineGenerator implements IMachineGenerator {
         Collection<String> properties = new ArrayList<String>();
 
         for (Variable variable : machine.getVariables()) {
-            switch (variable.getCategory()) {
+            //TODO Changer pour category variable
+        	switch (variable.getCategory()) {
                 case INPUT:
                     variablesInput.add(variable.getName());
                     break;
