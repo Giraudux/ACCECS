@@ -23,7 +23,7 @@ function getfile(){
    		<legend>System</legend>
     	<div class="container">
     		<div class="row">
-    			<input type="text" class="MachineName col-md-3" placeholder="Machine name" required>
+    			<input type="text" class="MachineName col-md-3" placeholder="Name of your system" required>
     		</div>
     	</div>
 	</fieldset>
@@ -41,14 +41,20 @@ function getfile(){
         		<div class="col-md-2 form-group">Upper bound</div>
         		<div class="col-md-2 form-group">Default value</div>
         	</div>
-        
+        	
+        	<div id="categoryinput"></div>
+        	<div id="categoryoutput"></div>
+        	<div id="categorycontrol"></div>
+        	<div id="categoryinternal"></div>
         	<button id="addVariableBtn" type="button" class="btn btn-success col-md-1" onclick="this.parentNode.insertBefore(newElementVariable(), this)">Add variable</button>
+        	
+        
         </div>
     </fieldset>
     <br>
     
     <fieldset id="properties">
-        <legend>Properties</legend>
+        <legend>Invariant's properties</legend>
         <div class="container">
         	<div class="form-inline">
         		<div class="col-md-1 form-group"></div>

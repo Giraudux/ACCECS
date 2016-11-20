@@ -72,7 +72,7 @@ function newElementVariable() {
         type: "button",
         class: "col-sm-1 btn btn-danger",
         onclick: "this.parentNode.parentNode.removeChild(this.parentNode)"
-    }, [document.createTextNode("Remove variable")]));
+    }, [document.createTextNode("Remove")]));
 
     variable.appendChild(newElement("INPUT", {
         type: "text",
@@ -97,8 +97,12 @@ function newElementVariable() {
     ]));
 
     variable.appendChild(newElement("SELECT", {
-        class: "VariableCategory col-sm-1"
+        class: "VariableCategory col-sm-1",
+        onchange: "updateCategory(this.parentNode)"
     }, [
+        newElement("OPTION", {
+        	value: ""
+        }, [document.createTextNode("")]),
         newElement("OPTION", {
             value: "input"
         }, [document.createTextNode("Input")]),
@@ -172,6 +176,15 @@ function updateVariable(variable) {
 
     variable.getElementsByClassName("VariableLowerBound")[0].disabled = disableBounds;
     variable.getElementsByClassName("VariableUpperBound")[0].disabled = disableBounds;
+}
+
+
+function updateCategory(variable){
+	var category = variable.getElementsByClassName("VariableCategory")[0].value;
+	//var old = variable.parentNode;
+	document.getElementById("category"+category).appendChild(variable);
+	//old.removeChild(variable);
+
 }
 
 /**
