@@ -34,3 +34,29 @@ fieldset{
 	padding:1%;
 	background-color: #F9F2F4;
 }
+
+#categoryinput, #categoryoutput, #categorycontrol, #categoryinternal{
+	border-bottom:1px solid gray;
+	margin-bottom:1%;
+}
+
+.onglet{
+	width:33%;
+	}
+	
+.btn-primary{
+
+}
+
+.btn-secondary{
+
+
+}
+
+.contentActif{
+	 display: block;
+}
+
+.contentInactif{
+	display: none;
+}
