@@ -1,12 +1,13 @@
 package fr.univ.nantes.alma.accecs.parser;
 
 import fr.univ.nantes.alma.accecs.model.*;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Collection;
-
+@SuppressWarnings("rawtypes")
 public class ParserJSON {
 
     private String name;
@@ -21,7 +22,7 @@ public class ParserJSON {
         properties = new ArrayList<Property>();
         events = new ArrayList<Event>();
     }
-    @SuppressWarnings({ "rawtypes", "unused" })
+    //@SuppressWarnings({ "rawtypes", "unused" })
 	public CategoryVariable convertVariableCategory(String variableCategory){
     	Class c = null;
     	CategoryVariable categoryVar = null;

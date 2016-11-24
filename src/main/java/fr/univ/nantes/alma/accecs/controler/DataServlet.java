@@ -10,13 +10,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
-import java.util.logging.Logger;
+//import java.util.logging.Logger;
 
 
 public class DataServlet extends HttpServlet {
-    private static final Logger LOGGER = Logger.getLogger(DataServlet.class.getName());
+   // private static final Logger LOGGER = Logger.getLogger(DataServlet.class.getName());
 
-    @Override
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -6576666616262736326L;
+
+	@Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ParserJSON parser = new ParserJSON();
         try {
