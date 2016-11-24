@@ -60,10 +60,4 @@ public abstract class Variable<T> {
         CONTROL,
         INTERNAL
     }
-
-    /*public enum Type {
-        INTEGER,
-        NATURAL,
-        BOOLEAN
-    }*/
 }

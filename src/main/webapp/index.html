@@ -18,84 +18,120 @@ function getfile(){
 </script>
 
 	<h1>Assistance for the Construction of Critical Embedded Control Systems</h1>
-
-	<fieldset id="machine">
-   		<legend>System</legend>
-    	<div class="container">
-    		<div class="row">
-    			<input type="text" class="MachineName col-md-3" placeholder="Name of your system" required>
-    		</div>
-    	</div>
-	</fieldset>
-    <br>
-    
-    <fieldset id="variables">
-        <legend>Variables</legend>
-        <div class="container">
-        	<div class="form-inline">
-        		<div class="col-md-1 form-group"></div>
-        		<div class="col-md-3 form-group">Name</div>
-        		<div class="col-md-1 form-group">Type</div>
-        		<div class="col-md-1 form-group">Category</div>
-        		<div class="col-md-2 form-group">Lower bound</div>
-        		<div class="col-md-2 form-group">Upper bound</div>
-        		<div class="col-md-2 form-group">Default value</div>
-        	</div>
-        	
-        	<div id="categoryinput"></div>
-        	<div id="categoryoutput"></div>
-        	<div id="categorycontrol"></div>
-        	<div id="categoryinternal"></div>
-        	<button id="addVariableBtn" type="button" class="btn btn-success col-md-1" onclick="this.parentNode.insertBefore(newElementVariable(), this)">Add variable</button>
-        	
-        
-        </div>
-    </fieldset>
-    <br>
-    
-    <fieldset id="properties">
-        <legend>Invariant's properties</legend>
-        <div class="container">
-        	<div class="form-inline">
-        		<div class="col-md-1 form-group"></div>
-        		<div class="col-md-9 form-group">Expression</div>
-        		<div class="col-md-2 form-group">Category</div>
-        	</div>
-        	
-        	<button id="addPropertiesBtn" type="button" class="btn btn-success col-md-1" onclick="this.parentNode.insertBefore(newElementProperty(), this)">Add property</button>
-        </div>
-    </fieldset>
-	<br>
 	
 	
-	<fieldset>
-    	<legend>Machine code</legend>
-    	
-    	<form id="saveForm" action="/savejsonservlet" method="post">
-			<input id="dataToSave" name="data" type="hidden">
-			<input id="machineName" name="machine" type="hidden">
-		</form>
-	
-    	<div class="container">
-			<button type="button" class="btn btn-info" onclick="generateMachine()">Generate machine</button>
-			<button type="button" class="btn btn-info" onclick="saveJson()">Save</button>
-			<button type ="button"  class="btn btn-info" onclick="selectMachine()">Select Machine</button>
-			<input type="file" id="hiddenfile" style="display:none" onchange="loadJson(this.files)"/>
-			<input type="button" class="btn btn-info" value="Load" onclick="getfile()" />
+	    <div class="container">
+			<button type="button" class="btn btn-primary onglet" id="onglet1" onclick="changeScreen(1, 3)">Step 1</button>
+			<button type="button" class="btn btn-secondary onglet" id="onglet2" onclick="changeScreen(2, 3)">Step 2</button>
+			<button type="button" class="btn btn-secondary onglet" id="onglet3" onclick="changeScreen(3, 3)">Step 3</button>
 		</div>
-		
+	
+	
+	<!-- Premier onglet -->
+	<div id="content1" class="contentActif">
+		<fieldset id="machine">
+			<legend>System</legend>
+			<div class="container">
+				<div class="row">
+					<input type="text" class="MachineName col-md-3" placeholder="Name of your system" required>
+				</div>
+			</div>
+		</fieldset>
 		<br>
-    	
-    	<div id="machine-code"></div>
-	</fieldset>
-	
+		
+		<fieldset id="variables">
+			<legend>Variables</legend>
+			<div class="container">
+				<div class="form-inline">
+					<div class="col-md-1 form-group"></div>
+					<div class="col-md-3 form-group">Name</div>
+					<div class="col-md-1 form-group">Type</div>
+					<div class="col-md-1 form-group">Category</div>
+					<div class="col-md-2 form-group">Lower bound</div>
+					<div class="col-md-2 form-group">Upper bound</div>
+					<div class="col-md-2 form-group">Default value</div>
+				</div>
+				
+				<div id="categoryinput"></div>
+				<div id="categoryoutput"></div>
+				<div id="categorycontrol"></div>
+				<div id="categoryinternal"></div>
+				<button id="addVariableBtn" type="button" class="btn btn-success col-md-1" onclick="this.parentNode.insertBefore(newElementVariable(), this)">Add variable</button>
+				
+			
+			</div>
+		</fieldset>
+		<br>
+		
+		<fieldset id="properties">
+			<legend>Invariant's properties</legend>
+			<div class="container">
+				<div class="form-inline">
+					<div class="col-md-1 form-group"></div>
+					<div class="col-md-9 form-group">Expression</div>
+					<div class="col-md-2 form-group">Category</div>
+				</div>
+				
+				<button id="addPropertiesBtn" type="button" class="btn btn-success col-md-1" onclick="this.parentNode.insertBefore(newElementProperty(), this)">Add property</button>
+			</div>
+		</fieldset>
+		<br>
+		
+		<div class="container">
+			<button type="button" class="btn btn-info" onclick="nextStep(2)">Next Step ></button>
+		</div>
+	</div>
 	
 
-	
 
-	
-	
 
+
+	<!-- Deuxieme onglet -->
+	<div id="content2" class="contentInactif">
+		<fieldset id="events">
+			<legend>Events</legend>
+			<div class="container">
+				<div class="form-inline">
+					<div class="col-md-1 form-group"></div>
+					<div class="col-md-9 form-group">Expression</div>
+					<div class="col-md-2 form-group">Type</div>
+				</div>
+				
+				<button id="addPropertiesBtn" type="button" class="btn btn-success col-md-1" onclick="this.parentNode.insertBefore(newElementEvent(), this)">Add event</button>
+			</div>
+		</fieldset>
+		<br>
+		
+		<div class="container">
+			<button type="button" class="btn btn-info" onclick="nextStep(3)">Next Step ></button>
+		</div>
+	</div>
+	
+	
+	
+	<!-- Troisieme onglet -->
+	<div id="content3" class="contentInactif">
+		<fieldset>
+			<legend>Machine code</legend>
+			
+			<form id="saveForm" action="/savejsonservlet" method="post">
+				<input id="dataToSave" name="data" type="hidden">
+				<input id="machineName" name="machine" type="hidden">
+			</form>
+		
+			<div class="container">
+				<button type="button" class="btn btn-info" onclick="generateMachine()">Generate machine</button>
+				<button type="button" class="btn btn-info" onclick="saveJson()">Save</button>
+				<button type ="button"  class="btn btn-info" onclick="selectMachine()">Select Machine</button>
+				<input type="file" id="hiddenfile" style="display:none" onchange="loadJson(this.files)"/>
+				<input type="button" class="btn btn-info" value="Load" onclick="getfile()" />
+			</div>
+			
+			<br>
+			
+			<div id="machine-code"></div>
+		</fieldset>
+	</div>
 	
 	
 	

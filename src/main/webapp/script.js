@@ -1,3 +1,73 @@
+
+/***
+ * Methode permettant de changer d'onglet et d'afficher le contenu voulu
+ * */
+function changeScreen(numberClicked, nbPages){
+	
+	for (i = 1; i <= nbPages; i++) {
+		if(numberClicked != i){
+			var otherOnglet = document.getElementById("onglet"+i);
+			var otherContent = document.getElementById("content"+i);
+			otherOnglet.className = "btn btn-secondary onglet";
+			otherContent.className = "contentInactif";
+		}
+	}
+	
+	document.getElementById("onglet"+numberClicked).className = "btn btn-primary onglet";
+	document.getElementById("content"+numberClicked).className = "contentActif";
+}
+
+/**
+ * 
+ */
+ function nextStep(numberNextStep){
+	 changeScreen(numberNextStep, 3); 
+	 if(numberNextStep == 3){
+		generateMachine();
+	}
+}
+ 
+ 
+ 
+/**
+ *
+ */
+function newElementEvent() {
+    return newElement("FIELDSET", {
+        class: "Event form-inline",
+        required: true
+    }, [
+        newElement("BUTTON", {
+            type: "button",
+            class: "col-sm-1 btn btn-danger",
+            onclick: "this.parentNode.parentNode.removeChild(this.parentNode)"
+        }, [document.createTextNode("Remove")]),
+        newElement("INPUT", {
+            type: "text",
+            required: true,
+            placeholder: "Event expression",
+            class: "EventExpression col-md-9"
+        }, []),
+        newElement("SELECT", {
+            class: "EventType col-md-2"
+        }, [
+            newElement("OPTION", {
+                value: "sensing"
+            }, [document.createTextNode("Sensing")]),
+            newElement("OPTION", {
+                value: "monitoring"
+            }, [document.createTextNode("Monitoring")]),
+            newElement("OPTION", {
+                value: "control"
+            }, [document.createTextNode("Control")]),
+            newElement("OPTION", {
+                value: "reaction"
+            }, [document.createTextNode("Reaction")])
+        ])
+    ]);
+}
+
+
 /**
  *
  */
@@ -181,10 +251,7 @@ function updateVariable(variable) {
 
 function updateCategory(variable){
 	var category = variable.getElementsByClassName("VariableCategory")[0].value;
-	//var old = variable.parentNode;
 	document.getElementById("category"+category).appendChild(variable);
-	//old.removeChild(variable);
-
 }
 
 /**
