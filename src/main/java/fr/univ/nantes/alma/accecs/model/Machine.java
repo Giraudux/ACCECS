@@ -65,7 +65,7 @@ public class Machine {
         //events.clear();
 
         for (Variable variable : variables) {
-            if (!excludeEventVariables.contains(variable)) {
+            if (!excludeEventVariables.contains(variable) && generateEventVariables.contains(variable.getCategory())) {
                 Event event = new Event();
                 Variable.Category category = variable.category;
 
