@@ -1,27 +1,33 @@
 package fr.univ.nantes.alma.accecs.parser;
 
 import fr.univ.nantes.alma.accecs.model.*;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Collection;
-
+@SuppressWarnings("rawtypes")
 public class ParserJSON {
 
     private String name;
     private Collection<Variable> variables;
     private Collection<Property> properties;
     private Collection<Event> events;
-
+    private Collection<Variable.Category> generateEventVariables;
+    private Collection<Variable> excludeEventVariables;
 
     public ParserJSON() {
         name = new String();
         variables = new ArrayList<Variable>();
         properties = new ArrayList<Property>();
         events = new ArrayList<Event>();
+        generateEventVariables = new ArrayList<Variable.Category>();
+        generateEventVariables.add(Variable.Category.INPUT);
+        generateEventVariables.add(Variable.Category.OUTPUT);
+        excludeEventVariables = new ArrayList<Variable>();
     }
-    @SuppressWarnings({ "rawtypes", "unused" })
+    //@SuppressWarnings({ "rawtypes", "unused" })
 	public CategoryVariable convertVariableCategory(String variableCategory){
     	Class c = null;
     	CategoryVariable categoryVar = null;
@@ -145,5 +151,13 @@ public class ParserJSON {
 
     public Collection<Event> getEvents() {
         return events;
+    }
+
+    public Collection<Variable.Category> getGenerateEventVariables() {
+        return generateEventVariables;
+    }
+
+    public Collection<Variable> getExcludeEventVariables() {
+        return excludeEventVariables;
     }
 }
