@@ -42,6 +42,7 @@ public class Event {
         SENSING,
         MONITORING,
         CONTROL,
-        REACTION
+        REACTION,
+        CUSTOM
     }
 }
