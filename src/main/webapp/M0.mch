@@ -56,32 +56,17 @@ INITIALISATION
     
 {%- endif %}
 
-{% if (variablesInput.size > 0 or variablesOutput.size > 0) -%}
+{% if (events.size > 0) -%}
 EVENTS
 
-    {%- if (variablesInput.size > 0) %}
-    // Sense events
-    {%- for i in [0..variablesInput.size-1] %}
-    sense_{{variablesInput[i]}} =
+    {% for eventName, eventPre in events -%}
+    {{ eventName }} =
         SELECT
-            {{senseEvents[i]}}
-        THEN
-            skip //TODO
-        END {%- if ( variablesOutput.size > 0 or loop.last == false) %}; {% endif %}
-    {% endfor %}
-    {% endif -%}
-    
-    {%- if (variablesOutput.size > 0) -%}
-    // Reaction events
-    {% for i in [0..variablesOutput.size-1] -%}
-    reaction_{{variablesOutput[i]}} =
-        SELECT
-            {{reactionEvents[i]}}
+            {{ eventPre }}
         THEN
             skip //TODO
         END {%- if (loop.last == false) %}; {% endif %}
     {% endfor -%}
-    {%- endif -%}
-    
+
 {%- endif %}
 END
