@@ -220,6 +220,7 @@ function generateMachine() {
 function saveJson() {
     console.log(machineToJSON());
     document.getElementById("dataToSave").value = machineToJSON(); 
+    document.getElementById("machineName").value = document.getElementsByClassName("MachineName")[0].value; 
     document.getElementById("saveForm").submit();
 }
 
@@ -290,6 +291,11 @@ function cleanForm(){
     for (i = 0; i < initialSizePr; i++) {
     	properties[0].parentNode.removeChild(properties[0]);
     }
+    
+    var element = document.getElementById("machine-code");    
+    while (element.firstChild) {
+		element.removeChild(element.firstChild);
+	}
 }
 
 /**
