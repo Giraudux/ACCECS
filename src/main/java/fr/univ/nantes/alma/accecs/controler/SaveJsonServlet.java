@@ -10,7 +10,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 //import java.util.logging.Logger;
 
-
+/**
+ * Class to save the JSON in a file, the name of the file will be "nameofthemachine_ddMMYYHHMmmss.mch"
+ * 
+ * */
 public class SaveJsonServlet extends HttpServlet {
     /**
 	 * 

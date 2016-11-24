@@ -14,7 +14,7 @@ import java.util.Collection;
 //import java.util.logging.Logger;
 
 /**
- *
+ *Class MachineGenerator which generate a file.mch from the Java Class Machine
  */
 public class MachineGenerator implements IMachineGenerator {
     //private static final Logger LOGGER = Logger.getLogger(MachineGenerator.class.getName());
