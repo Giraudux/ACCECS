@@ -62,7 +62,7 @@ public class Machine {
     }*/
 
     public Collection<Event> generateEvents() {
-        events.clear();
+        //events.clear();
 
         for (Variable variable : variables) {
             if (!excludeEventVariables.contains(variable)) {
