@@ -1,16 +1,8 @@
-/**
- * Class which representing the B events 
- * 
- * 
- * */
-
-
 package fr.univ.nantes.alma.accecs.model;
 
 public class Event {
-	/**
-	 * String which represent the expression of the B event (example : )  
-	 * */
+
+    private String name;
     private String expression;
     private Category category;
 
@@ -37,10 +29,15 @@ public class Event {
     public void setCategory(Category category) {
         this.category = category;
     }
-    /**
-     * Different category of event
-     * 
-     * */
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public enum Category {
         SENSING,
         MONITORING,

@@ -5,15 +5,6 @@ import java.util.Collection;
 
 import fr.univ.nantes.alma.accecs.model.Variable.Category;
 
-/**
- * Class which represent the B Machine 
- * 
- * 
- * 
- * */
-@SuppressWarnings("rawtypes")
-
-
 public class Machine {
 
     private String name;
@@ -76,23 +67,29 @@ public class Machine {
         for (Variable variable : variables) {
             if (!excludeEventVariables.contains(variable) && generateEventVariables.contains(variable.getCategory())) {
                 Event event = new Event();
-                Variable.Category category = variable.category;
 
+                Variable.Category category = variable.category;
                 //TODO: set mapping configurable
                 switch (category) {
                     case CONTROL:
+                        event.setName("control_"+variable.getName());
                         event.setCategory(Event.Category.CONTROL);
                         break;
                     case INPUT:
+                        event.setName("sensing_"+variable.getName());
                         event.setCategory(Event.Category.SENSING);
                         break;
                     case INTERNAL:
+                        event.setName("monitoring_"+variable.getName());
                         event.setCategory(Event.Category.MONITORING);
                         break;
                     case OUTPUT:
+                        event.setName("reaction_"+variable.getName());
                         event.setCategory(Event.Category.REACTION);
                         break;
                 }
+
+                events.add(event);
             }
         }
 
