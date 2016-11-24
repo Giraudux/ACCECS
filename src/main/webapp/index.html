@@ -18,6 +18,11 @@ function getfile(){
 </script>
 
 	<h1>Assistance for the Construction of Critical Embedded Control Systems</h1>
+		<div class="container" id="btnControl">
+			<button type="button" class="btn btn-info" onclick="saveJson()">Save</button>
+			<input type="file" id="hiddenfile" style="display:none" onchange="loadJson(this.files)"/>
+			<input type="button" class="btn btn-info" value="Load" onclick="getfile()" />
+		</div>
 	
 	
 	    <div class="container">
@@ -25,6 +30,10 @@ function getfile(){
 			<button type="button" class="btn btn-secondary onglet" id="onglet2" onclick="changeScreen(2, 3)">Step 2</button>
 			<button type="button" class="btn btn-secondary onglet" id="onglet3" onclick="changeScreen(3, 3)">Step 3</button>
 		</div>
+
+		
+				
+		
 	
 	
 	<!-- Premier onglet -->
@@ -93,11 +102,12 @@ function getfile(){
 			<div class="container">
 				<div class="form-inline">
 					<div class="col-md-1 form-group"></div>
-					<div class="col-md-9 form-group">Expression</div>
+					<div class="col-md-2 form-group">Name</div>
+					<div class="col-md-7 form-group">Expression</div>
 					<div class="col-md-2 form-group">Type</div>
 				</div>
 				
-				<button id="addPropertiesBtn" type="button" class="btn btn-success col-md-1" onclick="this.parentNode.insertBefore(newElementEvent(), this)">Add event</button>
+				<button id="addEventsBtn" type="button" class="btn btn-success col-md-1" onclick="this.parentNode.insertBefore(newElementEvent(), this)">Add event</button>
 			</div>
 		</fieldset>
 		<br>
@@ -121,10 +131,8 @@ function getfile(){
 		
 			<div class="container">
 				<button type="button" class="btn btn-info" onclick="generateMachine()">Generate machine</button>
-				<button type="button" class="btn btn-info" onclick="saveJson()">Save</button>
-				<button type ="button"  class="btn btn-info" onclick="selectMachine()">Select Machine</button>
-				<input type="file" id="hiddenfile" style="display:none" onchange="loadJson(this.files)"/>
-				<input type="button" class="btn btn-info" value="Load" onclick="getfile()" />
+				<button type ="button"  class="btn btn-info" onclick="selectMachine()">Select machine</button>
+				<button type="button" class="btn btn-info" onclick="saveJson()">Save machine</button>
 			</div>
 			
 			<br>

@@ -22,6 +22,25 @@ function changeScreen(numberClicked, nbPages){
  */
  function nextStep(numberNextStep){
 	 changeScreen(numberNextStep, 3); 
+	 
+	 
+	 //Ecriture des events
+	 if(numberNextStep == 2){ 
+		var variables = document.getElementsByClassName("Variable form-inline"); 
+		var objJson = JSON.parse(machineToJSON());
+		 console.log(objJson.variables[0].name);
+		 
+		for (var vr in objJson.variables) {
+			if(objJson.variables[vr].category == 'input' || objJson.variables[vr].category == 'output'){
+				var eventsBtn =  document.getElementById("addEventsBtn");
+				eventsBtn.parentNode.insertBefore(newElementEvent(), eventsBtn);
+				fillEventForm(objJson, vr, i);
+				i++;
+			}
+		}
+	 }
+	 
+	 //generation de la machine
 	 if(numberNextStep == 3){
 		generateMachine();
 	}
@@ -29,43 +48,7 @@ function changeScreen(numberClicked, nbPages){
  
  
  
-/**
- *
- */
-function newElementEvent() {
-    return newElement("FIELDSET", {
-        class: "Event form-inline",
-        required: true
-    }, [
-        newElement("BUTTON", {
-            type: "button",
-            class: "col-sm-1 btn btn-danger",
-            onclick: "this.parentNode.parentNode.removeChild(this.parentNode)"
-        }, [document.createTextNode("Remove")]),
-        newElement("INPUT", {
-            type: "text",
-            required: true,
-            placeholder: "Event expression",
-            class: "EventExpression col-md-9"
-        }, []),
-        newElement("SELECT", {
-            class: "EventType col-md-2"
-        }, [
-            newElement("OPTION", {
-                value: "sensing"
-            }, [document.createTextNode("Sensing")]),
-            newElement("OPTION", {
-                value: "monitoring"
-            }, [document.createTextNode("Monitoring")]),
-            newElement("OPTION", {
-                value: "control"
-            }, [document.createTextNode("Control")]),
-            newElement("OPTION", {
-                value: "reaction"
-            }, [document.createTextNode("Reaction")])
-        ])
-    ]);
-}
+
 
 
 /**
@@ -90,6 +73,52 @@ function newElement(name, attributes, childs) {
 
     return element;
 }
+
+
+/**
+ *
+ */
+function newElementEvent() {
+    return newElement("FIELDSET", {
+        class: "Event form-inline",
+        required: true
+    }, [
+        newElement("BUTTON", {
+            type: "button",
+            class: "col-sm-1 btn btn-danger",
+            onclick: "this.parentNode.parentNode.removeChild(this.parentNode)"
+        }, [document.createTextNode("Remove")]),
+        newElement("INPUT", {
+            type: "text",
+            required: true,
+            placeholder: "Event name",
+            class: "EventName col-md-2"
+        }, []),
+        newElement("INPUT", {
+            type: "text",
+            required: true,
+            placeholder: "Event expression",
+            class: "EventExpression col-md-7"
+        }, []),
+        newElement("SELECT", {
+            class: "EventType col-md-2"
+        }, [
+            newElement("OPTION", {
+                value: "sensing"
+            }, [document.createTextNode("Sensing")]),
+            newElement("OPTION", {
+                value: "monitoring"
+            }, [document.createTextNode("Monitoring")]),
+            newElement("OPTION", {
+                value: "control"
+            }, [document.createTextNode("Control")]),
+            newElement("OPTION", {
+                value: "reaction"
+            }, [document.createTextNode("Reaction")])
+        ])
+    ]);
+}
+
 
 /**
  *
@@ -251,7 +280,8 @@ function updateVariable(variable) {
 
 function updateCategory(variable){
 	var category = variable.getElementsByClassName("VariableCategory")[0].value;
-	document.getElementById("category"+category).appendChild(variable);
+	var container = document.getElementById("category"+category);
+	container.appendChild(variable);
 }
 
 /**
@@ -315,6 +345,13 @@ function loadJson(files) {
 	    		  fillPropertyForm(objJson, key, j)
 	    		  j++;
 	    	  }
+	    	  var k = 0;
+	    	  for(var key in objJson.events){
+	    		  var eventsBtn =  document.getElementById("addEventsBtn");
+	    		  eventsBtn.parentNode.insertBefore(newElementEvent(), eventsBtn);
+	    		  fillEventForm(objJson, key, k)
+	    		  k++;
+	    	  }
 	    	  document.getElementsByClassName("MachineName")[0].value = objJson.name;
 	    }
 	    reader.readAsText(file);
@@ -346,6 +383,30 @@ function fillPropertyForm(objJson, key, index){
 	property.getElementsByClassName("PropertyCategory")[0].value = objJson.properties[key].category;
 }
 
+
+function fillEventForm(objJson, key, index){
+	var events = document.getElementsByClassName("Event");
+	var event = events[index];
+	
+	if(objJson.variables[key].category =='input'){
+		document.getElementsByClassName("EventName")[key].value = "sense_"+objJson.variables[key].name;
+		document.getElementsByClassName("EventType")[key].value = "sensing";
+	}
+	else{
+		document.getElementsByClassName("EventName")[key].value = "reaction_"+objJson.variables[key].name;
+		document.getElementsByClassName("EventType")[key].value = "reaction";
+	}
+	
+	if(objJson.variables[key].type=='boolean'){
+		document.getElementsByClassName("EventExpression")[key].value = "BOOL";
+	}
+	else{
+		document.getElementsByClassName("EventExpression")[key].value = objJson.variables[key].name + " : " + objJson.variables[key].lowerBound+".."+objJson.variables[key].upperBound;
+	}
+	
+	
+}
+
 function cleanForm(){
 	var variables = document.getElementsByClassName("Variable");
 	var initialSize = variables.length;
@@ -357,6 +418,12 @@ function cleanForm(){
 	var initialSizePr = properties.length;
     for (i = 0; i < initialSizePr; i++) {
     	properties[0].parentNode.removeChild(properties[0]);
+    }
+    
+    var events = document.getElementsByClassName("Event");
+	var initialSizeEv = events.length;
+    for (i = 0; i < initialSizeEv; i++) {
+    	events[0].parentNode.removeChild(events[0]);
     }
     
     var element = document.getElementById("machine-code");    
@@ -378,7 +445,8 @@ function machineToJSON() {
 
     machine = {
         variables: [],
-        properties: []
+        properties: [],
+        events: []
     };
 
     machine.name = document.getElementsByClassName("MachineName")[0].value;
@@ -401,6 +469,15 @@ function machineToJSON() {
         property.expression = properties[i].getElementsByClassName("PropertyExpression")[0].value;
         property.category = properties[i].getElementsByClassName("PropertyCategory")[0].value;
         machine.properties.push(property);
+    }
+    
+    events = document.getElementsByClassName("Event");
+    for (i = 0; i < events.length; i++) {
+        event = {};
+        event.name = events[i].getElementsByClassName("EventName")[0].value;
+        event.expression = events[i].getElementsByClassName("EventExpression")[0].value;
+        event.type = events[i].getElementsByClassName("EventType")[0].value;
+        machine.events.push(event);
     }
 
     console.log(machine);
