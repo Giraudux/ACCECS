@@ -27,16 +27,26 @@ public class MachineGenerator implements IMachineGenerator {
         Collection<String> variablesInternal = new ArrayList<String>();
         Collection<String> invariants = new ArrayList<String>();
         Collection<String> initialisations = new ArrayList<String>();
-        Collection<String> properties = new ArrayList<String>();
+        Collection<String> senseEvents = new ArrayList<String>();
+        Collection<String> reactionEvents = new ArrayList<String>();
 
         for (Variable variable : machine.getVariables()) {
-            //TODO Changer pour category variable
         	switch (variable.getCategory()) {
                 case INPUT:
                     variablesInput.add(variable.getName());
+                    if (variable.hasBounds()) {
+                    	senseEvents.add(variable.getName()+" : "+variable.getLowerBound()+".."+variable.getUpperBound());
+                    } else {
+                    	senseEvents.add(variable.getName()+" : BOOL");
+                    }
                     break;
                 case OUTPUT:
                     variablesOutput.add(variable.getName());
+                    if (variable.hasBounds()) {
+                    	reactionEvents.add(variable.getName()+" : "+variable.getLowerBound()+".."+variable.getUpperBound());
+                    } else {
+                    	reactionEvents.add(variable.getName()+" : BOOL");
+                    }
                     break;
                 case CONTROL:
                     variablesControl.add(variable.getName());
@@ -49,11 +59,11 @@ public class MachineGenerator implements IMachineGenerator {
             if (variable.hasBounds()) {
                 invariants.add(variable.getName()+" : "+variable.getLowerBound()+".."+variable.getUpperBound());
             }
-            initialisations.add(variable.getName()+" := "+variable.getDefaultValue());
+            initialisations.add(variable.getName()+" := "+variable.getDefaultValue().toString().toUpperCase());
         }
 
         for (Property property : machine.getProperties()) {
-            properties.add(property.getExpression());
+            invariants.add(property.getExpression());
         }
 
         model.with("name", machine.getName());
@@ -63,7 +73,8 @@ public class MachineGenerator implements IMachineGenerator {
         model.with("variablesInternal", variablesInternal);
         model.with("invariants", invariants);
         model.with("initialisations", initialisations);
-        model.with("properties", properties);
+        model.with("senseEvents", senseEvents);
+        model.with("reactionEvents", reactionEvents);
 
         template.render(model, outputStream);
     }
