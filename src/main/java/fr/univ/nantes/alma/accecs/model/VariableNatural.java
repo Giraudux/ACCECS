@@ -1,6 +1,7 @@
 package fr.univ.nantes.alma.accecs.model;
 
 /**
+ * Class which represent the natural variable
  * @author Alexis Giraudet
  */
 public class VariableNatural extends Variable<Integer> {

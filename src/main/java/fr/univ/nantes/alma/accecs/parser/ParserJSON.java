@@ -7,6 +7,13 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Collection;
+
+/**
+ * Class which serves to parse the JSON of a machine to Java class representing the same machine.
+ * 
+ * 
+ * */
+
 @SuppressWarnings("rawtypes")
 public class ParserJSON {
 
@@ -44,6 +51,13 @@ public class ParserJSON {
 		}
     	return categoryVar;
     }
+	/**
+	 * Fonction which transform the JSON machine in Java class
+	 * 
+	 * @param json : String representing the JSON machine
+	 * 
+	 * @throws Exception : unknown variable category
+	 * */
     public void parse(String json) throws Exception {
 
         JSONObject jsonMachine = new JSONObject(json);

@@ -4,6 +4,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import fr.univ.nantes.alma.accecs.model.Variable.Category;
+/**
+ * Class which represent the B Machine 
+ * 
+ * 
+ * 
+ * */
 @SuppressWarnings("rawtypes")
 public class Machine {
 

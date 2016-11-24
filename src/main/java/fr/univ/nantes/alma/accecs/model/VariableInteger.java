@@ -1,6 +1,7 @@
 package fr.univ.nantes.alma.accecs.model;
 
 /**
+ * Class which represent the integer variable
  * @author Alexis Giraudet
  */
 public class VariableInteger extends Variable<Integer> {

@@ -18,7 +18,12 @@ import java.util.Collection;
  */
 public class MachineGenerator implements IMachineGenerator {
     //private static final Logger LOGGER = Logger.getLogger(MachineGenerator.class.getName());
-
+	
+	/**
+	 * @param machine : Machine as a Java Class
+	 * @param templeFile : The template file 
+	 * @param outputStream : the outputstream where the machine is send (like a file for example)
+	 * */
     @SuppressWarnings("rawtypes")
 	public void generate(Machine machine, File templateFile, OutputStream outputStream) {
         JtwigTemplate template = JtwigTemplate.fileTemplate(templateFile);

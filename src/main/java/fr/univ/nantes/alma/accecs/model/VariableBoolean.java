@@ -1,6 +1,8 @@
 package fr.univ.nantes.alma.accecs.model;
 
 /**
+ * Class which represent the boolean variable
+ * 
  * @author Alexis Giraudet
  */
 public class VariableBoolean extends Variable<Boolean> {

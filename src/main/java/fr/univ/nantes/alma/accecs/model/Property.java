@@ -1,5 +1,9 @@
 package fr.univ.nantes.alma.accecs.model;
-
+/**
+ * Class which represent the B property
+ * 
+ * 
+ * */
 public class Property {
 
     private String expression;

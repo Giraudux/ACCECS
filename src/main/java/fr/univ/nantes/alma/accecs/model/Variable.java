@@ -1,6 +1,8 @@
 package fr.univ.nantes.alma.accecs.model;
 
 /**
+ * Class which represent the different B variable in the Machine  
+ * 
  * @author Alexis Giraudet
  */
 public abstract class Variable<T> {
@@ -43,7 +45,11 @@ public abstract class Variable<T> {
     public T getDefaultValue() {
         return defaultValue;
     }
-
+    /**
+     * fonction which determine if a variable have a lowerBound and a upperBound
+     * 
+     * @return boolean 
+     * */
     public boolean hasBounds() {
         return lowerBound != null && upperBound != null;
     }
