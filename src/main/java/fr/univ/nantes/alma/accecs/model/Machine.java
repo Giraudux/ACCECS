@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import fr.univ.nantes.alma.accecs.model.Variable.Category;
-
+@SuppressWarnings("rawtypes")
 public class Machine {
 
     private String name;

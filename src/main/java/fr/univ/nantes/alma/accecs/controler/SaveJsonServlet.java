@@ -8,11 +8,15 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.logging.Logger;
+//import java.util.logging.Logger;
 
 
 public class SaveJsonServlet extends HttpServlet {
-    private static final Logger LOGGER = Logger.getLogger(SaveJsonServlet.class.getName());
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1029224371829063600L;
+	//private static final Logger LOGGER = Logger.getLogger(SaveJsonServlet.class.getName());
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

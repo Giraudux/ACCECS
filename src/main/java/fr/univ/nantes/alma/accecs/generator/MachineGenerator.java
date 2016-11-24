@@ -3,6 +3,7 @@ package fr.univ.nantes.alma.accecs.generator;
 import fr.univ.nantes.alma.accecs.model.Machine;
 import fr.univ.nantes.alma.accecs.model.Property;
 import fr.univ.nantes.alma.accecs.model.Variable;
+
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
 
@@ -10,15 +11,16 @@ import java.io.File;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.logging.Logger;
+//import java.util.logging.Logger;
 
 /**
  *
  */
 public class MachineGenerator implements IMachineGenerator {
-    private static final Logger LOGGER = Logger.getLogger(MachineGenerator.class.getName());
+    //private static final Logger LOGGER = Logger.getLogger(MachineGenerator.class.getName());
 
-    public void generate(Machine machine, File templateFile, OutputStream outputStream) {
+    @SuppressWarnings("rawtypes")
+	public void generate(Machine machine, File templateFile, OutputStream outputStream) {
         JtwigTemplate template = JtwigTemplate.fileTemplate(templateFile);
         JtwigModel model = JtwigModel.newModel();
         Collection<String> variablesInput = new ArrayList<String>();
