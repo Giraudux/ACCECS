@@ -16,7 +16,7 @@ public class TestGenerator {
 
     @Test
     public void test0() {
-        Machine machine = new Machine("test0", new ArrayList<Variable>(), new ArrayList<Property>(), new ArrayList<Event>());
+        Machine machine = new Machine("test0", new ArrayList<Variable>(), new ArrayList<Property>(), new ArrayList<Event>(), new ArrayList<Variable.Category>(), new ArrayList<Variable>());
         MachineGenerator machineGenerator = new MachineGenerator();
 
         machineGenerator.generate(machine, new File("src/main/resources/mch/M0.mch"), System.out);
