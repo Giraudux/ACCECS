@@ -6,7 +6,7 @@ body {
 }
 
 h1{
-	margin-left:5%;
+	padding-left:5%;
 }
 
 .container{
@@ -40,7 +40,7 @@ fieldset{
 }
 
 #categoryinput, #categoryoutput, #categorycontrol, #categoryinternal{
-	border-bottom:1px solid gray;
+	border-bottom:1px solid rgb(204,204,204);
 	margin-bottom:1%;
 }
 
@@ -48,13 +48,22 @@ fieldset{
 	width:33%;
 	}
 	
-#btnControl{
-	position:absolute;
-	right:0;
-	top:0;
+#btnControl input, #btnControl button, #reference{
 	margin-top : 15px;
-	margin-right:5%;
-	width:10%;
+}
+
+#reference{
+	width:50%;
+}
+#reference:hover{
+	position:absolute;
+	top:0;
+	left:0;
+	width:100%;
+}
+
+#header{
+	width:100%;
 }
 
 .contentActif{
@@ -63,4 +72,8 @@ fieldset{
 
 .contentInactif{
 	display: none;
+}
+
+.nextStep, fieldset{
+	margin-top:5%;
 }
