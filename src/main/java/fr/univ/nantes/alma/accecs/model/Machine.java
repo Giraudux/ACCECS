@@ -13,6 +13,7 @@ public class Machine {
     private Collection<Event> events;
     private Collection<Variable.Category> generateEventVariables;
     private Collection<Variable> excludeEventVariables;
+    private Collection<EnumerateType> sets;
 
     public Machine() {
         name = new String();
@@ -21,15 +22,17 @@ public class Machine {
         events = new ArrayList<Event>();
         generateEventVariables = new ArrayList<Category>();
         excludeEventVariables = new ArrayList<Variable>();
+        sets = new ArrayList<EnumerateType>();
     }
 
-    public Machine(String name, Collection<Variable> variables, Collection<Property> properties, Collection<Event> events, Collection<Category> generateEventVariables, Collection<Variable> excludeEventVariables) {
+    public Machine(String name, Collection<Variable> variables, Collection<Property> properties, Collection<Event> events, Collection<Category> generateEventVariables, Collection<Variable> excludeEventVariables, Collection<EnumerateType> enumerateTypes) {
         this.name = name;
         this.variables = variables;
         this.properties = properties;
         this.events = events;
         this.generateEventVariables = generateEventVariables;
         this.excludeEventVariables = excludeEventVariables;
+        this.sets = enumerateTypes;
         generateEvents();
     }
 
@@ -142,5 +145,13 @@ public class Machine {
 
     public void setExcludeEventVariables(Collection<Variable> excludeEventVariables) {
         this.excludeEventVariables = excludeEventVariables;
+    }
+
+    public Collection<EnumerateType> getSets() {
+        return sets;
+    }
+
+    public void setSets(Collection<EnumerateType> sets) {
+        this.sets = sets;
     }
 }

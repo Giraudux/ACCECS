@@ -1,6 +1,7 @@
 package fr.univ.nantes.alma.accecs.controler;
 
 import fr.univ.nantes.alma.accecs.generator.MachineGenerator;
+import fr.univ.nantes.alma.accecs.model.EnumerateType;
 import fr.univ.nantes.alma.accecs.model.Machine;
 //import fr.univ.nantes.alma.accecs.model.Variable;
 import fr.univ.nantes.alma.accecs.parser.ParserJSON;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 //import java.util.ArrayList;
 //import java.util.logging.Logger;
 
@@ -34,7 +36,7 @@ public class DataServlet extends HttpServlet {
             throw new ServletException(e);
         }
 
-        Machine machine = new Machine(parser.getName(), parser.getVariables(), parser.getProperties(), parser.getEvents(), parser.getGenerateEventVariables(), parser.getExcludeEventVariables());
+        Machine machine = new Machine(parser.getName(), parser.getVariables(), parser.getProperties(), parser.getEvents(), parser.getGenerateEventVariables(), parser.getExcludeEventVariables(), new ArrayList<EnumerateType>());
         MachineGenerator generator = new MachineGenerator();
         File template = new File(getServletContext().getRealPath("/M0.mch"));
         generator.generate(machine, template, response.getOutputStream());

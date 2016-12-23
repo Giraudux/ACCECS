@@ -1,9 +1,6 @@
 package fr.univ.nantes.alma.accecs.generator;
 
-import fr.univ.nantes.alma.accecs.model.Event;
-import fr.univ.nantes.alma.accecs.model.Machine;
-import fr.univ.nantes.alma.accecs.model.Property;
-import fr.univ.nantes.alma.accecs.model.Variable;
+import fr.univ.nantes.alma.accecs.model.*;
 
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
@@ -35,6 +32,7 @@ public class MachineGenerator implements IMachineGenerator {
         /*Collection<String> senseEvents = new ArrayList<String>();
         Collection<String> reactionEvents = new ArrayList<String>();*/
         Map<String,String> events = new HashMap<String, String>();
+        Map<String, Collection<String>> sets = new HashMap<String, Collection<String>>();
 
         for (Variable variable : machine.getVariables()) {
             switch (variable.getCategory()) {
@@ -76,6 +74,10 @@ public class MachineGenerator implements IMachineGenerator {
             events.put(event.getName(), "pre");
         }
 
+        for(EnumerateType set : machine.getSets()) {
+            sets.put(set.getName(), set.getValues());
+        }
+
         model.with("name", machine.getName());
         model.with("variablesInput", variablesInput);
         model.with("variablesOutput", variablesOutput);
@@ -84,6 +86,7 @@ public class MachineGenerator implements IMachineGenerator {
         model.with("invariants", invariants);
         model.with("initialisations", initialisations);
         model.with("events", events);
+        model.with("sets", sets);
         /*model.with("senseEvents", senseEvents);
         model.with("reactionEvents", reactionEvents);*/
 
