@@ -35,12 +35,10 @@ function nextStep(numberNextStep){
 	
 	// Génération de la machine
 	if(numberNextStep == 3){
-		generateMachine();
-	}
+
 	 
-	 /*
-	 //Ecriture des events
-	 if(numberNextStep == 2){ 
+	 
+		//Ecriture des events
 		var variables = document.getElementsByClassName("Variable form-inline"); 
 		var objJson = JSON.parse(machineToJSON());
 		 
@@ -52,9 +50,9 @@ function nextStep(numberNextStep){
 				i++;
 			}
 		}
-	 }
-	 */
-	
+	 
+		generateMachine();
+	}
 }
 
 
@@ -306,7 +304,7 @@ function newElementEnumeration() {
     newElement("INPUT", {
     	type: "text",
       required: true,
-      placeholder: "Type the enumeration",
+      placeholder: "Type of variable",
       class: "EnumerationName col-md-11"
 		}, []),
     newElement("DIV",
@@ -456,8 +454,7 @@ function loadJson(files) {
 	    		  fillPropertyForm(objJson, key, j)
 	    		  j++;
 	    	  }
-					
-					/* Evenements a ne pas utiliser dans cet outil
+						
 	    	  var k = 0;
 	    	  for(var key in objJson.events){
 	    		  var eventsBtn =  document.getElementById("addEventsBtn");
@@ -465,7 +462,7 @@ function loadJson(files) {
 	    		  fillEventForm(objJson, key, k)
 	    		  k++;
 	    	  }
-					*/
+					
 	    	  document.getElementsByClassName("MachineName")[0].value = objJson.name;
 	    }
 	    reader.readAsText(file);
