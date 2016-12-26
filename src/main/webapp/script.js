@@ -307,12 +307,34 @@ function newElementEnumeration() {
     	type: "text",
       required: true,
       placeholder: "Type the enumeration",
-      class: "EnumerationExpression col-md-11"
-		}, [])
+      class: "EnumerationName col-md-11"
+		}, []),
+    newElement("DIV",
+    {},
+    [
+        newElement("BUTTON",
+            {type: "button", onclick: "this.parentNode.appendChild(newElementLiteral())"},
+            [document.createTextNode("Add Literal")]
+        )
+    ])
 	]);
 }
 
-
+function newElementLiteral() {
+	return newElement("DIV", {}, [
+  	newElement("BUTTON", {
+    	type: "button",
+      //class: "col-sm-1 btn btn-danger",
+      onclick: "this.parentNode.parentNode.removeChild(this.parentNode)"
+		}, [document.createTextNode("Remove")]),
+    newElement("INPUT", {
+    	type: "text",
+      required: true,
+      //placeholder: "Type the enumeration",
+      class: "LiteralName"// col-md-11"
+		}, [])
+	]);
+}
 
 
 /**
@@ -538,7 +560,8 @@ function machineToJSON() {
     machine = {
         variables: [],
         properties: [],
-        events: []
+        events: [],
+        enumerations: []
     };
 
     machine.name = document.getElementsByClassName("MachineName")[0].value;
@@ -572,7 +595,19 @@ function machineToJSON() {
         machine.events.push(event);
     }
 
-    console.log(machine);
+    enumerations = document.getElementsByClassName("Enumeration");
+    for (i = 0; i < enumerations.length; i++) {
+        enumeration = {};
+        enumeration.name = enumerations[i].getElementsByClassName("EnumerationName")[0].value;
+        enumeration.literals = [];
+        literals = enumerations[i].getElementsByClassName("LiteralName");
+        for (j = 0; j < literals.length; j++) {
+            enumeration.literals.push(literals[j].value);
+        }
+        machine.enumerations.push(enumeration);
+    }
+
+    console.log(JSON.stringify(machine));
 
     return JSON.stringify(machine);
 }

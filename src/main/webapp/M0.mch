@@ -1,6 +1,13 @@
 MACHINE 
     {{ name }}
 
+{% if (sets.size > 0) %}
+SETS
+    {% for setName, setValues in sets %}
+    {% if (not loop.first) %}; {% endif %}{{ setName }} = { {% for setValue in setValues %}{{ setValue }}{% if (not loop.first) %}, {% endif %}{% endfor %} }
+    {% endfor %}
+{% endif %}
+
 {% if (variablesInput.size + variablesOutput.size + variablesControl.size + variablesInternal.size > 0) -%}
 VARIABLES
 
