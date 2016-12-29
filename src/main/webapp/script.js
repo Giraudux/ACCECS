@@ -61,13 +61,14 @@ function nextStep(numberNextStep){
  */
 function addEnumeration(){
 	var enumerations = ["integer", "natural", "boolean"];
-	var enums = document.getElementsByClassName("EnumerationExpression");
+	var enums = document.getElementsByClassName("EnumerationName");
+	var literal = document.getElementsByClassName("LiteralName");
 	
 	// On crée les enumeration a utiliser
 	for(i=0; i<enums.length; i++){
 		enumerations[i+3] = enums[i].value.toLowerCase();
 	}
-	
+
 return enumerations;
 }
  
@@ -293,7 +294,7 @@ function newElementVariable() {
  */
 function newElementEnumeration() {
 	return newElement("FIELDSET", {
-  	class: "Enumeration form-inline",
+  	class: "Enumeration  form-inline",
     required: true
 	}, [
   	newElement("BUTTON", {
@@ -329,18 +330,31 @@ function newElementLiteral() {
     	type: "text",
       required: true,
       //placeholder: "Type the enumeration",
-      class: "LiteralName"// col-md-11"
+      class: "LiteralName"
 		}, [])
 	]);
 }
 
 
 /**
- *
+ * actualise la variable que l'on modifie selon son type.
+ * modifie son choix de valeur par défaut et ses bornes selon son type
  */
 function updateVariable(variable) {
     var type;
     var disableBounds;
+		
+		
+		type = variable.getElementsByClassName("VariableType")[0];
+		var enumerations = addEnumeration();
+		for(j=0; j<enumerations.length; j++){
+			var opt = newElement("OPTION", {
+				value: enumerations[j]},
+				[document.createTextNode(enumerations[j].charAt(0).toUpperCase() + enumerations[j].substring(1))])
+			type.add(opt, j);
+		}
+		
+		
 
     type = variable.getElementsByClassName("VariableType")[0].value;
     variable.removeChild(variable.getElementsByClassName("VariableDefaultValue")[0]);
@@ -357,7 +371,7 @@ function updateVariable(variable) {
                 value: "false"
             }, [document.createTextNode("False")])
         ]));
-    } else {
+    } else if(type == "integer" || type == "natural"){
         disableBounds = false;
         if (type == "integer") {
             ;
@@ -369,19 +383,19 @@ function updateVariable(variable) {
             class: "VariableDefaultValue"
         }, []));
     }
+		else{
+			disableBounds = true;
+			variable.appendChild(newElement("INPUT", {
+            type: "number",
+            class: "VariableDefaultValue"
+        }, []));
+		}
 
     variable.getElementsByClassName("VariableLowerBound")[0].disabled = disableBounds;
     variable.getElementsByClassName("VariableUpperBound")[0].disabled = disableBounds;
 		
 		
-		type = variable.getElementsByClassName("VariableType")[0];
-		var enumerations = addEnumeration();
-		for(j=0; j<enumerations.length; j++){
-			var opt = newElement("OPTION", {
-				value: enumerations[j]},
-				[document.createTextNode(enumerations[j].charAt(0).toUpperCase() + enumerations[j].substring(1))])
-			type.add(opt, j);
-		}
+
 }
 
 /**

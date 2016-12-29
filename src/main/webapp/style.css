@@ -74,6 +74,6 @@ fieldset{
 	display: none;
 }
 
-.nextStep, fieldset{
+.nextStep{
 	margin-top:5%;
 }
