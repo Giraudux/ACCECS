@@ -3,9 +3,9 @@ MACHINE
 
 {% if (sets.size > 0) %}
 SETS
-    {% for setName, setValues in sets %}
-    {% if (not loop.first) %}; {% endif %}{{ setName }} = { {% for setValue in setValues %}{{ setValue }}{% if (not loop.first) %}, {% endif %}{% endfor %} }
-    {% endfor %}
+    {%- for setName, setValues in sets %}
+    {% if (loop.first == false) %}; {% endif %}{{ setName }}{% if (setValues.size > 0) %} = { {% for setValue in setValues %}{% if (loop.first == false) %}, {% endif %}{{ setValue }}{% endfor %} } {% endif %}
+    {%- endfor %}
 {% endif %}
 
 {% if (variablesInput.size + variablesOutput.size + variablesControl.size + variablesInternal.size > 0) -%}
