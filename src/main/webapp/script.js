@@ -312,7 +312,7 @@ function newElementEnumeration() {
     {},
     [
         newElement("BUTTON",
-            {type: "button", onclick: "this.parentNode.appendChild(newElementLiteral())"},
+            {type: "button", class: "addLiteralBtn", onclick: "this.parentNode.appendChild(newElementLiteral())"},
             [document.createTextNode("Add Literal")]
         )
     ])
@@ -476,6 +476,14 @@ function loadJson(files) {
 	    		  fillEventForm(objJson, key, k)
 	    		  k++;
 	    	  }
+	    	  
+	    	  var l = 0;
+	    	  for(var key in objJson.enumerations){
+	    		  var enumBtn =  document.getElementById("addEnumerationBtn");
+	    		  enumBtn.parentNode.insertBefore(newElementEnumeration(), enumBtn);
+	    		  fillEnumForm(objJson, key, l)
+	    		  l++;
+	    	  }
 					
 	    	  document.getElementsByClassName("MachineName")[0].value = objJson.name;
 	    }
@@ -532,6 +540,28 @@ function fillEventForm(objJson, key, index){
 	
 }
 
+/**
+ * Charger les types d'énumeration à partir du fichier Json
+ * @param objJson
+ * @param key
+ * @param index
+ * @returns
+ */
+function fillEnumForm(objJson, key, index){	
+	//console.log(document.getElementsByClassName("Enumeration")[key]);
+	var enums = document.getElementsByClassName("Enumeration");
+	var enumType = enums[index]; 
+	enumType.getElementsByClassName("EnumerationName")[0].value = objJson.enumerations[key].name;
+	var index = 0;
+	for(var k in objJson.enumerations[key].literals){
+		var literalBtn = enumType.getElementsByClassName("addLiteralBtn")[0];
+		literalBtn.parentNode.insertBefore(newElementLiteral(), literalBtn);
+	    var literalElmts = enumType.getElementsByClassName("LiteralName");
+	    literalElmts[index].value = objJson.enumerations[key].literals[k];
+		index++;
+	}
+}
+
 function cleanForm(){
 	var variables = document.getElementsByClassName("Variable");
 	var initialSize = variables.length;
@@ -543,6 +573,12 @@ function cleanForm(){
 	var initialSizePr = properties.length;
     for (i = 0; i < initialSizePr; i++) {
     	properties[0].parentNode.removeChild(properties[0]);
+    }
+    
+    var enums = document.getElementsByClassName("Enumeration");
+	var initialSizePr = enums.length;
+    for (i = 0; i < initialSizePr; i++) {
+    	enums[0].parentNode.removeChild(enums[0]);
     }
     
     var events = document.getElementsByClassName("Event");
