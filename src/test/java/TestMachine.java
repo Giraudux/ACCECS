@@ -17,7 +17,7 @@ public class TestMachine {
 		
 	        Machine machine = new Machine("test0", new ArrayList<Variable>(Arrays.asList(new VariableInteger("a", Variable.Category.INPUT,10,20))),
 	        		new ArrayList<Property>(Arrays.asList(new Property("a<0", Category.SAFETY))),
-	        		new ArrayList<Event>(Arrays.asList(new Event("abc", Event.Category.CONTROL))), new ArrayList<Variable.Category>(), new ArrayList<Variable>());
+	        		new ArrayList<Event>(Arrays.asList(new Event("abc", Event.Category.CONTROL))), new ArrayList<Variable.Category>(), new ArrayList<Variable>(), null);
 	       System.out.println(machine.getName());
 	       System.out.println("");
 	       System.out.println("Events:");

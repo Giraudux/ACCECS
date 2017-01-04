@@ -36,7 +36,15 @@ public class DataServlet extends HttpServlet {
             throw new ServletException(e);
         }
 
-        Machine machine = new Machine(parser.getName(), parser.getVariables(), parser.getProperties(), parser.getEvents(), parser.getGenerateEventVariables(), parser.getExcludeEventVariables(), new ArrayList<EnumerateType>());
+        Machine machine = new Machine(
+                parser.getName(),
+                parser.getVariables(),
+                parser.getProperties(),
+                parser.getEvents(),
+                parser.getGenerateEventVariables(),
+                parser.getExcludeEventVariables(),
+                parser.getEnumerateTypes()
+        );
         MachineGenerator generator = new MachineGenerator();
         File template = new File(getServletContext().getRealPath("/M0.mch"));
         generator.generate(machine, template, response.getOutputStream());

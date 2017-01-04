@@ -29,7 +29,7 @@ function nextStep(numberNextStep){
 	
 	// Création des variables et des invariants
 	if(numberNextStep == 2){ 
-		addTypes(addEnumeration());
+		/*addTypes(addEnumeration());*/
 		
 	}
 	
@@ -203,6 +203,22 @@ function newElementProperty() {
     ]);
 }
 
+function newEnumerationOptions() {
+    var options = [];
+
+    enumerations = document.getElementsByClassName("Enumeration");
+    for (i = 0; i < enumerations.length; i++) {
+        enumerationName = enumerations[i].getElementsByClassName("EnumerationName")[0].value;
+        if(enumerationName !== "") { //TODO: replace by regex
+            options.push(newElement("OPTION", {
+                                     value: enumerationName
+                                 }, [document.createTextNode(enumerationName)]));
+        }
+    }
+
+    return options;
+}
+
 /**
  * Crée un élément de type variable.
  * Une variable a une nom, un type, une categorie, une borne inférieure, une borne supérieure et une valeure par défaut.
@@ -232,7 +248,7 @@ function newElementVariable() {
     variable.appendChild(newElement("SELECT", {
         class: "VariableType  col-sm-1",
         onchange: "updateVariable(this.parentNode)"
-    }, [/* Création dynamique avec les enumerations
+    }, [/* Création dynamique avec les enumerations */
         newElement("OPTION", {
             value: "integer"
         }, [document.createTextNode("Integer")]),
@@ -241,8 +257,8 @@ function newElementVariable() {
         }, [document.createTextNode("Natural")]),
         newElement("OPTION", {
             value: "boolean"
-        }, [document.createTextNode("Boolean")])*/
-    ]));
+        }, [document.createTextNode("Boolean")])
+    ].concat(newEnumerationOptions())));
 
     variable.appendChild(newElement("SELECT", {
         class: "VariableCategory col-sm-1",
@@ -312,7 +328,7 @@ function newElementEnumeration() {
     {},
     [
         newElement("BUTTON",
-            {type: "button", onclick: "this.parentNode.appendChild(newElementLiteral())"},
+            {type: "button", class: "addLiteralBtn", onclick: "this.parentNode.appendChild(newElementLiteral())"},
             [document.createTextNode("Add Literal")]
         )
     ])
@@ -335,6 +351,38 @@ function newElementLiteral() {
 	]);
 }
 
+function getEnumerations() {
+    var enumerationsValues = [];
+
+    enumerations = document.getElementsByClassName("Enumeration");
+    for (i = 0; i < enumerations.length; i++) {
+        enumerationName = enumerations[i].getElementsByClassName("EnumerationName")[0].value;
+        if(enumerationName !== "") { //TODO: replace by regex
+            enumerationsValues.push(enumerationName);
+        }
+    }
+
+    return enumerationsValues;
+}
+
+function getLiterals(enumeration) {
+    var literalsValues = [];
+
+    enumerations = document.getElementsByClassName("Enumeration");
+    for (var i = 0; i < enumerations.length; i++) {
+        var enumerationName = enumerations[i].getElementsByClassName("EnumerationName")[0].value;
+        if(enumerationName === enumeration) {
+            var literals = enumerations[i].getElementsByClassName("LiteralName");
+            for (var j = 0; j < literals.length; j++) {
+                if(literals[j].value !== "") { //TODO: replace by regex
+                    literalsValues.push(literals[j].value);
+                }
+            }
+        }
+    }
+
+    return literalsValues;
+}
 
 /**
  * actualise la variable que l'on modifie selon son type.
@@ -345,14 +393,14 @@ function updateVariable(variable) {
     var disableBounds;
 		
 		
-		type = variable.getElementsByClassName("VariableType")[0];
+		/*type = variable.getElementsByClassName("VariableType")[0];
 		var enumerations = addEnumeration();
 		for(j=0; j<enumerations.length; j++){
 			var opt = newElement("OPTION", {
 				value: enumerations[j]},
 				[document.createTextNode(enumerations[j].charAt(0).toUpperCase() + enumerations[j].substring(1))])
 			type.add(opt, j);
-		}
+		}*/
 		
 		
 
@@ -382,6 +430,23 @@ function updateVariable(variable) {
             type: "number",
             class: "VariableDefaultValue"
         }, []));
+    } else if(getEnumerations().indexOf(type) >= 0) {
+        disableBounds = true;
+        var literalsOptions = [];
+        var literals = getLiterals(type);
+        for(var i = 0; i < literals.length; i++) {
+            literalsOptions.push(newElement("OPTION", {
+                                                 value: literals[i]
+                                             }, [document.createTextNode(literals[i])]));
+        }
+
+        variable.appendChild(newElement("SELECT", {
+            class: "VariableDefaultValue"
+        }, [
+            newElement("OPTION", {
+                value: ""
+            }, [document.createTextNode("")])
+        ].concat(literalsOptions)));
     }
 		else{
 			disableBounds = true;
@@ -476,6 +541,14 @@ function loadJson(files) {
 	    		  fillEventForm(objJson, key, k)
 	    		  k++;
 	    	  }
+	    	  
+	    	  var l = 0;
+	    	  for(var key in objJson.enumerations){
+	    		  var enumBtn =  document.getElementById("addEnumerationBtn");
+	    		  enumBtn.parentNode.insertBefore(newElementEnumeration(), enumBtn);
+	    		  fillEnumForm(objJson, key, l)
+	    		  l++;
+	    	  }
 					
 	    	  document.getElementsByClassName("MachineName")[0].value = objJson.name;
 	    }
@@ -532,6 +605,28 @@ function fillEventForm(objJson, key, index){
 	
 }
 
+/**
+ * Charger les types d'énumeration à partir du fichier Json
+ * @param objJson
+ * @param key
+ * @param index
+ * @returns
+ */
+function fillEnumForm(objJson, key, index){	
+	//console.log(document.getElementsByClassName("Enumeration")[key]);
+	var enums = document.getElementsByClassName("Enumeration");
+	var enumType = enums[index]; 
+	enumType.getElementsByClassName("EnumerationName")[0].value = objJson.enumerations[key].name;
+	var index = 0;
+	for(var k in objJson.enumerations[key].literals){
+		var literalBtn = enumType.getElementsByClassName("addLiteralBtn")[0];
+		literalBtn.parentNode.insertBefore(newElementLiteral(), literalBtn);
+	    var literalElmts = enumType.getElementsByClassName("LiteralName");
+	    literalElmts[index].value = objJson.enumerations[key].literals[k];
+		index++;
+	}
+}
+
 function cleanForm(){
 	var variables = document.getElementsByClassName("Variable");
 	var initialSize = variables.length;
@@ -543,6 +638,12 @@ function cleanForm(){
 	var initialSizePr = properties.length;
     for (i = 0; i < initialSizePr; i++) {
     	properties[0].parentNode.removeChild(properties[0]);
+    }
+    
+    var enums = document.getElementsByClassName("Enumeration");
+	var initialSizePr = enums.length;
+    for (i = 0; i < initialSizePr; i++) {
+    	enums[0].parentNode.removeChild(enums[0]);
     }
     
     var events = document.getElementsByClassName("Event");
@@ -566,7 +667,12 @@ function machineToJSON() {
     var variable;
     var properties;
     var property;
+    var enumerations;
+    var enumeration;
+    var literals;
+    var literal;
     var i;
+    var j
 
     machine = {
         variables: [],
@@ -575,7 +681,8 @@ function machineToJSON() {
         enumerations: []
     };
 
-    machine.name = document.getElementsByClassName("MachineName")[0].value;
+    //machine.name = document.getElementsByClassName("MachineName")[0].value;
+    machine.name = "M0";
 
     variables = document.getElementsByClassName("Variable");
     for (i = 0; i < variables.length; i++) {
@@ -586,7 +693,9 @@ function machineToJSON() {
         variable.lowerBound = variables[i].getElementsByClassName("VariableLowerBound")[0].value;
         variable.upperBound = variables[i].getElementsByClassName("VariableUpperBound")[0].value;
         variable.defaultValue = variables[i].getElementsByClassName("VariableDefaultValue")[0].value;
-        machine.variables.push(variable);
+        if(variable.name !== "") { //TODO: replace by regex
+            machine.variables.push(variable);
+        }
     }
 
     properties = document.getElementsByClassName("Property");
@@ -594,7 +703,9 @@ function machineToJSON() {
         property = {};
         property.expression = properties[i].getElementsByClassName("PropertyExpression")[0].value;
         property.category = properties[i].getElementsByClassName("PropertyCategory")[0].value;
-        machine.properties.push(property);
+        if(property.expression !== "") { //TODO: replace by regex
+            machine.properties.push(property);
+        }
     }
     
     events = document.getElementsByClassName("Event");
@@ -613,9 +724,13 @@ function machineToJSON() {
         enumeration.literals = [];
         literals = enumerations[i].getElementsByClassName("LiteralName");
         for (j = 0; j < literals.length; j++) {
-            enumeration.literals.push(literals[j].value);
+            if(literals[j].value !== "") { //TODO: replace by regex
+                enumeration.literals.push(literals[j].value);
+            }
         }
-        machine.enumerations.push(enumeration);
+        if(enumeration.name !== "") { //TODO: replace by regex
+            machine.enumerations.push(enumeration);
+        }
     }
 
     console.log(JSON.stringify(machine));

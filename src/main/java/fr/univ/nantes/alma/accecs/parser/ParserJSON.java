@@ -7,6 +7,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 
 /**
  * Class which serves to parse the JSON of a machine to Java class representing the same machine.
@@ -24,6 +25,8 @@ public class ParserJSON {
     private Collection<Variable.Category> generateEventVariables;
     private Collection<Variable> excludeEventVariables;
 
+    private Collection<EnumerateType> enumerateTypes;
+
     public ParserJSON() {
         name = new String();
         variables = new ArrayList<Variable>();
@@ -33,6 +36,7 @@ public class ParserJSON {
         generateEventVariables.add(Variable.Category.INPUT);
         generateEventVariables.add(Variable.Category.OUTPUT);
         excludeEventVariables = new ArrayList<Variable>();
+        enumerateTypes = new ArrayList<EnumerateType>();
     }
     //@SuppressWarnings({ "rawtypes", "unused" })
 	public CategoryVariable convertVariableCategory(String variableCategory){
@@ -119,7 +123,8 @@ public class ParserJSON {
                     variable = new VariableBoolean(variableName, category);
                 }
             } else {
-                throw new Exception("unknown variable type: " + variableType);
+                //throw new Exception("unknown variable type: " + variableType);
+                variable = new VariableEnum(variableName, category, variableType, jsonVariable.getString("defaultValue"));
             }
 
 
@@ -149,6 +154,21 @@ public class ParserJSON {
             property = new Property(propertyExpression, category);
             properties.add(property);
         }
+
+        JSONArray jsonEnumerateTypes = jsonMachine.getJSONArray("enumerations");
+        for(int i = 0; i < jsonEnumerateTypes.length(); i++) {
+            EnumerateType enumerateType;
+            Collection<String> enumerateTypeValues = new HashSet<String>();
+            JSONObject jsonEnumerateType = jsonEnumerateTypes.getJSONObject(i);
+
+            JSONArray jsonEnumerateTypeValues = jsonEnumerateType.getJSONArray("literals");
+            for (int j = 0; j < jsonEnumerateTypeValues.length(); j++) {
+                enumerateTypeValues.add(jsonEnumerateTypeValues.getString(j));
+            }
+
+            enumerateType = new EnumerateType(jsonEnumerateType.getString("name"), enumerateTypeValues);
+            enumerateTypes.add(enumerateType);
+        }
     }
 
     public String getName() {
@@ -173,5 +193,9 @@ public class ParserJSON {
 
     public Collection<Variable> getExcludeEventVariables() {
         return excludeEventVariables;
+    }
+
+    public Collection<EnumerateType> getEnumerateTypes() {
+        return enumerateTypes;
     }
 }
