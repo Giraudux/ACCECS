@@ -681,8 +681,7 @@ function machineToJSON() {
         enumerations: []
     };
 
-    //machine.name = document.getElementsByClassName("MachineName")[0].value;
-    machine.name = "M0";
+    machine.name = document.getElementsByClassName("MachineName")[0].value;
 
     variables = document.getElementsByClassName("Variable");
     for (i = 0; i < variables.length; i++) {

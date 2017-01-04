@@ -66,12 +66,12 @@ INITIALISATION
 {% if (events.size > 0) -%}
 EVENTS
 
-    {% for eventName, eventPre in events -%}
+    {% for eventName, eventProperties in events -%}
     {{ eventName }} =
         SELECT
-            {{ eventPre }}
+            {{ eventProperties["precondition"] }} //TODO
         THEN
-            skip //TODO
+            {{ eventProperties["body"] }} //TODO
         END {%- if (loop.last == false) %}; {% endif %}
     {% endfor -%}
 

@@ -93,12 +93,20 @@ public class ParserJSON {
             } else if (variableCategory.equals("internal")) {
                 category = Variable.Category.INTERNAL;
             } else {
-                throw new Exception("unknown variable category: " + variableCategory);
+                //throw new Exception("unknown variable category: " + variableCategory);
+                category = null;
             }
 
             if (variableType.equals("integer")) {
-                Integer lowerBound = Integer.parseInt(jsonVariable.getString("lowerBound"));
-                Integer upperBound = Integer.parseInt(jsonVariable.getString("upperBound"));
+                Integer lowerBound;
+                Integer upperBound;
+                try {
+                    lowerBound = Integer.parseInt(jsonVariable.getString("lowerBound"));
+                    upperBound = Integer.parseInt(jsonVariable.getString("upperBound"));
+                } catch (Exception e) {
+                    lowerBound = null;
+                    upperBound = null;
+                }
 
                 String variableDefaultValue = jsonVariable.getString("defaultValue");
                 if (variableDefaultValue.isEmpty()) {
@@ -107,8 +115,15 @@ public class ParserJSON {
                     variable = new VariableInteger(variableName, category, upperBound, lowerBound, Integer.parseInt(variableDefaultValue));
                 }
             } else if (variableType.equals("natural")) {
-                Integer lowerBound = Integer.parseInt(jsonVariable.getString("lowerBound"));
-                Integer upperBound = Integer.parseInt(jsonVariable.getString("upperBound"));
+                Integer lowerBound;
+                Integer upperBound;
+                try {
+                    lowerBound = Integer.parseInt(jsonVariable.getString("lowerBound"));
+                    upperBound = Integer.parseInt(jsonVariable.getString("upperBound"));
+                } catch (Exception e) {
+                    lowerBound = null;
+                    upperBound = null;
+                }
 
                 String variableDefaultValue = jsonVariable.getString("defaultValue");
                 if (variableDefaultValue.isEmpty()) {
@@ -117,14 +132,18 @@ public class ParserJSON {
                     variable = new VariableNatural(variableName, category, lowerBound, upperBound, Integer.parseInt(variableDefaultValue));
                 }
             } else if (variableType.equals("boolean")) {
-                if (Boolean.parseBoolean(jsonVariable.getString("defaultValue"))) {
-                    variable = new VariableBoolean(variableName, category, Boolean.TRUE);
-                } else {
-                    variable = new VariableBoolean(variableName, category);
+                Boolean defaultValue;
+                try {
+                    defaultValue = Boolean.parseBoolean(jsonVariable.getString("defaultValue"));
+                } catch (Exception e) {
+                    defaultValue = Boolean.FALSE;
                 }
+
+                variable = new VariableBoolean(variableName, category, defaultValue);
             } else {
                 //throw new Exception("unknown variable type: " + variableType);
-                variable = new VariableEnum(variableName, category, variableType, jsonVariable.getString("defaultValue"));
+                String defaultValue = jsonVariable.getString("defaultValue");
+                variable = new VariableEnum(variableName, category, variableType, (defaultValue.isEmpty()? null: defaultValue));
             }
 
 

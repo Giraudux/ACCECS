@@ -92,6 +92,7 @@ public class Machine {
                         break;
                 }
 
+                event.setVariable(variable);
                 events.add(event);
             }
         }

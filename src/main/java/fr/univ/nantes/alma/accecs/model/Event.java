@@ -1,7 +1,7 @@
 package fr.univ.nantes.alma.accecs.model;
 
 public class Event {
-
+    private Variable variable;
     private String name;
     private String expression;
     private Category category;
@@ -9,7 +9,8 @@ public class Event {
     public Event() {
     }
 
-    public Event(String expression, Category category) {
+    public Event(Variable variable, String expression, Category category) {
+        this.variable = variable;
         this.expression = expression;
         this.category = category;
     }
@@ -36,6 +37,14 @@ public class Event {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Variable getVariable() {
+        return variable;
+    }
+
+    public void setVariable(Variable variable) {
+        this.variable = variable;
     }
 
     public enum Category {

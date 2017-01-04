@@ -31,7 +31,7 @@ public class MachineGenerator implements IMachineGenerator {
         Collection<String> initialisations = new ArrayList<String>();
         /*Collection<String> senseEvents = new ArrayList<String>();
         Collection<String> reactionEvents = new ArrayList<String>();*/
-        Map<String,String> events = new HashMap<String, String>();
+        Map<String,Map<String,String>> events = new HashMap<String, Map<String,String>>();
         Map<String, Collection<String>> sets = new HashMap<String, Collection<String>>();
 
         for (Variable variable : machine.getVariables()) {
@@ -60,10 +60,14 @@ public class MachineGenerator implements IMachineGenerator {
                     break;
             }
             invariants.add(variable.getName()+" : "+variable.getType());
-            if (variable.hasBounds()) {
-                invariants.add(variable.getName()+" : "+variable.getLowerBound()+".."+variable.getUpperBound());
+            if (variable.getLowerBound() != null || variable.getUpperBound() != null) {
+                invariants.add(variable.getName()+" : "+(variable.getLowerBound() == null? "MININT": variable.getLowerBound())+".."+(variable.getUpperBound() == null? "MAXINT": variable.getUpperBound()));
             }
-            initialisations.add(variable.getName()+" := "+variable.getDefaultValue().toString().toUpperCase());
+            if(variable.getDefaultValue() == null) {
+                initialisations.add(variable.getName()+" :: "+variable.getType());
+            } else {
+                initialisations.add(variable.getName()+" := "+(variable instanceof VariableEnum? variable.getDefaultValue(): variable.getDefaultValue().toString().toUpperCase()));
+            }
         }
 
         for (Property property : machine.getProperties()) {
@@ -71,7 +75,11 @@ public class MachineGenerator implements IMachineGenerator {
         }
 
         for(Event event: machine.getEvents()) {
-            events.put(event.getName(), "pre");
+            Map<String, String> properties = new HashMap<String, String>();
+            properties.put("precondition", event.getVariable().getName()+" : "+event.getVariable().getType());
+            properties.put("body", event.getVariable().getName()+" :: "+event.getVariable().getType());
+            events.put(event.getName(), properties);
+
         }
 
         for(EnumerateType set : machine.getSets()) {
