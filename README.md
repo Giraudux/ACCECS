@@ -5,7 +5,7 @@ We have to develop a support software thet will help and guide a specifier to bu
 To run the embedded server:
 
 ```
-$ mvn jetty:run
+$ mvn -Dmaven.test.skip=true jetty:run
 ```
 
 The application can be accessed at: localhost:8080
